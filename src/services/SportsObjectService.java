@@ -24,9 +24,9 @@ public class SportsObjectService {
 	
 	@PostConstruct
 	public void init() {
-		if (ctx.getAttribute("spotsObjectDAO") == null) {
+		if (ctx.getAttribute("sportsObjectDAO") == null) {
 			String contextPath = ctx.getRealPath("");
-			ctx.setAttribute("spotsObjectDAO", new SportsObjectsDAO());
+			ctx.setAttribute("sportsObjectDAO", new SportsObjectsDAO());
 		}
 	}
 	

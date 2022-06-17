@@ -23,7 +23,7 @@ import enums.ObjectType;
 public class SportsObjectsDAO {
 	
 	private List<SportsObject> sportsObjects;
-	private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\sportObjects.json";
+	private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\sportObjects.json";
 	
 	public SportsObjectsDAO() {
 		sportsObjects = new ArrayList<SportsObject>();
@@ -38,15 +38,8 @@ public class SportsObjectsDAO {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			sportsObjects = new ArrayList<>(Arrays.asList(mapper.readValue(Paths.get(pathToFile).toFile(), SportsObject[].class)));
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-			System.out.println("greska1");
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-			System.out.println("greska2 s");
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("greska3");
 		}
 	}
 }

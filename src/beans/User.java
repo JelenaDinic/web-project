@@ -13,7 +13,7 @@ public class User implements Serializable {
 	private String name;
 	private String surname;
 	private String gender;
-	private LocalDateTime dateOfBirth;
+	private String dateOfBirth;
 	private UserType userType;
 	private List<Training> trainingsHistory;
 	private int fee;
@@ -26,7 +26,7 @@ public class User implements Serializable {
 		super();
 	}
 
-	public User(String username, String password, String name, String surname, String gender, LocalDateTime dateOfBirth,
+	public User(String username, String password, String name, String surname, String gender, String dateOfBirth,
 			UserType userType, List<Training> trainingsHistory, int fee, SportsObject sportsObject,
 			List<SportsObject> visitedSportsObjects, int points, CustomerType customerType) {
 		super();
@@ -108,13 +108,13 @@ public class User implements Serializable {
 
 
 
-	public LocalDateTime getDateOfBirth() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
 
 
 
-	public void setDateOfBirth(LocalDateTime dateOfBirth) {
+	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
