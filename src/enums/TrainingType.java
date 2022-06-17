@@ -1,6 +1,8 @@
 package enums;
 
-public enum TrainingType {
+import java.io.Serializable;
+
+public enum TrainingType implements Serializable{
 	PERSONAL, 
 	GROUP, 
 	GYM

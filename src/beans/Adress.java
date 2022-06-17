@@ -2,6 +2,7 @@ package beans;
 
 public class Adress {
 	private String street;
+	private String number;
 	private String city;
 	private int postalCode;
 	
@@ -10,12 +11,29 @@ public class Adress {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Adress(String street, String city, int postalCode) {
+
+
+	public String getNumber() {
+		return number;
+	}
+
+
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+
+
+	public Adress(String street, String number, String city, int postalCode) {
 		super();
 		this.street = street;
+		this.number = number;
 		this.city = city;
 		this.postalCode = postalCode;
 	}
+
+
 
 	public String getStreet() {
 		return street;

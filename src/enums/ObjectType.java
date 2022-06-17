@@ -1,6 +1,8 @@
 package enums;
 
-public enum ObjectType {
+import java.io.Serializable;
+
+public enum ObjectType implements Serializable{
 	GYM, 
 	POOL,
 	SPORT_CENTER,
