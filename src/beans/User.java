@@ -25,8 +25,6 @@ public class User implements Serializable {
 	public User() {
 		super();
 	}
-	
-	
 
 	public User(String username, String password, String name, String surname, String gender, LocalDateTime dateOfBirth,
 			UserType userType, List<Training> trainingsHistory, int fee, SportsObject sportsObject,
