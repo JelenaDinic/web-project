@@ -16,4 +16,14 @@
  "logo" : "slika", 
  "averageGrade" : 2.0, 
  "startWorkingHour" : "08:00", 
+ "endWorkingHour" : "22:00"},
+ 
+ { "name" : "RoyalGym", 
+"type" : "GYM", 
+"content" : ["SAUNA", "PERSONAL"],
+ "status" : false, 
+ "location" : {"longitude" : 15.0, "latitude" : 15.0, "address" : {"street" : "Puskinova", "number" : "2", "city" : "Novi Sad", "postalCode" : 21000}},
+ "logo" : "slika", 
+ "averageGrade" : 2.0, 
+ "startWorkingHour" : "08:00", 
  "endWorkingHour" : "22:00"}]
