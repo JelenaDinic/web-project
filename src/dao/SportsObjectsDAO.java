@@ -34,6 +34,21 @@ public class SportsObjectsDAO {
 		return sportsObjects; 
 	}
 	
+	public List<SportsObject> search(String input){
+		List<SportsObject> foundObjects = new ArrayList<SportsObject>();
+		for (SportsObject so : sportsObjects) {
+			if (so.getName().equals(input))
+				foundObjects.add(so);
+			else if(so.getType().toString().equals(input))
+				foundObjects.add(so);
+			else if(so.getLocation().getAddress().getCity().equals(input))
+				foundObjects.add(so);
+			else if(String.valueOf(so.getAverageGrade()).equals(input))
+				foundObjects.add(so);
+		}
+		return foundObjects;
+	}
+	
 	private void loadSportsObjects() {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
