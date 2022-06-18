@@ -1,11 +1,13 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -33,6 +35,14 @@ public class UserService {
 		}
 	}
 	
+	@GET
+	@Path("/")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<User> getUsers(){
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		return dao.findAll();
+	}
+	
 	@POST
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -41,5 +51,21 @@ public class UserService {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		dao.add(user);
 		dao.save();
+	}
+	
+	@POST
+	@Path("/login")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public boolean login(User user) {
+		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
+		User loggedUser = userDao.login(user.getUsername(), user.getPassword());
+		if (loggedUser != null) {
+			System.out.println(" NASAO");
+			return true;
+		}else {
+			System.out.println("NISAM NASAO");
+			return false;
+		}
 	}
 }
