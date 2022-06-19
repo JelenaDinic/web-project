@@ -23,7 +23,7 @@ import enums.ObjectType;
 public class SportsObjectsDAO {
 	
 	private List<SportsObject> sportsObjects;
-	private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\sportObjects.json";
+	private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\sportObjects.json";
 	
 	public SportsObjectsDAO() {
 		sportsObjects = new ArrayList<SportsObject>();
@@ -37,11 +37,11 @@ public class SportsObjectsDAO {
 	public List<SportsObject> search(String input){
 		List<SportsObject> foundObjects = new ArrayList<SportsObject>();
 		for (SportsObject so : sportsObjects) {
-			if (so.getName().equals(input))
+			if (so.getName().contains(input))
 				foundObjects.add(so);
-			else if(so.getType().toString().equals(input))
+			else if(so.getType().toString().contains(input))
 				foundObjects.add(so);
-			else if(so.getLocation().getAddress().getCity().equals(input))
+			else if(so.getLocation().getAddress().getCity().contains(input))
 				foundObjects.add(so);
 			else if(String.valueOf(so.getAverageGrade()).equals(input))
 				foundObjects.add(so);

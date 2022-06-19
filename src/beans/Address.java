@@ -1,12 +1,12 @@
 package beans;
 
-public class Adress {
+public class Address {
 	private String street;
 	private String number;
 	private String city;
 	private int postalCode;
 	
-	public Adress() {
+	public Address() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -25,7 +25,7 @@ public class Adress {
 
 
 
-	public Adress(String street, String number, String city, int postalCode) {
+	public Address(String street, String number, String city, int postalCode) {
 		super();
 		this.street = street;
 		this.number = number;

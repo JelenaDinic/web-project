@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class Location implements Serializable{
 	private double longitude;
 	private double latitude;
-	private Adress address;
+	private Address address;
 	
 	public Location() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Location(double longitude, double latitude, Adress address) {
+	public Location(double longitude, double latitude, Address address) {
 		super();
 		this.longitude = longitude;
 		this.latitude = latitude;
@@ -35,11 +35,11 @@ public class Location implements Serializable{
 		this.latitude = latitude;
 	}
 
-	public Adress getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(Adress address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	} 
 
