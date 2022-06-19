@@ -1,4 +1,5 @@
-Vue.component("sportsObj", { 
+var sportsObjectApp = new Vue({ 
+	el:'#sportsObj',
 	data: function () {
 	    return {
 	      sportsObjects: null,
