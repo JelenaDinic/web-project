@@ -4,7 +4,7 @@
 "status" : false,
 "location" : {"longitude" : 15.0, "latitude" : 15.0, "address" : {"street" : "Puskinova", "number" : "2", "city" : "Novi Sad", "postalCode" : 21000}},
  "logo" : "missfit.png", 
- "averageGrade" : 2.0, 
+ "averageGrade" : 2.2, 
  "startWorkingHour" : "08:00", 
  "endWorkingHour" : "22:00"},
  
@@ -14,7 +14,7 @@
  "status" : false, 
  "location" : {"longitude" : 15.0, "latitude" : 15.0, "address" : {"street" : "Puskinova", "number" : "2", "city" : "Beograd", "postalCode" : 21000}},
  "logo" : "missfit.png", 
- "averageGrade" : 2.0, 
+ "averageGrade" : 3.5, 
  "startWorkingHour" : "08:00", 
  "endWorkingHour" : "22:00"},
  
@@ -24,6 +24,6 @@
  "status" : false, 
  "location" : {"longitude" : 15.0, "latitude" : 15.0, "address" : {"street" : "Puskinova", "number" : "2", "city" : "Nis", "postalCode" : 21000}},
  "logo" : "missfit.png", 
- "averageGrade" : 2.0, 
+ "averageGrade" : 3.8, 
  "startWorkingHour" : "08:00", 
  "endWorkingHour" : "22:00"}]
