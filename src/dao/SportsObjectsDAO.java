@@ -23,12 +23,16 @@ import enums.ObjectType;
 public class SportsObjectsDAO {
 	
 	private List<SportsObject> sportsObjects;
-	private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\sportObjects.json";
-	//private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\sportObjects.json";
+	//String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\sportObjects.json";
+	private String pathToFile = "..\\..\\WebContent\\sportsObjects.json";
 	
-	public SportsObjectsDAO() {
+	public SportsObjectsDAO(String contextPath) {
 		sportsObjects = new ArrayList<SportsObject>();
+		//System.out.println(contextPath);
+		//this.pathToFile = contextPath + "sportsObjects.json";
+		System.out.println(pathToFile);
 		loadSportsObjects();
+		
 	}
 	
 	public List<SportsObject> findAll(){

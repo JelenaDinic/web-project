@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,6 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import beans.User;
 import dao.UserDAO;
@@ -57,15 +59,15 @@ public class UserService {
 	@Path("/login")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean login(User user) {
+	public Response login(User user, @Context HttpServletRequest request) {
+		System.out.println(user.getPassword());
+		System.out.println(user.getUsername());
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
 		User loggedUser = userDao.login(user.getUsername(), user.getPassword());
 		if (loggedUser != null) {
-			System.out.println(" NASAO");
-			return true;
-		}else {
-			System.out.println("NISAM NASAO");
-			return false;
+			return Response.status(400).entity("Invalid username and/or password").build();
 		}
+		request.getSession().setAttribute("user", loggedUser);
+		return Response.status(200).build();
 	}
 }
