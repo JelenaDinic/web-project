@@ -49,10 +49,11 @@ public class UserService {
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void save(User user) {
+	public Response save(User user) {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		dao.add(user);
 		dao.save();
+		return Response.status(200).build();
 	}
 	
 	@POST
@@ -64,7 +65,10 @@ public class UserService {
 		System.out.println(user.getUsername());
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
 		User loggedUser = userDao.login(user.getUsername(), user.getPassword());
-		if (loggedUser != null) {
+		System.out.println(user.getUsername());
+		System.out.println(user.getPassword());
+		System.out.println(loggedUser);
+		if (loggedUser == null) {
 			return Response.status(400).entity("Invalid username and/or password").build();
 		}
 		request.getSession().setAttribute("user", loggedUser);

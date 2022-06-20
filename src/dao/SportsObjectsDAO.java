@@ -24,13 +24,10 @@ public class SportsObjectsDAO {
 	
 	private List<SportsObject> sportsObjects;
 	//String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\sportObjects.json";
-	private String pathToFile = "..\\..\\WebContent\\sportsObjects.json";
+	public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\sportObjects.json";
 	
 	public SportsObjectsDAO(String contextPath) {
 		sportsObjects = new ArrayList<SportsObject>();
-		//System.out.println(contextPath);
-		//this.pathToFile = contextPath + "sportsObjects.json";
-		System.out.println(pathToFile);
 		loadSportsObjects();
 		
 	}

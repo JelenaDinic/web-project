@@ -9,13 +9,11 @@ var loginApp = new Vue({
 	},
 	template: ` 
     	<div>
-		<form id="forma">
 			<table>
 				<tr><td>Username</td><td><input type="text" id = "username" v-model = "username"></td></tr>
 				<tr><td>Password</td><td><input type="password" id = "password" v-model = "password"></td></tr>
-				<tr><td><button type="submit" v-on:click = "login">LOG IN</button></td></tr>
+				<tr><td><button v-on:click = "login">ULOGUJ SE</button></td></tr>
 			</table>
-		</form>
     	</div>		  
     	`,
     mounted () {
@@ -30,10 +28,11 @@ var loginApp = new Vue({
 				password: this.password
 			})
 			.then(response => {
-				this.loggedin = true;
+				alert("Uspesno ste se ulogovali!");
+				window.location.href = 'sportsObjects.html';
 			})
 			.catch( error => {
-                alert("GRESKA");
+                alert("Pogresno korisnicko ime i/ili lozinka!");
             })
 			
 		}

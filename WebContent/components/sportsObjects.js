@@ -24,7 +24,7 @@ var sportsObjectApp = new Vue({
 	    			<td>{{s.name}}</td>
 	    			<td>{{s.type}}</td>
                     <td>{{s.location.address.city}}</td>
-	    			<td>{{s.logo}}</td>
+	    			<td><img src="./missfit.png"/></td>
                     <td>{{s.averageGrade}}</td>
 	    			<td>{{s.startWorkingHour}} - {{s.endWorkingHour}}</td>
 	    		</tr>
