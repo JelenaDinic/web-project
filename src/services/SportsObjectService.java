@@ -29,7 +29,7 @@ public class SportsObjectService {
 	public void init() {
 		if (ctx.getAttribute("sportsObjectDAO") == null) {
 			String contextPath = ctx.getRealPath("");
-			ctx.setAttribute("sportsObjectDAO", new SportsObjectsDAO());
+			ctx.setAttribute("sportsObjectDAO", new SportsObjectsDAO(contextPath));
 		}
 	}
 	

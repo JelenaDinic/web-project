@@ -1,14 +1,15 @@
-Vue.component("sportsObj", { 
+var sportsObjectApp = new Vue({ 
+	el:'#sportsObj',
 	data: function () {
 	    return {
 	      sportsObjects: null,
-		  searchText: null
+		  searchText: ""
 	    }
 	},
 	template: ` 
     	<div>
     		<h3>Prikaz sportskih objekata</h3>
-			<input type = "text" v-model = "searchText" v-on:input = "search">
+			<input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
     		<table border="1">
 	    		<tr bgcolor="lightgrey">
 	    			<th>Naziv</th>
@@ -23,7 +24,7 @@ Vue.component("sportsObj", {
 	    			<td>{{s.name}}</td>
 	    			<td>{{s.type}}</td>
                     <td>{{s.location.address.city}}</td>
-	    			<td>{{s.logo}}</td>
+	    			<td><img src="./missfit.png"/></td>
                     <td>{{s.averageGrade}}</td>
 	    			<td>{{s.startWorkingHour}} - {{s.endWorkingHour}}</td>
 	    		</tr>
@@ -36,8 +37,7 @@ Vue.component("sportsObj", {
     },
 	methods: {
 		search : function(){
-			this.searchText = this.$refs.searchText.value;
-			axios.get('rest/sportsObject/this.searchText')
+			axios.get('rest/sportsObject/' + this.searchText)
 			.then(response => (this.sportsObjects = response.data))
 		}
 	}
