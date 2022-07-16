@@ -50,5 +50,4 @@ public class SportsObjectService {
 		return dao.search(input);
 	}
 	
-	
 }
