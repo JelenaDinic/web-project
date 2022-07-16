@@ -3,13 +3,28 @@ var sportsObjectApp = new Vue({
 	data: function () {
 	    return {
 	      sportsObjects: null,
-		  searchText: ""
+		  searchText: "",
+		  sortCombo: null
 	    }
 	},
 	template: ` 
     	<div>
+			<button onclick = "location. href = 'login.html'"> Uloguj se </button>
+			<button onclick = "location. href = 'registration.html'"> Registruj se </button>
     		<h3>Prikaz sportskih objekata</h3>
-			<input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
+			<label>Pretrazi:</label><input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
+			<div>
+				<label>Parametar:</label>
+				<select id="comboBox" v-model = "sortCombo">
+				  <option value="0a">Naziv sportskog objekta(rastuci)</option>
+				  <option value="0d">Naziv sportskog objekta(opadajuci)</option>
+				  <option value="1a">Lokacija(rastuci)</option>
+		          <option value="1d">Lokacija(opadajuci)</option>
+				  <option value="2a">Prosecna ocena(rastuci)</option>
+		          <option value="2d">Prosecna ocena(opadajuci)</option>
+				</select> 
+				<button v-on:click = "sorting">Sortiraj</button>
+			</div>
     		<table border="1">
 	    		<tr bgcolor="lightgrey">
 	    			<th>Naziv</th>
@@ -39,6 +54,54 @@ var sportsObjectApp = new Vue({
 		search : function(){
 			axios.get('rest/sportsObject/' + this.searchText)
 			.then(response => (this.sportsObjects = response.data))
+		},
+		sorting : function(){
+			if(this.sortCombo === "0d") {
+				this.sportsObjects = this.sportsObjects.sort(
+				(a, b) => {
+					return b.name.localeCompare(a.name)
+				}
+			)
+			}
+			
+			else if(this.sortCombo === "0a") {
+				this.sportsObjects = this.sportsObjects.sort(
+				(a, b) => {
+					return a.name.localeCompare(b.name)
+				}
+			)
+			}
+			if(this.sortCombo === "1d") {
+				this.sportsObjects = this.sportsObjects.sort(
+				(a, b) => {
+					return b.location.address.city.localeCompare(a.location.address.city)
+				}
+			)
+			}
+			
+			else if(this.sortCombo === "1a") {
+				this.sportsObjects = this.sportsObjects.sort(
+				(a, b) => {
+					return a.location.address.city.localeCompare(b.location.address.city)
+				}
+			)
+			}
+			if(this.sortCombo === "2d") {
+				this.sportsObjects = this.sportsObjects.sort(
+				(a, b) => {
+					return b.averageGrade.toString().localeCompare(a.averageGrade.toString())
+				}
+			)
+			}
+			
+			else if(this.sortCombo === "2a") {
+				this.sportsObjects = this.sportsObjects.sort(
+				(a, b) => {
+					return a.averageGrade.toString().localeCompare(b.averageGrade.toString())
+				}
+			)
+			}
+			
 		}
 	}
 });
