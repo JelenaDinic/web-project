@@ -5,13 +5,14 @@ var sportsObjectsApp = new Vue({
 	      sportsObjects: null,
 		  searchText: "",
 		  sortCombo: null,
-		  tableRow: null
+		  tableRow: null,
+		  isLoggedIn: false
 	    }
 	},
 	template: ` 
     	<div>
-			<button onclick = "location. href = 'login.html'"> Uloguj se </button>
-			<button onclick = "location. href = 'registration.html'"> Registruj se </button>
+			<button v-if = "isLoggedIn === false" onclick = "location. href = 'login.html'"> Uloguj se </button>
+			<button v-if = "isLoggedIn === false" onclick = "location. href = 'registration.html'"> Registruj se </button>
     		<h3>Prikaz sportskih objekata</h3>
 			<label>Pretrazi:</label><input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
 			<div>
@@ -49,8 +50,17 @@ var sportsObjectsApp = new Vue({
     	</div>		  
     	`,
     mounted () {
+		/*this.$root.$on('isLoggedIn', (text) => {
+			alert("GRESKA");
+			console.log(isLoggedIn);
+			this.isLoggedIn = text
+		})*/
+		axios.get('rest/sportsObject/isLoggedIn')
+			.then(response => {
+				this.isLoggedIn = response.data;
+			})
         axios.get('rest/sportsObject/')
-          .then(response => (this.sportsObjects = response.data))
+			.then(response => (this.sportsObjects = response.data))
     },
 	methods: {
 		search : function(){
@@ -110,7 +120,6 @@ var sportsObjectsApp = new Vue({
                 'rest/sportsObject/sportsObj/' + selected
             ).then(
 				response => {
-					console.log(response.data);
 					window.location.href = "sportsObject.html"
 				}, error => {
 					alert(error);

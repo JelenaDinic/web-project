@@ -65,13 +65,19 @@ public class UserService {
 		System.out.println(user.getUsername());
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
 		User loggedUser = userDao.login(user.getUsername(), user.getPassword());
-		System.out.println(user.getUsername());
-		System.out.println(user.getPassword());
-		System.out.println(loggedUser);
 		if (loggedUser == null) {
-			return Response.status(400).entity("Invalid username and/or password").build();
+			request.getSession().setAttribute("isLoggedIn", true);
+			return Response.status(400).entity("Invalid username and/or password").build();	
 		}
+		request.getSession().setAttribute("isLoggedIn", true);
 		request.getSession().setAttribute("user", loggedUser);
 		return Response.status(200).build();
+	}
+	@GET
+	@Path("/loggedUser")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public User login(@Context HttpServletRequest request) {
+		return (User)request.getSession().getAttribute("user");
 	}
 }
