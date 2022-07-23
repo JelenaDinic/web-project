@@ -49,5 +49,4 @@ public class SportsObjectService {
 		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
 		return dao.search(input);
 	}
-	
 }
