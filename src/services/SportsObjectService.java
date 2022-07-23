@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -48,5 +50,32 @@ public class SportsObjectService {
 	public Collection<SportsObject> searchSportsObjects(@PathParam("input") String input){
 		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
 		return dao.search(input);
+	}
+
+	@GET
+	@Path("/sportsObj/{name}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Object setObject(@PathParam("name") String name, @Context HttpServletRequest request) {
+		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
+		HttpSession sesija = request.getSession();
+		sesija.removeAttribute("name");
+		sesija.setAttribute("name", name);
+		return sesija.getAttribute("name");
+	}
+	@GET
+	@Path("/object")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public SportsObject currentObject( @Context HttpServletRequest request) {
+		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO"); 
+		return dao.findByName(request.getSession().getAttribute("name").toString());
+	}
+	@GET
+	@Path("/isLoggedIn")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean isLoggedIn( @Context HttpServletRequest request) {
+		return (boolean)request.getSession().getAttribute("isLoggedIn");
 	}
 }

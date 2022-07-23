@@ -1,4 +1,4 @@
-var sportsObjectApp = new Vue({ 
+var sportsObjectsApp = new Vue({ 
 	el:'#sportsObj',
 	data: function () {
 	    return {
@@ -11,13 +11,15 @@ var sportsObjectApp = new Vue({
 		  filter2: false,
 		  filter3: false,
 		  filter4: false,
-		  filter5: false
+		  filter5: false,
+		  tableRow: null,
+		  isLoggedIn: false
 	    }
 	},
 	template: ` 
     	<div>
-			<button onclick = "location. href = 'login.html'"> Uloguj se </button>
-			<button onclick = "location. href = 'registration.html'"> Registruj se </button>
+			<button v-if = "isLoggedIn === false" onclick = "location. href = 'login.html'"> Uloguj se </button>
+			<button v-if = "isLoggedIn === false" onclick = "location. href = 'registration.html'"> Registruj se </button>
     		<h3>Prikaz sportskih objekata</h3>
 			<label>Pretrazi:</label><input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
 			<div>
@@ -50,18 +52,28 @@ var sportsObjectApp = new Vue({
                     <th>Radno vrijeme</th>
 	    		</tr>
 	    			
-	    		<tr v-for="(s, index) in sportsObjects">
+	    		<tr v-for="(s, index) in sportsObjects" :key="index">
 	    			<td>{{s.name}}</td>
 	    			<td>{{s.type}}</td>
                     <td>{{s.location.address.city}}</td>
 	    			<td><img src="./missfit.png"/></td>
                     <td>{{s.averageGrade}}</td>
 	    			<td>{{s.startWorkingHour}} - {{s.endWorkingHour}}</td>
+					<td><button @click="details(s.name)">Prikazi</button></td>
 	    		</tr>
 	    	</table>
     	</div>		  
     	`,
     mounted () {
+		/*this.$root.$on('isLoggedIn', (text) => {
+			alert("GRESKA");
+			console.log(isLoggedIn);
+			this.isLoggedIn = text
+		})*/
+		axios.get('rest/sportsObject/isLoggedIn')
+			.then(response => {
+				this.isLoggedIn = response.data;
+			})
         axios.get('rest/sportsObject/')
           .then(response => {this.sportsObjects = response.data;this.allSportsObjects = response.data})
     },
@@ -138,6 +150,20 @@ var sportsObjectApp = new Vue({
 				}
 			)
 			}
+			
+		},
+		details(selected) {
+			axios.get(
+                'rest/sportsObject/sportsObj/' + selected
+            ).then(
+				response => {
+					window.location.href = "sportsObject.html"
+				}, error => {
+					alert(error);
+				}
+			)
+			
+			
 			
 		}
 	}
