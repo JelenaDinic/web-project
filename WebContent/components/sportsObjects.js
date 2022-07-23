@@ -1,10 +1,11 @@
-var sportsObjectApp = new Vue({ 
+var sportsObjectsApp = new Vue({ 
 	el:'#sportsObj',
 	data: function () {
 	    return {
 	      sportsObjects: null,
 		  searchText: "",
-		  sortCombo: null
+		  sortCombo: null,
+		  tableRow: null
 	    }
 	},
 	template: ` 
@@ -35,13 +36,14 @@ var sportsObjectApp = new Vue({
                     <th>Radno vrijeme</th>
 	    		</tr>
 	    			
-	    		<tr v-for="(s, index) in sportsObjects">
+	    		<tr v-for="(s, index) in sportsObjects" :key="index">
 	    			<td>{{s.name}}</td>
 	    			<td>{{s.type}}</td>
                     <td>{{s.location.address.city}}</td>
 	    			<td><img src="./missfit.png"/></td>
                     <td>{{s.averageGrade}}</td>
 	    			<td>{{s.startWorkingHour}} - {{s.endWorkingHour}}</td>
+					<td><button @click="details(s.name)">Prikazi</button></td>
 	    		</tr>
 	    	</table>
     	</div>		  
@@ -101,6 +103,21 @@ var sportsObjectApp = new Vue({
 				}
 			)
 			}
+			
+		},
+		details(selected) {
+			axios.get(
+                'rest/sportsObject/sportsObj/' + selected
+            ).then(
+				response => {
+					console.log(response.data);
+					window.location.href = "sportsObject.html"
+				}, error => {
+					alert(error);
+				}
+			)
+			
+			
 			
 		}
 	}
