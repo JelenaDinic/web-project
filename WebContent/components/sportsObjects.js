@@ -6,13 +6,43 @@ var sportsObjectsApp = new Vue({
 		  searchText: "",
 		  sortCombo: null,
 		  tableRow: null,
-		  isLoggedIn: false
+		  isLoggedIn: null,
+		  isManager: false,
+		  isCustomer: false
 	    }
 	},
 	template: ` 
     	<div>
-			<button v-if = "isLoggedIn === false" onclick = "location. href = 'login.html'"> Uloguj se </button>
-			<button v-if = "isLoggedIn === false" onclick = "location. href = 'registration.html'"> Registruj se </button>
+			<div id="navBar">
+                <ul>
+                    <li>
+                        <a v-if="isLoggedIn != null" href="sportsObjects.html">Početna</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a v-if="isLoggedIn === null" href="login.html">Uloguj se</a>
+                    </li>
+                    <li>
+                        <a v-if="isLoggedIn === null" href="registration.html">Registruj se</a>
+                    </li>
+                    <li>
+                        <a v-if="isLoggedIn != null">Izloguj se</a>
+                    </li>
+                    <li>
+                        <a v-if="isManager === true">Moj sportski objekat</a>
+                    </li>
+                    <li>
+                        <a v-if="isCustomer === true">Moji treninzi</a>
+                    </li>
+                    <li>
+                        <a v-if="isManager === true">Treninzi</a>
+                    </li>
+                    <li>
+                        <a v-if="isCustomer === true">Moj nalog</a>
+                    </li>
+                </ul>
+            </div>
     		<h3>Prikaz sportskih objekata</h3>
 			<label>Pretrazi:</label><input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
 			<div>
@@ -50,14 +80,15 @@ var sportsObjectsApp = new Vue({
     	</div>		  
     	`,
     mounted () {
-		/*this.$root.$on('isLoggedIn', (text) => {
-			alert("GRESKA");
-			console.log(isLoggedIn);
-			this.isLoggedIn = text
-		})*/
 		axios.get('rest/sportsObject/isLoggedIn')
 			.then(response => {
-				this.isLoggedIn = response.data;
+				this.isLoggedIn =  response.data ? response.data : null;
+				if(this.isLoggedIn != null) {
+					if(this.isLoggedIn.userType === "MANAGER")
+						this.isManager = true;
+					if(this.isLoggedIn.userType === "CUSTOMER")
+						this.isCustomer = true;
+				}
 			})
         axios.get('rest/sportsObject/')
 			.then(response => (this.sportsObjects = response.data))

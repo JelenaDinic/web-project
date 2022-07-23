@@ -16,6 +16,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import beans.SportsObject;
+import beans.User;
 import dao.SportsObjectsDAO;
 
 @Path("sportsObject")
@@ -74,8 +75,11 @@ public class SportsObjectService {
 	@Path("/isLoggedIn")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean isLoggedIn( @Context HttpServletRequest request) {
-		return (boolean)request.getSession().getAttribute("isLoggedIn");
+	public User isLoggedIn( @Context HttpServletRequest request) {
+		if(request.getSession().getAttribute("user") !=null) {
+			return (User)request.getSession().getAttribute("user");
+		}
+		return null;
 	}
 	
 	

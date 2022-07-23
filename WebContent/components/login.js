@@ -3,12 +3,7 @@ var loginApp = new Vue({
 	data: function () {
 	    return {
 			username: "",
-			password: "",
-			isLoggedIn: false,
-			isCustomer: false,
-			isManager: false,
-			isAdmin: false,
-			isCoach: false
+			password: ""
 	    }
 	},
 	template: ` 
@@ -33,23 +28,6 @@ var loginApp = new Vue({
 			})
 			.then(response => {
 				alert("Uspesno ste se ulogovali!");
-				//this.$root.$emit('isLoggedIn', 'true')
-				axios.get('rest/loggedUser')
-					.then((response) => {
-						if(response.data.userType == 'CUSTOMER'){
-							this.isCustomer = true;
-						} else if(response.data.userType == 'MANAGER'){
-							this.isManager = true;
-						} else if(response.data.userType == 'ADMIN'){
-							this.isAdmin = true;
-						} else if(response.data.userType == 'COACH'){
-							this.isCoach = true;
-						}
-						this.username = response.data.username;
-						if(this.username){
-							this.isLoggedIn = true;
-						}
-			});
 				window.location.href = 'sportsObjects.html';
 			})
 			.catch( error => {
