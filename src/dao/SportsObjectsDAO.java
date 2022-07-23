@@ -61,4 +61,13 @@ public class SportsObjectsDAO {
 			e.printStackTrace();
 		}
 	}
+	public SportsObject findByName(String sportsObjectName) {
+
+		for (SportsObject sportsObject : sportsObjects) {
+			if(sportsObject.getName().equals(sportsObjectName)) {
+				return sportsObject;
+			}
+		}
+		return null;
+	}
 }
