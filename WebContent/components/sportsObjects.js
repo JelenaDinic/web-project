@@ -3,8 +3,15 @@ var sportsObjectsApp = new Vue({
 	data: function () {
 	    return {
 	      sportsObjects: null,
+		  allSportsObjects: null,
 		  searchText: "",
 		  sortCombo: null,
+		  filterCombo: null,
+		  filter1: false,
+		  filter2: false,
+		  filter3: false,
+		  filter4: false,
+		  filter5: false,
 		  tableRow: null,
 		  isLoggedIn: false
 	    }
@@ -26,6 +33,14 @@ var sportsObjectsApp = new Vue({
 		          <option value="2d">Prosecna ocena(opadajuci)</option>
 				</select> 
 				<button v-on:click = "sorting">Sortiraj</button>
+			</div>
+			<div ref = "filter">
+				<label>TERETANA</label><input type="checkbox" id="checkbox1" v-model="filter1">
+				<label>BAZEN</label><input type="checkbox" id="checkbox2" v-model="filter2">
+				<label>SPORTSKI CENTAR</label><input type="checkbox" id="checkbox3" v-model="filter3">
+				<label>PLESNI STUDIO</label><input type="checkbox" id="checkbox4" v-model="filter4">
+				<label>OTVORENO</label><input type="checkbox" id="checkbox5" v-model="filter5">
+				<button v-on:click = "filter">Filtriraj</button>
 			</div>
     		<table border="1">
 	    		<tr bgcolor="lightgrey">
@@ -60,12 +75,34 @@ var sportsObjectsApp = new Vue({
 				this.isLoggedIn = response.data;
 			})
         axios.get('rest/sportsObject/')
-			.then(response => (this.sportsObjects = response.data))
+          .then(response => {this.sportsObjects = response.data;this.allSportsObjects = response.data})
     },
 	methods: {
 		search : function(){
 			axios.get('rest/sportsObject/' + this.searchText)
-			.then(response => (this.sportsObjects = response.data))
+			.then(response => {this.sportsObjects = response.data})
+		},
+		filter : function(){
+			let filterdSportsObjects = [];
+			this.sportsObjects = this.allSportsObjects;
+			Array.from(this.sportsObjects).forEach(element => {
+				if (element.type == "GYM" && this.filter1 != false){
+					filterdSportsObjects.push(element);
+				}
+				if (element.type == "POOL" && this.filter2 != false){
+					filterdSportsObjects.push(element);
+				}
+				if (element.type == "SPORT_CENTER" && this.filter3 != false){
+					filterdSportsObjects.push(element);
+				}
+				if (element.type == "DANCE_STUDIO" && this.filter4 != false){
+					filterdSportsObjects.push(element);
+				}
+			});
+			if(this.filter1 == false && this.filter2 == false && this.filter3 == false && this.filter4 == false && this.filter5 == false){
+				filterdSportsObjects = this.allSportsObjects;
+			}
+			this.sportsObjects = filterdSportsObjects;
 		},
 		sorting : function(){
 			if(this.sortCombo === "0d") {

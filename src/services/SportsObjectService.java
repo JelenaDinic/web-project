@@ -51,6 +51,7 @@ public class SportsObjectService {
 		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
 		return dao.search(input);
 	}
+
 	@GET
 	@Path("/sportsObj/{name}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -77,6 +78,4 @@ public class SportsObjectService {
 	public boolean isLoggedIn( @Context HttpServletRequest request) {
 		return (boolean)request.getSession().getAttribute("isLoggedIn");
 	}
-	
-	
 }
