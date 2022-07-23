@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import enums.Gender;
 import enums.UserType;
 
 public class User implements Serializable {
@@ -12,7 +13,7 @@ public class User implements Serializable {
 	private String password;
 	private String name;
 	private String surname;
-	private String gender;
+	private Gender gender;
 	private String dateOfBirth;
 	private UserType userType;
 	private List<Training> trainingsHistory;
@@ -26,7 +27,7 @@ public class User implements Serializable {
 		super();
 	}
 
-	public User(String username, String password, String name, String surname, String gender, String dateOfBirth,
+	public User(String username, String password, String name, String surname, Gender gender, String dateOfBirth,
 			UserType userType, List<Training> trainingsHistory, int fee, SportsObject sportsObject,
 			List<SportsObject> visitedSportsObjects, int points, CustomerType customerType) {
 		super();
@@ -96,13 +97,13 @@ public class User implements Serializable {
 
 
 
-	public String getGender() {
+	public Gender getGender() {
 		return gender;
 	}
 
 
 
-	public void setGender(String gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
 
