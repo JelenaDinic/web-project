@@ -8,7 +8,10 @@ var registrationApp = new Vue({
 		  password: "",
 		  gender: null,
 		  dateOfBirth: "",
-	      userType: "CUSTOMER"
+	      userType: "CUSTOMER",
+	      isManager: false,
+		  isCustomer: false,
+		  isAdmin: false
 	    }
 	},
 	template: ` 
@@ -45,13 +48,37 @@ var registrationApp = new Vue({
 					<td>Datum rodjenja</td>
 					<td><input type="text" id = "dateOfBirth" v-model = "dateOfBirth"></td>
 				</tr>
+				<tr v-if="isAdmin === true">
+					<td>Tip korisnika</td>
+					<td>
+						<select v-model = "userType" id="userType">
+  							<option value="MANAGER">Menadzer</option>
+  							<option value="COACH">Trener</option>
+  						</select>
+					</td>
+				</tr>
 				<tr>
 					<td><button type="submit" v-on:click = "registration">REGISTRUJ SE</button></td>
 				</tr>
 			</table>
     	</div>		  
     	`,
-
+    mounted () {
+		axios.get('rest/sportsObject/isLoggedIn')
+			.then(response => {
+				this.isLoggedIn =  response.data ? response.data : null;
+				if(this.isLoggedIn != null) {
+					if(this.isLoggedIn.userType === "MANAGER")
+						this.isManager = true;
+					if(this.isLoggedIn.userType === "CUSTOMER")
+						this.isCustomer = true;
+					if(this.isLoggedIn.userType === "ADMIN")
+						this.isAdmin = true;
+				}
+			})
+        axios.get('rest/sportsObject/')
+          .then(response => {this.sportsObjects = response.data;this.allSportsObjects = response.data})
+    },
 	methods: {
 		registration : function(){
 			
