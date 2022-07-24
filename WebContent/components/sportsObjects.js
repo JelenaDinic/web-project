@@ -15,38 +15,48 @@ var sportsObjectsApp = new Vue({
 		  tableRow: null,
 		  isLoggedIn: null,
 		  isManager: false,
-		  isCustomer: false
+		  isCustomer: false,
+		  isAdmin: false
 	    }
 	},
 	template: ` 
     	<div>
 			<div id="navBar">
                 <ul>
-                    <li>
-                        <a v-if="isLoggedIn != null" href="sportsObjects.html">Početna</a>
+                    <li v-if="isLoggedIn != null">
+                        <a href="sportsObjects.html">Početna</a>
                     </li>
                 </ul>
                 <ul>
-                    <li>
-                        <a v-if="isLoggedIn === null" href="login.html">Uloguj se</a>
+                    <li v-if="isLoggedIn === null">
+                        <a href="login.html">Uloguj se</a>
                     </li>
-                    <li>
-                        <a v-if="isLoggedIn === null" href="registration.html">Registruj se</a>
+                    <li v-if="isLoggedIn === null">
+                        <a href="registration.html">Registruj se</a>
                     </li>
-                    <li>
-                        <a v-if="isLoggedIn != null">Izloguj se</a>
+                    <li v-if="isLoggedIn != null">
+                        <a>Izloguj se</a>
                     </li>
-                    <li>
-                        <a v-if="isManager === true">Moj sportski objekat</a>
+                    <li  v-if="isManager === true">
+                        <a>Moj sportski objekat</a>
                     </li>
-                    <li>
-                        <a v-if="isCustomer === true">Moji treninzi</a>
+                    <li  v-if="isCustomer === true">
+                        <a>Moji treninzi</a>
                     </li>
-                    <li>
-                        <a v-if="isManager === true">Treninzi</a>
+                    <li v-if="isManager === true">
+                        <a >Treninzi</a>
                     </li>
-                    <li>
-                        <a v-if="isCustomer === true">Moj nalog</a>
+                    <li v-if="isCustomer === true">
+                        <a >Moj nalog</a>
+                    </li>
+                    <li v-if="isAdmin === true">
+                        <a href="users.html">Pregled svih registrovanih korisnika</a>
+                    </li>
+                    <li v-if="isAdmin === true">
+                        <a>Moj profil</a>
+                    </li>
+                    <li v-if="isAdmin === true">
+                        <a href="registration.html">Kreiraj menadzera/trenera</a>
                     </li>
                 </ul>
             </div>
@@ -103,6 +113,8 @@ var sportsObjectsApp = new Vue({
 						this.isManager = true;
 					if(this.isLoggedIn.userType === "CUSTOMER")
 						this.isCustomer = true;
+					if(this.isLoggedIn.userType === "ADMIN")
+						this.isAdmin = true;
 				}
 			})
         axios.get('rest/sportsObject/')
