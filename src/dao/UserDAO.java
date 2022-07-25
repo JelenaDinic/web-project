@@ -20,8 +20,8 @@ import beans.User;
 
 public class UserDAO {
 	private List<User> users;
-	//private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\users.json";
-	private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\users.json";
+	private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\users.json";
+	//private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\users.json";
 	
 	public UserDAO() {
 		users = new ArrayList<User>();
@@ -59,6 +59,21 @@ public class UserDAO {
 				if (u.getPassword().equals(password)) {
 					return u;
 				}
+			}
+		}
+		return null;
+	}
+	public User update(String username, User user) {
+		for(User u : users) {
+			if(u.getUsername().equals(username)) {
+				u.setUsername(user.getUsername());
+				u.setPassword(user.getPassword());
+				u.setName(user.getName());
+				u.setSurname(user.getSurname());
+				u.setDateOfBirth(user.getDateOfBirth());
+				u.setGender(user.getGender());
+				System.out.println(u.getUsername());
+				return u;
 			}
 		}
 		return null;

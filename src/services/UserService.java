@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -61,8 +63,6 @@ public class UserService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response login(User user, @Context HttpServletRequest request) {
-		System.out.println(user.getPassword());
-		System.out.println(user.getUsername());
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
 		User loggedUser = userDao.login(user.getUsername(), user.getPassword());
 		if (loggedUser == null) {
@@ -70,5 +70,14 @@ public class UserService {
 		}
 		request.getSession().setAttribute("user", loggedUser);
 		return Response.status(200).build();
+	}
+	@PUT
+	@Path("/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void update(@PathParam("username") String username, User user) {
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		dao.update(username, user);
+		dao.save();
 	}
 }

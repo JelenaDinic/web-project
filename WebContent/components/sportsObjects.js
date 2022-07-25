@@ -47,7 +47,7 @@ var sportsObjectsApp = new Vue({
                         <a >Treninzi</a>
                     </li>
                     <li v-if="isCustomer === true">
-                        <a >Moj nalog</a>
+                        <a href="customerAccount.html">Moj nalog</a>
                     </li>
                     <li v-if="isAdmin === true">
                         <a href="users.html">Pregled svih registrovanih korisnika</a>
