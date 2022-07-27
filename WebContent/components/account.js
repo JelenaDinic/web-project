@@ -1,5 +1,5 @@
-var customerAccApp = new Vue({ 
-	el:'#customerAccount',
+var accountApp = new Vue({ 
+	el:'#account',
 	data: function () {
 	    return {
 			surname: "",
