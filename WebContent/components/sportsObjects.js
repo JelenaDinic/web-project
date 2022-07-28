@@ -92,7 +92,7 @@ var sportsObjectsApp = new Vue({
                     <th>Radno vrijeme</th>
 	    		</tr>
 	    			
-	    		<tr v-for="(s, index) in sportsObjects" :key="index">
+	    		<tr v-for="(s, index) in sportsObjects">
 	    			<td>{{s.name}}</td>
 	    			<td>{{s.type}}</td>
                     <td>{{s.location.address.city}}</td>
@@ -118,7 +118,8 @@ var sportsObjectsApp = new Vue({
 				}
 			})
         axios.get('rest/sportsObject/')
-          .then(response => {this.sportsObjects = response.data;this.allSportsObjects = response.data})
+          .then(response => {this.sportsObjects = response.data;
+							 this.allSportsObjects = response.data})
     },
 	methods: {
 		search : function(){

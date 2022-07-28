@@ -5,9 +5,9 @@ import enums.TrainingType;
 public class Training {
 	private String name;
 	private TrainingType type;
-	private SportsObject sportsObject;
+	private String sportsObject;
 	private int duration;
-	private User coach;
+	private String coach;
 	private String description;
 	private String photo;
 	
@@ -15,7 +15,7 @@ public class Training {
 		super();
 	}
 
-	public Training(String name, TrainingType type, SportsObject sportsObject, int duration, User coach,
+	public Training(String name, TrainingType type, String sportsObject, int duration, String coach,
 			String description, String photo) {
 		super();
 		this.name = name;
@@ -43,11 +43,11 @@ public class Training {
 		this.type = type;
 	}
 
-	public SportsObject getSportsObject() {
+	public String getSportsObject() {
 		return sportsObject;
 	}
 
-	public void setSportsObject(SportsObject sportsObject) {
+	public void setSportsObject(String sportsObject) {
 		this.sportsObject = sportsObject;
 	}
 
@@ -59,11 +59,11 @@ public class Training {
 		this.duration = duration;
 	}
 
-	public User getCoach() {
+	public String getCoach() {
 		return coach;
 	}
 
-	public void setCoach(User coach) {
+	public void setCoach(String coach) {
 		this.coach = coach;
 	}
 
