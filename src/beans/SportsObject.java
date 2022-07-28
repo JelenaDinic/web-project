@@ -1,17 +1,15 @@
 package beans;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import enums.ContentType;
 import enums.ObjectType;
-import enums.TrainingType;
 
 public class SportsObject {
 
 	private String name;
 	private ObjectType type;
-	private List<ContentType> content;  //?
+	private List<ContentType> content;
 	private boolean status;
 	public Location location;
 	public String logo;
