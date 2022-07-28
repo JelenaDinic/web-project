@@ -32,7 +32,6 @@ public class UserService {
 	@PostConstruct
 	public void init() {
 		if (ctx.getAttribute("userDAO") == null) {
-			String contextPath = ctx.getRealPath("");
 			ctx.setAttribute("userDAO", new UserDAO());
 		}
 	}
@@ -77,5 +76,13 @@ public class UserService {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		dao.update(username, user);
 		dao.save();
+	}
+	@GET
+	@Path("/all-coaches")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCoaches(){
+		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
+		return Response.ok(userDao.findAllCoaches(), MediaType.APPLICATION_JSON).build();
 	}
 }

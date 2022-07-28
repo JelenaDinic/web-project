@@ -1,11 +1,1 @@
-[{
-	"name" : "XYZ",
-	"type" : "GROUP",
-	"sportsObject" : "MissFit",
-	"duration" : 30,
-	"coach" : "",
-	"description" : "",
-	"photo" : ""
-	
-}
-]
+[{"name":"XYZ","type":"GROUP","sportsObject":"MissFit","duration":30,"coach":"","description":"","photo":""},{"name":"Cardio","type":"PERSONAL","sportsObject":"MissFit","duration":40,"coach":null,"description":"ecwdcwec","photo":"slika1"},{"name":"Aerobik","type":"PERSONAL","sportsObject":"MissFit","duration":35,"coach":"tamara123","description":"","photo":"slika2"}]
