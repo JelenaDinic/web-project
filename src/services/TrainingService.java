@@ -7,7 +7,9 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -49,6 +51,15 @@ public class TrainingService {
 		dao.add(training);
 		dao.save();
 		return Response.status(200).build();
+	}
+	@PUT
+	@Path("/{name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void update(@PathParam("name") String name, Training training) {
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
+		dao.update(name, training);
+		dao.save();
 	}
 	
 }
