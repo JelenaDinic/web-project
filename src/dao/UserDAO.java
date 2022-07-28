@@ -8,6 +8,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.User;
+import enums.UserType;
 
 public class UserDAO {
 	private List<User> users;
@@ -68,6 +69,15 @@ public class UserDAO {
 			}
 		}
 		return null;
+	}
+	public List<User> findAllCoaches(){
+		List<User> coaches = new ArrayList<User>();
+		for(User user : users) {
+			if(user.getUserType() == UserType.COACH) {
+				coaches.add(user);
+			}
+		}
+		return coaches;
 	}
 	
 }
