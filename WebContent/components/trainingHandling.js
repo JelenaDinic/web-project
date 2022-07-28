@@ -6,8 +6,11 @@ var trainingHandlingApp = new Vue({
 			isLoggedIn: null,
 			trainingsManager: [],
 			addPressed: false,
+			updatePressed: false,
+			oldName: "",
 			name: "",
 			photo: "",
+			sportsObject: "",
 			type: "",
 			description: "",
 			duration: "",
@@ -37,12 +40,13 @@ var trainingHandlingApp = new Vue({
 	                    <td>{{t.coach}}</td>
 		    			<td>{{t.description}}</td>
 						<td>{{t.photo}}</td>
+						<td><button v-on:click = "openUpdateForm(t)">Izmeni</button></td>
 		    		</tr>
 	    		</table>
     	</div>
 		<div>
 			<button v-on:click = "openAddForm">Dodavanje novog treninga</button>
-			<table v-if = "addPressed === true">
+			<table v-if = "addPressed === true || updatePressed===true">
 				<tr>
 					<td>Naziv</td>
 					<td><input type="text" id = "name" v-model = "name" required></td>
@@ -95,6 +99,7 @@ var trainingHandlingApp = new Vue({
 				axios.get('rest/sportsObject/isLoggedIn')
 			.then(response => {
 				this.isLoggedIn =  response.data ? response.data : null;
+				this.sportsObject = this.isLoggedIn.sportsObject;
 				if(this.isLoggedIn != null) {
 					if(this.isLoggedIn.userType === "MANAGER"){
 						Array.from(this.trainings).forEach(element => {
@@ -111,14 +116,33 @@ var trainingHandlingApp = new Vue({
 	methods: {
 		openAddForm: function() {
 			this.addPressed = true;
+			this.updatePressed = false;
+			this.name = "";
+			this.photo = "";
+			this.type = "";
+			this.coach = "",
+			this.description= "";
+			this.duration =  "";
+			
+		},
+		openUpdateForm(selected) {
+			this.updatePressed = true;
+			this.addPressed = false;
+			this.oldName = selected.name;
+			this.name = selected.name;
+			this.photo = selected.photo;
+			this.type = selected.type;
+			this.coach = selected.coach;
+			this.description= selected.description;
+			this.duration =  selected.duration;
 		},
 		add : function(){
-			
-			axios.post('rest/training/', {
+			if(this.addPressed === true) {
+				axios.post('rest/training/', {
 				name: this.name,
 				type: this.type,
 				photo: this.photo,
-				sportsObject: this.isLoggedIn.sportsObject,
+				sportsObject: this.sportsObject,
 				coach: this.coach,
 				duration: this.duration,
 				description: this.description
@@ -130,6 +154,25 @@ var trainingHandlingApp = new Vue({
 			.catch( error => {
                 alert("Greska!");
             })
+			} else {
+						axios.put('rest/training/' + this.oldName, {
+						name: this.name,
+						type: this.type,
+						photo: this.photo,
+						sportsObject: this.sportsObject,
+						coach: this.coach,
+						duration: this.duration,
+						description: this.description
+				})
+					.then(response => {
+						alert("Uspesno ste izmenili trening!");
+						window.location.reload();
+					})
+					.catch(error => {
+		                alert("Greska prilikom izmene treninga!");
+		            })
+			}
+			
 		}
 	}
 })

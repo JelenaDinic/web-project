@@ -26,6 +26,20 @@ public class TrainingDAO {
 	public void add(Training training) {
 		trainings.add(training);
 	}
+	public Training update(String name, Training training) {
+		for(Training t : trainings) {
+			if(t.getName().equals(name)) {
+				t.setName(training.getName());
+				t.setType(training.getType());
+				t.setDuration(training.getDuration());
+				t.setDescription(training.getDescription());
+				t.setPhoto(training.getPhoto());
+				t.setCoach(training.getCoach());
+				return t;
+			}
+		}
+		return null;
+	}
 
 	public void save() {
 		ObjectMapper mapper = new ObjectMapper();

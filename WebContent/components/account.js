@@ -80,8 +80,6 @@ var accountApp = new Vue({
     },
 	methods: {
 		update : function(){
-			console.log(this.oldUsername);
-			console.log(this.username);
 			axios.put('rest/user/' + this.oldUsername, {
 				username: this.username,
 				password: this.password,
