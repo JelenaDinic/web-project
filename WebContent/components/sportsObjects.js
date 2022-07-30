@@ -102,6 +102,7 @@ var sportsObjectsApp = new Vue({
 					<td><button @click="details(s.name)">Prikazi</button></td>
 	    		</tr>
 	    	</table>
+	    	<button v-if="isAdmin === true" onclick="window.location='addSportsObject.html';">Dodaj</button>
     	</div>		  
     	`,
     mounted () {
