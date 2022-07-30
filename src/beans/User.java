@@ -17,7 +17,7 @@ public class User implements Serializable {
 	private String dateOfBirth;
 	private UserType userType;
 	private List<Training> trainingsHistory;
-	private int fee;
+	private String fee; //id clanarine
 	private String sportsObject;
 	private List<SportsObject> visitedSportsObjects;
 	private int points;
@@ -28,7 +28,7 @@ public class User implements Serializable {
 	}
 
 	public User(String username, String password, String name, String surname, Gender gender, String dateOfBirth,
-			UserType userType, List<Training> trainingsHistory, int fee, String sportsObject,
+			UserType userType, List<Training> trainingsHistory, String fee, String sportsObject,
 			List<SportsObject> visitedSportsObjects, int points, CustomerType customerType) {
 		super();
 		this.username = username;
@@ -145,13 +145,13 @@ public class User implements Serializable {
 
 
 
-	public int getFee() {
+	public String getFee() {
 		return fee;
 	}
 
 
 
-	public void setFee(int fee) {
+	public void setFee(String fee) {
 		this.fee = fee;
 	}
 
