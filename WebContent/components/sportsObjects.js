@@ -44,16 +44,16 @@ var sportsObjectsApp = new Vue({
                         <a>Moji treninzi</a>
                     </li>
                     <li v-if="isManager === true">
-                        <a >Treninzi</a>
+                        <a href="trainingHandling.html">Treninzi</a>
                     </li>
-                    <li v-if="isCustomer === true">
-                        <a >Moj nalog</a>
+                    <li v-if="isLoggedIn != null">
+                        <a href="account.html">Moj profil</a>
+                    </li>
+					<li  v-if="isCustomer === true">
+                        <a href="membershipFee.html">Kupite članarinu</a>
                     </li>
                     <li v-if="isAdmin === true">
                         <a href="users.html">Pregled svih registrovanih korisnika</a>
-                    </li>
-                    <li v-if="isAdmin === true">
-                        <a>Moj profil</a>
                     </li>
                     <li v-if="isAdmin === true">
                         <a href="registration.html">Kreiraj menadzera/trenera</a>
@@ -92,7 +92,7 @@ var sportsObjectsApp = new Vue({
                     <th>Radno vrijeme</th>
 	    		</tr>
 	    			
-	    		<tr v-for="(s, index) in sportsObjects" :key="index">
+	    		<tr v-for="(s, index) in sportsObjects">
 	    			<td>{{s.name}}</td>
 	    			<td>{{s.type}}</td>
                     <td>{{s.location.address.city}}</td>
@@ -119,7 +119,8 @@ var sportsObjectsApp = new Vue({
 				}
 			})
         axios.get('rest/sportsObject/')
-          .then(response => {this.sportsObjects = response.data;this.allSportsObjects = response.data})
+          .then(response => {this.sportsObjects = response.data;
+							 this.allSportsObjects = response.data})
     },
 	methods: {
 		search : function(){

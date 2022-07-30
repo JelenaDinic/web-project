@@ -2,7 +2,6 @@ package beans;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import enums.FeeType;
 import enums.Status;
@@ -13,9 +12,10 @@ public class Fee implements Serializable{
 	private LocalDateTime paymentDate;
 	private LocalDateTime dateTimeOfValidity;
 	private double price;
-	private User customer;
+	private String customer;
 	private Status status;
 	private int numberOfEntries;
+	private int usedEntries;
 	
 	public Fee() {
 		super();
@@ -23,7 +23,7 @@ public class Fee implements Serializable{
 	}
 
 	public Fee(String id, FeeType feeType, LocalDateTime paymentDate, LocalDateTime dateTimeOfValidity, double price,
-			User customer, Status status, int numberOfEntries) {
+			String customer, Status status, int numberOfEntries, int usedEntries) {
 		super();
 		this.id = id;
 		this.feeType = feeType;
@@ -33,7 +33,7 @@ public class Fee implements Serializable{
 		this.customer = customer;
 		this.status = status;
 		this.numberOfEntries = numberOfEntries;
-	}
+		this.usedEntries = usedEntries;	}
 
 	public String getId() {
 		return id;
@@ -75,11 +75,11 @@ public class Fee implements Serializable{
 		this.price = price;
 	}
 
-	public User getCustomer() {
+	public String getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(User customer) {
+	public void setCustomer(String customer) {
 		this.customer = customer;
 	}
 
@@ -97,6 +97,14 @@ public class Fee implements Serializable{
 
 	public void setNumberOfEntries(int numberOfEntries) {
 		this.numberOfEntries = numberOfEntries;
+	}
+
+	public int getUsedEntries() {
+		return usedEntries;
+	}
+
+	public void setUsedEntries(int usedEntries) {
+		this.usedEntries = usedEntries;
 	}
 	
 }

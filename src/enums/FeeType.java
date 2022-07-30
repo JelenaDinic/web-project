@@ -2,5 +2,6 @@ package enums;
 
 public enum FeeType {
 	MONTHLY,
-	ANNUAL
+	ANNUALY,
+	WEEKLY
 }

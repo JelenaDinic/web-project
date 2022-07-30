@@ -82,7 +82,6 @@ public class SportsObjectService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object setObject(@PathParam("name") String name, @Context HttpServletRequest request) {
-		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
 		HttpSession sesija = request.getSession();
 		sesija.removeAttribute("name");
 		sesija.setAttribute("name", name);
