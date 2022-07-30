@@ -47,13 +47,13 @@ var sportsObjectsApp = new Vue({
                         <a href="trainingHandling.html">Treninzi</a>
                     </li>
                     <li v-if="isLoggedIn != null">
-                        <a href="account.html">Moj nalog</a>
+                        <a href="account.html">Moj profil</a>
+                    </li>
+					<li  v-if="isCustomer === true">
+                        <a href="membershipFee.html">Kupite članarinu</a>
                     </li>
                     <li v-if="isAdmin === true">
                         <a href="users.html">Pregled svih registrovanih korisnika</a>
-                    </li>
-                    <li v-if="isAdmin === true">
-                        <a>Moj profil</a>
                     </li>
                     <li v-if="isAdmin === true">
                         <a href="registration.html">Kreiraj menadzera/trenera</a>

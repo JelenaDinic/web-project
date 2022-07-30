@@ -1,14 +1,50 @@
-tr.selected {
-	background: lightblue;
-}
-tr {
-	cursor: pointer;
+.all-purchase {
+    display: flex;
+    text-align: center;
 }
 
-#error {
-	color: red;
+.fee {
+    border: 1px solid orange;
+    border-radius: 10px;
+    text-align: center;
+    width: fit-content;
+    margin: 10px;
 }
 
-#success {
-	color: green;	
+.header {
+    background-color: orange;
+    border: 1px solid orange;
+    border-radius: 10px 10px 0px 0px;
+    color: white;
+    padding: 10px;
+    width: 300px;
+}
+
+.header h3 {
+    margin: 0;
+}
+
+.header span {
+    font-size: 12px;
+     display: block;
+}
+
+.price {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid orange;
+}
+
+.buy-btn {
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: orange;
+    color: white;
+    cursor: pointer;
+}
+body {
+    font-family: 'Roboto', sans-serif;
 }
