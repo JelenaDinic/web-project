@@ -9,15 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
+import beans.Fee;
 import beans.SportsObject;
 import beans.User;
+import dao.FeeDAO;
 import dao.SportsObjectsDAO;
+import dao.UserDAO;
 
 @Path("sportsObject")
 public class SportsObjectService {
@@ -31,8 +36,10 @@ public class SportsObjectService {
 	@PostConstruct
 	public void init() {
 		if (ctx.getAttribute("sportsObjectDAO") == null) {
-			String contextPath = ctx.getRealPath("");
-			ctx.setAttribute("sportsObjectDAO", new SportsObjectsDAO(contextPath));
+			ctx.setAttribute("sportsObjectDAO", new SportsObjectsDAO());
+		}
+		if (ctx.getAttribute("feeDAO") == null) {
+			ctx.setAttribute("feeDAO", new FeeDAO());
 		}
 	}
 	
@@ -80,5 +87,15 @@ public class SportsObjectService {
 			return (User)request.getSession().getAttribute("user");
 		}
 		return null;
+	}
+	@POST
+	@Path("/fee")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response newFee(Fee fee) {
+		FeeDAO dao = (FeeDAO) ctx.getAttribute("feeDAO");
+		dao.add(fee);
+		dao.save();
+		return Response.status(200).build();
 	}
 }
