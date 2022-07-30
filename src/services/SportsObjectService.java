@@ -51,6 +51,18 @@ public class SportsObjectService {
 		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
 		return dao.findAll();
 	}
+	
+	@POST
+	@Path("/")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response save(SportsObject sportObject) {
+		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
+		dao.add(sportObject);
+		dao.save();
+		return Response.status(200).build();
+	}
+	
 	@GET
 	@Path("/{input}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -58,6 +70,15 @@ public class SportsObjectService {
 	public Collection<SportsObject> searchSportsObjects(@PathParam("input") String input){
 		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
 		return dao.search(input);
+	}
+	
+	@GET
+	@Path("/find/{input}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public SportsObject findByName(@PathParam("input") String input){
+		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
+		return dao.findByName(input);
 	}
 
 	@GET

@@ -23,6 +23,17 @@ public class UserDAO {
 	public List<User> findAll(){
 		return users; 
 	}
+	
+	public List<User> findFreeManagers(){
+		List<User> freeManagers = new ArrayList<User>();
+		for (User user : users) {
+			if(user.getUserType().toString().equals("MANAGER")) {
+				if (user.getSportsObject() == null)
+					freeManagers.add(user);
+			}
+		}
+		return freeManagers;
+	}
 	public void add(User user) {
 		users.add(user);
 	}
@@ -33,6 +44,15 @@ public class UserDAO {
 			mapper.writeValue(Paths.get(pathToFile).toFile(), users);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void setObjectToManager(String username, SportsObject sportObject) {
+		for (User user : users) {
+			if (username.equals(user.getUsername())) {
+				user.setSportsObject(sportObject);
+				save();
+			}
 		}
 	}
 	

@@ -16,7 +16,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import beans.SportsObject;
 import beans.User;
+import dao.SportsObjectsDAO;
 import dao.UserDAO;
 
 @Path("user")
@@ -44,6 +46,14 @@ public class UserService {
 		return dao.findAll();
 	}
 	
+	@GET
+	@Path("/freeManagers")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<User> freeManagers(){
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		return dao.findFreeManagers();
+	}
+	
 	@POST
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -52,6 +62,16 @@ public class UserService {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		dao.add(user);
 		dao.save();
+		return Response.status(200).build();
+	}
+	
+	@POST
+	@Path("/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response setObjectToManager(@PathParam("username") String username, SportsObject sportsObject) {
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		dao.setObjectToManager(username, sportsObject);
 		return Response.status(200).build();
 	}
 	

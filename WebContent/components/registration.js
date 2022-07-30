@@ -11,7 +11,9 @@ var registrationApp = new Vue({
 	      userType: "CUSTOMER",
 	      isManager: false,
 		  isCustomer: false,
-		  isAdmin: false
+		  isAdmin: false,
+		  objectName:"",
+		  sportObject:null
 	    }
 	},
 	template: ` 
@@ -78,6 +80,11 @@ var registrationApp = new Vue({
 			})
         axios.get('rest/sportsObject/')
           .then(response => {this.sportsObjects = response.data;this.allSportsObjects = response.data})
+		this.$root.$on('messageFromAddSportsObject',(text)=>{
+			this.objectName = text;
+		})
+		axios.get('rest/sportsObject/find/'+this.objectName)
+		.then(response => {this.sportObject = response.data;})
     },
 	methods: {
 		registration : function(){
@@ -98,6 +105,13 @@ var registrationApp = new Vue({
 			.catch( error => {
                 alert("Greska!");
             })
+
+			axios.post('rest/user/'+ this.username, {
+				name:this.sportObject.name,
+				type: this.sportObject.type,
+				location: this.sportObject.location,
+				logo: this.sportObject.logo
+			})
 		}
 	}
 });

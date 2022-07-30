@@ -9,6 +9,8 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.SportsObject;
+import beans.User;
+import enums.ObjectType;
 
 public class SportsObjectsDAO {
 	
@@ -24,6 +26,19 @@ public class SportsObjectsDAO {
 	
 	public List<SportsObject> findAll(){
 		return sportsObjects; 
+	}
+	
+	public void add(SportsObject sportObject) {
+		sportsObjects.add(sportObject);
+	}
+	
+	public void save() {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			mapper.writeValue(Paths.get(pathToFile).toFile(), sportsObjects);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public List<SportsObject> search(String input){
