@@ -9,6 +9,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Fee;
+import enums.Status;
 
 public class FeeDAO {
 	private List<Fee> fees;
@@ -19,7 +20,16 @@ public class FeeDAO {
 		load();
 	}
 	
+	public List<Fee> findAll(){
+		return fees; 
+	}
+	
 	public void add(Fee fee) {
+		for(Fee f : fees) {
+			if(f.getCustomer().equals(fee.getCustomer())) {
+				f.setStatus(Status.INACTIVE);
+			}
+		}
 		fees.add(fee);
 	}
 	

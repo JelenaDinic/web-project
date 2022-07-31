@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beans.SportsObject;
 import beans.User;
 import enums.UserType;
 
@@ -50,7 +51,7 @@ public class UserDAO {
 	public void setObjectToManager(String username, SportsObject sportObject) {
 		for (User user : users) {
 			if (username.equals(user.getUsername())) {
-				user.setSportsObject(sportObject);
+				user.setSportsObject(sportObject.getName());
 				save();
 			}
 		}
@@ -84,7 +85,8 @@ public class UserDAO {
 				u.setSurname(user.getSurname());
 				u.setDateOfBirth(user.getDateOfBirth());
 				u.setGender(user.getGender());
-				System.out.println(u.getUsername());
+				u.setFee(user.getFee());
+				u.setUserType(user.getUserType());
 				return u;
 			}
 		}
