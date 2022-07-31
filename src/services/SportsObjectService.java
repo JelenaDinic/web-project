@@ -51,6 +51,14 @@ public class SportsObjectService {
 		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
 		return dao.findAll();
 	}
+	@GET
+	@Path("/fee/generate-id")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int generateFeeId(){
+		FeeDAO dao = (FeeDAO) ctx.getAttribute("feeDAO");
+		return dao.findAll().size();
+	}
 	
 	@POST
 	@Path("/")

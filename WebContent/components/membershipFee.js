@@ -2,7 +2,8 @@ var membershipFeeApp = new Vue({
 	el:'#membershipFee',
 	data: function () {
 	    return {
-			customer : null
+			customer : null,
+			feeId: ""
 	    }
 	},
 	template: ` 
@@ -86,15 +87,33 @@ var membershipFeeApp = new Vue({
 		buy(type, price, entries){
 			var today = new Date();
 			var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-			axios.post('rest/sportsObject/fee', {
-				feeType: type,
-				paymentDate: date,
-				price: price,
-				status: "ACTIVE",
-				numberOfEntries: entries,
-				customer: this.customer.username
+			axios.get('rest/sportsObject/fee/generate-id')
+				.then(response => {
+					this.feeId = response.data;
+					axios.post('rest/sportsObject/fee', {
+						id: this.feeId,
+						feeType: type,
+						paymentDate: date,
+						price: price,
+						status: "ACTIVE",
+						numberOfEntries: entries,
+						customer: this.customer.username
 				
 		})
+					axios.put('rest/user/' + this.customer.username, {
+						fee: this.feeId,
+						username: this.customer.username,
+						password: this.customer.password,
+						name: this.customer.name,
+						surname: this.customer.surname,
+						gender: this.customer.gender,
+						dateOfBirth: this.customer.dateOfBirth,
+						userType: this.customer.userType
+		})
+				})
+			
+			
+			
 		}
 	}
 });

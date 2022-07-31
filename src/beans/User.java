@@ -1,7 +1,6 @@
 package beans;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import enums.Gender;
@@ -18,7 +17,7 @@ public class User implements Serializable {
 	private UserType userType;
 	private List<Training> trainingsHistory;
 	private String fee; //id clanarine
-	private String sportsObject;
+	private String sportsObject;//name sportskog objekta
 	private List<SportsObject> visitedSportsObjects;
 	private int points;
 	private CustomerType customerType;
