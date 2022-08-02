@@ -92,25 +92,18 @@ public class Training {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-
-
-
+  
 	public LocalDateTime getTime() {
 		return time;
 	}
-
-
 
 	public void setTime(LocalDateTime time) {
 		this.time = time;
 	}
 
-
-
 	public String getUser() {
 		return user;
 	}
-
 
 
 	public void setUser(String user) {

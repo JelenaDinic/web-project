@@ -156,7 +156,7 @@ var trainingHandlingApp = new Vue({
 				window.location.href = 'trainingHandling.html';
 			})
 			.catch( error => {
-                alert("Greska!");
+                alert("Greska prilikom dodavanja treninga!");
             })
 			} else {
 						axios.put('rest/training/' + this.oldName, {

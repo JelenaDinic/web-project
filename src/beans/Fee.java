@@ -10,7 +10,7 @@ public class Fee implements Serializable{
 	private String id;
 	private FeeType feeType;
 	private String paymentDate;
-	private LocalDateTime dateTimeOfValidity;
+	private String dateTimeOfValidity;
 	private int price;
 	private String customer;
 	private Status status;
@@ -22,7 +22,7 @@ public class Fee implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Fee(String id, FeeType feeType, String paymentDate, LocalDateTime dateTimeOfValidity, int price,
+	public Fee(String id, FeeType feeType, String paymentDate, String dateTimeOfValidity, int price,
 			String customer, Status status, int numberOfEntries, int usedEntries) {
 		super();
 		this.id = id;
@@ -59,11 +59,11 @@ public class Fee implements Serializable{
 		this.paymentDate = paymentDate;
 	}
 
-	public LocalDateTime getDateTimeOfValidity() {
+	public String getDateTimeOfValidity() {
 		return dateTimeOfValidity;
 	}
 
-	public void setDateTimeOfValidity(LocalDateTime dateTimeOfValidity) {
+	public void setDateTimeOfValidity(String dateTimeOfValidity) {
 		this.dateTimeOfValidity = dateTimeOfValidity;
 	}
 
