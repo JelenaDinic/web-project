@@ -2,14 +2,15 @@ var membershipFeeApp = new Vue({
 	el:'#membershipFee',
 	data: function () {
 	    return {
-			
+			customer : null,
+			feeId: ""
 	    }
 	},
 	template: ` 
     	<div class="all-purchase">
         <div class="fee">
             <div class="header">
-                <h3>CLASSIC S</h5>
+                <h3>CLASSIC S</h3>
                     <span>Ovaj paket obuhvata grupne treninge i teretanu. Ostali sadržaji se dodatno naplaćuje.</span>
             </div>
 
@@ -21,12 +22,12 @@ var membershipFeeApp = new Vue({
 				</div>
             </div>
 
-            <button class="buy-btn">KUPI</button>
+            <button @click="buy('WEEKLY', 700, 4)" class="buy-btn">KUPI</button>
         </div>
 
         <div class="fee">
             <div class="header">
-                <h3>CLASSIC M</h5>
+                <h3>CLASSIC M</h3>
                     <span>Paket uključuje teretanu i grupne treninge.</span>
             </div>
 
@@ -38,12 +39,12 @@ var membershipFeeApp = new Vue({
 				</div>
             </div>
 
-            <button class="buy-btn">KUPI</button>
+            <button @click="buy('MONTHLY', 2000, 12)" class="buy-btn">KUPI</button>
         </div>
 
         <div class="fee">
             <div class="header">
-                <h3>ADVANCED M</h5>
+                <h3>ADVANCED M</h3>
                     <span>Ovaj paket pruža upotrebu svog sadržaja teretane bez doplate.</span>
             </div>
 
@@ -55,12 +56,12 @@ var membershipFeeApp = new Vue({
 				</div>
             </div>
 
-            <button class="buy-btn">KUPI</button>
+            <button @click="buy('MONTHLY', 3500, 20)" class="buy-btn">KUPI</button>
         </div>
 
 		<div class="fee">
             <div class="header">
-                <h3>CLASSIC L</h5>
+                <h3>CLASSIC L</h3>
                     <span>Ovaj paket pruža upotrebu svog sadržaja teretane bez doplate.</span>
             </div>
 
@@ -72,13 +73,47 @@ var membershipFeeApp = new Vue({
 				</div>
             </div>
 
-            <button class="buy-btn">KUPI</button>
+            <button @click="buy('ANNUALY', 25000, 200)" class="buy-btn">KUPI</button>
         </div>
     </div>		  
     	`,
     mounted () {
+		axios.get('rest/sportsObject/isLoggedIn')
+			.then(response => {
+					this.customer = response.data;			
+			})
     },
 	methods: {
-		
+		buy(type, price, entries){
+			var today = new Date();
+			var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+			axios.get('rest/sportsObject/fee/generate-id')
+				.then(response => {
+					this.feeId = response.data;
+					axios.post('rest/sportsObject/fee', {
+						id: this.feeId,
+						feeType: type,
+						paymentDate: date,
+						price: price,
+						status: "ACTIVE",
+						numberOfEntries: entries,
+						customer: this.customer.username
+				
+		})
+					axios.put('rest/user/' + this.customer.username, {
+						fee: this.feeId,
+						username: this.customer.username,
+						password: this.customer.password,
+						name: this.customer.name,
+						surname: this.customer.surname,
+						gender: this.customer.gender,
+						dateOfBirth: this.customer.dateOfBirth,
+						userType: this.customer.userType
+		})
+				})
+			
+			
+			
+		}
 	}
 });

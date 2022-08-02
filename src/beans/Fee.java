@@ -9,9 +9,9 @@ import enums.Status;
 public class Fee implements Serializable{
 	private String id;
 	private FeeType feeType;
-	private LocalDateTime paymentDate;
+	private String paymentDate;
 	private LocalDateTime dateTimeOfValidity;
-	private double price;
+	private int price;
 	private String customer;
 	private Status status;
 	private int numberOfEntries;
@@ -22,7 +22,7 @@ public class Fee implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Fee(String id, FeeType feeType, LocalDateTime paymentDate, LocalDateTime dateTimeOfValidity, double price,
+	public Fee(String id, FeeType feeType, String paymentDate, LocalDateTime dateTimeOfValidity, int price,
 			String customer, Status status, int numberOfEntries, int usedEntries) {
 		super();
 		this.id = id;
@@ -51,11 +51,11 @@ public class Fee implements Serializable{
 		this.feeType = feeType;
 	}
 
-	public LocalDateTime getPaymentDate() {
+	public String getPaymentDate() {
 		return paymentDate;
 	}
 
-	public void setPaymentDate(LocalDateTime paymentDate) {
+	public void setPaymentDate(String paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 
@@ -67,11 +67,11 @@ public class Fee implements Serializable{
 		this.dateTimeOfValidity = dateTimeOfValidity;
 	}
 
-	public double getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 

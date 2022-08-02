@@ -64,7 +64,7 @@ public class UserDAO {
 	/*public void setObjectToManager(String username, SportsObject sportObject) {
 		for (User user : users) {
 			if (username.equals(user.getUsername())) {
-				user.setSportsObject(sportObject);
+				user.setSportsObject(sportObject.getName());
 				save();
 			}
 		}
@@ -98,7 +98,8 @@ public class UserDAO {
 				u.setSurname(user.getSurname());
 				u.setDateOfBirth(user.getDateOfBirth());
 				u.setGender(user.getGender());
-				System.out.println(u.getUsername());
+				u.setFee(user.getFee());
+				u.setUserType(user.getUserType());
 				return u;
 			}
 		}
