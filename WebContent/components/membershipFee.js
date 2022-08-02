@@ -87,6 +87,17 @@ var membershipFeeApp = new Vue({
 		buy(type, price, entries){
 			var today = new Date();
 			var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+			if (type === "MONTHLY"){
+				today.setMonth(today.getMonth() + 1)
+				var dateTimeOfValidity =  today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+			} else if(type === "ANNUALY") {
+				today.setYear(today.getFullYear() + 1)
+				var dateTimeOfValidity =  today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+			} else {
+				today.setDate(today.getDate() + 7)
+				var dateTimeOfValidity =  today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+			}
+				
 			axios.get('rest/sportsObject/fee/generate-id')
 				.then(response => {
 					this.feeId = response.data;
@@ -94,6 +105,7 @@ var membershipFeeApp = new Vue({
 						id: this.feeId,
 						feeType: type,
 						paymentDate: date,
+						dateTimeOfValidity: dateTimeOfValidity,
 						price: price,
 						status: "ACTIVE",
 						numberOfEntries: entries,
