@@ -1,5 +1,7 @@
 package beans;
 
+import java.time.LocalDateTime;
+
 import enums.TrainingType;
 
 public class Training {
@@ -7,17 +9,20 @@ public class Training {
 	private TrainingType type;
 	private String sportsObject;
 	private int duration;
-	private String coach;
+	private String coach; //username
 	private String description;
 	private String photo;
-	private boolean deleted;
+	private LocalDateTime time;
+	private String user; //username
 	
 	public Training() {
 		super();
 	}
 
-	public Training(String name, TrainingType type, String sportsObject, int duration, String coach,
-			String description, String photo, boolean deleted) {
+
+
+	public Training(String name, TrainingType type, String sportsObject, int duration, String coach, String description,
+			String photo, LocalDateTime time, String user) {
 		super();
 		this.name = name;
 		this.type = type;
@@ -26,8 +31,11 @@ public class Training {
 		this.coach = coach;
 		this.description = description;
 		this.photo = photo;
-		this.deleted = deleted;
+		this.time = time;
+		this.user = user;
 	}
+
+
 
 	public String getName() {
 		return name;
@@ -84,13 +92,22 @@ public class Training {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-
-	public boolean isDeleted() {
-		return deleted;
+  
+	public LocalDateTime getTime() {
+		return time;
 	}
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	public void setTime(LocalDateTime time) {
+		this.time = time;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+
+	public void setUser(String user) {
+		this.user = user;
 	}
 	
 }

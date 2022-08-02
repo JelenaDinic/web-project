@@ -12,17 +12,32 @@ import beans.Training;
 
 public class TrainingDAO {
 	private List<Training> trainings;
-	public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\trainings.json";
+	public String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\trainings.json";
+	//public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\trainings.json";
 	
 	public TrainingDAO() {
 		trainings = new ArrayList<Training>();
-		load();
-		
+		load();	
 	}
 	
 	public List<Training> findAll(){
 		return trainings; 
 	}
+	
+	public List<Training> findForCoach(String coach){
+		 List<Training> trainingsForCoach = new ArrayList<Training>();
+		 System.out.println(coach);
+		 System.out.println(trainings.size());
+		 for(Training t : trainings) {
+			System.out.println(t.getCoach());
+			System.out.println(coach);
+			if (t.getCoach().equals(coach)) {
+				trainingsForCoach.add(t);
+			}
+		 }
+		return trainingsForCoach;
+	}
+	
 	public void add(Training training) {
 		trainings.add(training);
 	}

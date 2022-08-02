@@ -96,7 +96,7 @@ var trainingHandlingApp = new Vue({
 		axios.get('rest/training/')
           .then(response => 
 				{this.trainings = response.data;
-				axios.get('rest/sportsObject/isLoggedIn')
+		axios.get('rest/sportsObject/isLoggedIn')
 			.then(response => {
 				this.isLoggedIn =  response.data ? response.data : null;
 				this.sportsObject = this.isLoggedIn.sportsObject;
@@ -107,10 +107,14 @@ var trainingHandlingApp = new Vue({
 								this.trainingsManager.push(element);
 							}
 						});
+					}
+					else if(this.isLoggedIn.userType === "COACH"){
+						axios.get('rest/training/'+ this.isLoggedIn.username)
+						.then(response => {this.trainingsManager = response.data})
+					}
 				}
-			}
-	})
-				})
+			})
+		})
 		
 },
 	methods: {
