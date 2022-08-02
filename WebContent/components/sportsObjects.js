@@ -16,7 +16,8 @@ var sportsObjectsApp = new Vue({
 		  isLoggedIn: null,
 		  isManager: false,
 		  isCustomer: false,
-		  isAdmin: false
+		  isAdmin: false,
+		  isCoach: false
 	    }
 	},
 	template: ` 
@@ -57,6 +58,9 @@ var sportsObjectsApp = new Vue({
                     </li>
                     <li v-if="isAdmin === true">
                         <a href="registration.html">Kreiraj menadzera/trenera</a>
+                    </li>
+                    <li v-if="isCoach === true">
+                        <a href="trainingHandling.html">Pregled svih treninga</a>
                     </li>
                 </ul>
             </div>
@@ -116,6 +120,8 @@ var sportsObjectsApp = new Vue({
 						this.isCustomer = true;
 					if(this.isLoggedIn.userType === "ADMIN")
 						this.isAdmin = true;
+					if(this.isLoggedIn.userType === "COACH")
+						this.isCoach = true;
 				}
 			})
         axios.get('rest/sportsObject/')

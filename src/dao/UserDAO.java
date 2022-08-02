@@ -7,13 +7,14 @@ import java.util.Arrays;
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beans.SportsObject;
 import beans.User;
 import enums.UserType;
 
 public class UserDAO {
 	private List<User> users;
-	private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\users.json";
-	//private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\users.json";
+	//private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\users.json";
+	private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\users.json";
 	
 	public UserDAO() {
 		users = new ArrayList<User>();
@@ -38,6 +39,19 @@ public class UserDAO {
 		users.add(user);
 	}
 	
+	public List<User> search(String input){
+		List<User> foundUsers = new ArrayList<User>();
+		for (User u : users) {
+			if (u.getName().contains(input))
+				foundUsers.add(u);
+			else if(u.getSurname().toString().contains(input))
+				foundUsers.add(u);
+			else if(u.getUsername().toString().contains(input))
+				foundUsers.add(u);			
+		}
+		return foundUsers;
+	}
+	
 	public void save() {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -47,14 +61,14 @@ public class UserDAO {
 		}
 	}
 	
-	public void setObjectToManager(String username, SportsObject sportObject) {
+	/*public void setObjectToManager(String username, SportsObject sportObject) {
 		for (User user : users) {
 			if (username.equals(user.getUsername())) {
 				user.setSportsObject(sportObject);
 				save();
 			}
 		}
-	}
+	}*/
 	
 	private void loadUsers() {
 		ObjectMapper mapper = new ObjectMapper();

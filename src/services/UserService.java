@@ -54,6 +54,15 @@ public class UserService {
 		return dao.findFreeManagers();
 	}
 	
+	@GET
+	@Path("/{input}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Collection<User> searchUsers(@PathParam("input") String input){
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		return dao.search(input);
+	}
+	
 	@POST
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -65,7 +74,7 @@ public class UserService {
 		return Response.status(200).build();
 	}
 	
-	@POST
+	/*@POST
 	@Path("/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -73,7 +82,7 @@ public class UserService {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		dao.setObjectToManager(username, sportsObject);
 		return Response.status(200).build();
-	}
+	}*/
 	
 	@POST
 	@Path("/login")
