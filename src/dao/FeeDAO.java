@@ -9,6 +9,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Fee;
+import beans.User;
 import enums.Status;
 
 public class FeeDAO {
@@ -31,6 +32,14 @@ public class FeeDAO {
 			}
 		}
 		fees.add(fee);
+	}
+	public int calculatePoints(String username) {
+		for(Fee f: fees) {
+			if(f.getCustomer().equals(username) && f.getStatus().equals(Status.ACTIVE)) {
+				return (int) Math.round(f.getPrice()/1000 * f.getUsedEntries());
+			}
+		}
+		return 0;
 	}
 	
 	private void load() {

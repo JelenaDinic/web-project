@@ -13,8 +13,8 @@ import enums.UserType;
 
 public class UserDAO {
 	private List<User> users;
-	//private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\users.json";
-	private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\users.json";
+	private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\users.json";
+	//private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\users.json";
 	
 	public UserDAO() {
 		users = new ArrayList<User>();
@@ -100,6 +100,7 @@ public class UserDAO {
 				u.setGender(user.getGender());
 				u.setFee(user.getFee());
 				u.setUserType(user.getUserType());
+				u.setPoints(user.getPoints());
 				return u;
 			}
 		}

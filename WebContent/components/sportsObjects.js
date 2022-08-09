@@ -12,12 +12,12 @@ var sportsObjectsApp = new Vue({
 		  filter3: false,
 		  filter4: false,
 		  filter5: false,
-		  tableRow: null,
 		  isLoggedIn: null,
 		  isManager: false,
 		  isCustomer: false,
 		  isAdmin: false,
-		  isCoach: false
+		  isCoach: false,
+		  points: 0
 	    }
 	},
 	template: ` 
@@ -116,8 +116,26 @@ var sportsObjectsApp = new Vue({
 				if(this.isLoggedIn != null) {
 					if(this.isLoggedIn.userType === "MANAGER")
 						this.isManager = true;
-					if(this.isLoggedIn.userType === "CUSTOMER")
+					if(this.isLoggedIn.userType === "CUSTOMER") {
 						this.isCustomer = true;
+						axios.get('rest/sportsObject/fee/' + this.isLoggedIn.username)
+							.then(response => {	
+							this.points = response.data;
+							console.log("POENI: " + this.points)
+							axios.put('rest/user/' + this.isLoggedIn.username, {
+								fee: this.isLoggedIn.fee,
+								username: this.isLoggedIn.username,
+								password: this.isLoggedIn.password,
+								name: this.isLoggedIn.name,
+								surname: this.isLoggedIn.surname,
+								gender: this.isLoggedIn.gender,
+								dateOfBirth: this.isLoggedIn.dateOfBirth,
+								userType: this.isLoggedIn.userType,
+								points: this.points
+						});
+							})
+						
+					}
 					if(this.isLoggedIn.userType === "ADMIN")
 						this.isAdmin = true;
 					if(this.isLoggedIn.userType === "COACH")

@@ -9,11 +9,11 @@ public class Training {
 	private TrainingType type;
 	private String sportsObject;
 	private int duration;
-	private String coach; //username
+	private String coach;
 	private String description;
 	private String photo;
 	private LocalDateTime time;
-	private String user; //username
+	private String user;
 	
 	public Training() {
 		super();
