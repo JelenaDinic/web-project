@@ -70,6 +70,7 @@ var accountApp = new Vue({
 					this.password = user.password;
 					this.name = user.name;
 					this.surname = user.surname;
+					this.points = user.points;
 					if(user.gender === "MALE")
 						this.isMale = true
 					else
