@@ -2,6 +2,7 @@ package dao;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +41,20 @@ public class FeeDAO {
 			}
 		}
 		return 0;
+	}
+	public boolean feeValidity(String id) {
+		for(Fee f : fees) {
+			if(f.getId().equals(id)) {
+				LocalDate date = LocalDate.parse(f.getDateTimeOfValidity());
+				LocalDate now = LocalDate.now();
+				int compareValue = now.compareTo(date);
+				if(compareValue > 0) {
+					return false;
+				}
+				//String[] parts = f.getDateTimeOfValidity().split("-");
+			}
+		}
+		return true;
 	}
 	
 	private void load() {

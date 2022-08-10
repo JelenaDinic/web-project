@@ -118,22 +118,29 @@ var sportsObjectsApp = new Vue({
 						this.isManager = true;
 					if(this.isLoggedIn.userType === "CUSTOMER") {
 						this.isCustomer = true;
-						axios.get('rest/sportsObject/fee/' + this.isLoggedIn.username)
-							.then(response => {	
-							this.points = response.data;
-							console.log("POENI: " + this.points)
-							axios.put('rest/user/' + this.isLoggedIn.username, {
-								fee: this.isLoggedIn.fee,
-								username: this.isLoggedIn.username,
-								password: this.isLoggedIn.password,
-								name: this.isLoggedIn.name,
-								surname: this.isLoggedIn.surname,
-								gender: this.isLoggedIn.gender,
-								dateOfBirth: this.isLoggedIn.dateOfBirth,
-								userType: this.isLoggedIn.userType,
-								points: this.points
+						axios.get('rest/sportsObject/fee-validity/' + this.isLoggedIn.fee)
+							.then(response => 
+							{ 	console.log("DATUM VAZENJA: " + response.data)
+								if(!response.date) {
+								axios.get('rest/sportsObject/fee/' + this.isLoggedIn.username)
+									.then(response => {	
+									this.points = response.data;
+									axios.put('rest/user/' + this.isLoggedIn.username, {
+										fee: this.isLoggedIn.fee,
+										username: this.isLoggedIn.username,
+										password: this.isLoggedIn.password,
+										name: this.isLoggedIn.name,
+										surname: this.isLoggedIn.surname,
+										gender: this.isLoggedIn.gender,
+										dateOfBirth: this.isLoggedIn.dateOfBirth,
+										userType: this.isLoggedIn.userType,
+										points: this.points
 						});
 							})
+							}
+								
+							})
+						
 						
 					}
 					if(this.isLoggedIn.userType === "ADMIN")
