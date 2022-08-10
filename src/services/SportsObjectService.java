@@ -131,11 +131,19 @@ public class SportsObjectService {
 		return Response.status(200).build();
 	}
 	@GET
+	@Path("/fee-validity/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public boolean feeValidity(@PathParam("id") String id) {
+		FeeDAO dao = (FeeDAO) ctx.getAttribute("feeDAO");
+		return dao.feeValidity(id);
+	}
+	@GET
 	@Path("/fee/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public int calculatePoints(@PathParam("username") String username) {
-		FeeDAO daoF = (FeeDAO) ctx.getAttribute("feeDAO");
-		return daoF.calculatePoints(username);
+		FeeDAO dao = (FeeDAO) ctx.getAttribute("feeDAO");
+		return dao.calculatePoints(username);
 	}
 }
