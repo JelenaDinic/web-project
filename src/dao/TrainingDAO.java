@@ -26,11 +26,7 @@ public class TrainingDAO {
 	
 	public List<Training> findForCoach(String coach){
 		 List<Training> trainingsForCoach = new ArrayList<Training>();
-		 System.out.println(coach);
-		 System.out.println(trainings.size());
 		 for(Training t : trainings) {
-			System.out.println(t.getCoach());
-			System.out.println(coach);
 			if (t.getCoach().equals(coach)) {
 				trainingsForCoach.add(t);
 			}

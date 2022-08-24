@@ -16,19 +16,20 @@ public class User implements Serializable {
 	private String dateOfBirth;
 	private UserType userType;
 	private List<Training> trainingsHistory;
-	private String fee;
-	private String sportsObject;
-	private List<SportsObject> visitedSportsObjects;
+	private String fee; //id clanarine
+	private String sportsObject;//name sportskog objekta
+	private List<String> visitedSportsObjects;
+
 	private int points;
 	private CustomerType customerType;
 	
 	public User() {
 		super();
 	}
-
+	
 	public User(String username, String password, String name, String surname, Gender gender, String dateOfBirth,
 			UserType userType, List<Training> trainingsHistory, String fee, String sportsObject,
-			List<SportsObject> visitedSportsObjects, int points, CustomerType customerType) {
+			List<String> visitedSportsObjects, int points, CustomerType customerType) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -44,9 +45,6 @@ public class User implements Serializable {
 		this.points = points;
 		this.customerType = customerType;
 	}
-	
-
-
 
 	public String getUsername() {
 		return username;
@@ -168,18 +166,6 @@ public class User implements Serializable {
 
 
 
-	public List<SportsObject> getVisitedSportsObjects() {
-		return visitedSportsObjects;
-	}
-
-
-
-	public void setVisitedSportsObjects(List<SportsObject> visitedSportsObjects) {
-		this.visitedSportsObjects = visitedSportsObjects;
-	}
-
-
-
 	public int getPoints() {
 		return points;
 	}
@@ -202,7 +188,13 @@ public class User implements Serializable {
 		this.customerType = customerType;
 	}
 
+	public List<String> getVisitedSportsObjects() {
+		return visitedSportsObjects;
+	}
 
+	public void setVisitedSportsObjects(List<String> visitedSportsObjects) {
+		this.visitedSportsObjects = visitedSportsObjects;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
