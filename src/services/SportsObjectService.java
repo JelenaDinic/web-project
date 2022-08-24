@@ -41,6 +41,9 @@ public class SportsObjectService {
 		if (ctx.getAttribute("feeDAO") == null) {
 			ctx.setAttribute("feeDAO", new FeeDAO());
 		}
+		if (ctx.getAttribute("userDAO") == null) {
+			ctx.setAttribute("userDAO", new UserDAO());
+		}
 	}
 	
 	@GET
@@ -126,5 +129,21 @@ public class SportsObjectService {
 		dao.add(fee);
 		dao.save();
 		return Response.status(200).build();
+	}
+	@GET
+	@Path("/fee-validity/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public boolean feeValidity(@PathParam("id") String id) {
+		FeeDAO dao = (FeeDAO) ctx.getAttribute("feeDAO");
+		return dao.feeValidity(id);
+	}
+	@GET
+	@Path("/fee/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int calculatePoints(@PathParam("username") String username) {
+		FeeDAO dao = (FeeDAO) ctx.getAttribute("feeDAO");
+		return dao.calculatePoints(username);
 	}
 }

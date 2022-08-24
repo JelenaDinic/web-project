@@ -2,6 +2,7 @@ package dao;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Fee;
+import beans.User;
 import enums.Status;
 
 public class FeeDAO {
@@ -31,6 +33,28 @@ public class FeeDAO {
 			}
 		}
 		fees.add(fee);
+	}
+	public int calculatePoints(String username) {
+		for(Fee f: fees) {
+			if(f.getCustomer().equals(username) && f.getStatus().equals(Status.ACTIVE)) {
+				return (int) Math.round(f.getPrice()/1000 * f.getUsedEntries());
+			}
+		}
+		return 0;
+	}
+	public boolean feeValidity(String id) {
+		for(Fee f : fees) {
+			if(f.getId().equals(id)) {
+				LocalDate date = LocalDate.parse(f.getDateTimeOfValidity());
+				LocalDate now = LocalDate.now();
+				int compareValue = now.compareTo(date);
+				if(compareValue > 0) {
+					return false;
+				}
+				//String[] parts = f.getDateTimeOfValidity().split("-");
+			}
+		}
+		return true;
 	}
 	
 	private void load() {

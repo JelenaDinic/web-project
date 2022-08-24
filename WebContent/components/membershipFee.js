@@ -84,18 +84,30 @@ var membershipFeeApp = new Vue({
 			})
     },
 	methods: {
+		dateFormatter(today){
+			if(today.getMonth()+1 < 10 && today.getDate() < 10)
+					return today.getFullYear()+'-0'+(today.getMonth()+1)+'-0'+today.getDate();
+				else if(today.getMonth()+1 < 10 && today.getDate() > 9)
+					return today.getFullYear()+'-0'+(today.getMonth()+1)+'-'+today.getDate();
+				else if(today.getMonth()+1 > 9 && today.getDate() > 9)
+					return today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+				else
+					return today.getFullYear()+'-'+(today.getMonth()+1)+'-0'+today.getDate();
+					
+		},
 		buy(type, price, entries){
 			var today = new Date();
 			var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 			if (type === "MONTHLY"){
 				today.setMonth(today.getMonth() + 1)
-				var dateTimeOfValidity =  today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+				var dateTimeOfValidity = this.dateFormatter(today);
+				
 			} else if(type === "ANNUALY") {
 				today.setYear(today.getFullYear() + 1)
-				var dateTimeOfValidity =  today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+				var dateTimeOfValidity = this.dateFormatter(today);
 			} else {
 				today.setDate(today.getDate() + 7)
-				var dateTimeOfValidity =  today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+				var dateTimeOfValidity = this.dateFormatter(today);
 			}
 				
 			axios.get('rest/sportsObject/fee/generate-id')
