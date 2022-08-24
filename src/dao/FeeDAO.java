@@ -37,7 +37,13 @@ public class FeeDAO {
 	public int calculatePoints(String username) {
 		for(Fee f: fees) {
 			if(f.getCustomer().equals(username) && f.getStatus().equals(Status.ACTIVE)) {
-				return (int) Math.round(f.getPrice()/1000 * f.getUsedEntries());
+				if(f.getNumberOfEntries()/3 > f.getUsedEntries()) {
+					return (int) Math.round(((double)f.getPrice())/1000 * ((double)f.getUsedEntries())) - (int) Math.round(((double)f.getPrice())/1000 * 133 * 4);
+				}
+				else {
+					return (int) Math.round(((double)f.getPrice())/1000 * ((double)f.getUsedEntries()));
+				}
+					
 			}
 		}
 		return 0;
