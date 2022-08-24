@@ -1,3 +1,3 @@
-[{"name":"Pilates","type":"GROUP","sportsObject":"MissFit","duration":60,"coach":"trener123","description":"","photo":"Slika9","time":null,"user":""},
-{"name":"Cardio","type":"PERSONAL","sportsObject":"MissFit","duration":40,"coach":"trener123","description":"ecwdcwec","photo":"slika1","time":null,"user":""},
-{"name":"Aerobik","type":"PERSONAL","sportsObject":"MissFit","duration":35,"coach":"trener123","description":"","photo":"slika2","time":null,"user":""}]
+[{"name":"Pilates","type":"GROUP","sportsObject":"MissFit","duration":60,"coach":"trener123","description":"","photo":"Slika9","time":null},
+{"name":"Cardio","type":"PERSONAL","sportsObject":"MissFit","duration":40,"coach":"trener123","description":"ecwdcwec","photo":"slika1","time":null},
+{"name":"Aerobik","type":"PERSONAL","sportsObject":"MissFit","duration":35,"coach":"trener123","description":"","photo":"slika2","time":null}]

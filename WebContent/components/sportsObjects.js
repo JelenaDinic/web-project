@@ -59,6 +59,9 @@ var sportsObjectsApp = new Vue({
                     <li v-if="isAdmin === true">
                         <a href="registration.html">Kreiraj menadzera/trenera</a>
                     </li>
+					<li v-if="isAdmin === true">
+					<a href="comments.html">Komentari</a>
+					</li>
                     <li v-if="isCoach === true">
                         <a href="trainingHandling.html">Pregled svih treninga</a>
                     </li>

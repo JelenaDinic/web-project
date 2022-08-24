@@ -21,6 +21,7 @@ var trainingHandlingApp = new Vue({
 	template: ` 
     	<div>
 			<div>
+			
 				<table border="1">
 		    		<tr bgcolor="lightgrey">
 		    			<th>Naziv</th>

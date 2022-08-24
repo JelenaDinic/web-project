@@ -13,7 +13,6 @@ public class Training {
 	private String description;
 	private String photo;
 	private LocalDateTime time;
-	private String user; //username
 	
 	public Training() {
 		super();
@@ -22,7 +21,7 @@ public class Training {
 
 
 	public Training(String name, TrainingType type, String sportsObject, int duration, String coach, String description,
-			String photo, LocalDateTime time, String user) {
+			String photo, LocalDateTime time) {
 		super();
 		this.name = name;
 		this.type = type;
@@ -32,7 +31,6 @@ public class Training {
 		this.description = description;
 		this.photo = photo;
 		this.time = time;
-		this.user = user;
 	}
 
 
@@ -99,15 +97,6 @@ public class Training {
 
 	public void setTime(LocalDateTime time) {
 		this.time = time;
-	}
-
-	public String getUser() {
-		return user;
-	}
-
-
-	public void setUser(String user) {
-		this.user = user;
 	}
 	
 }

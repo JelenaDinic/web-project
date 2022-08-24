@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class TrainingHistory {
 	private LocalDateTime joinDate;
-	private Training training;
-	private CustomerType customer;
-	private User coach;
+	private String training;
+	private String user;
+	private String coach;
 }

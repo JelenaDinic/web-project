@@ -47,7 +47,6 @@ public class TrainingService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Training> getTrainingsForCoach(@PathParam("coach") String coach){
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
-		System.out.println(coach);
 		return dao.findForCoach(coach);
 	}
 	
