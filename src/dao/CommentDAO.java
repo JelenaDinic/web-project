@@ -31,7 +31,13 @@ public class CommentDAO {
 	}
 	
 	public List<Comment> findAll(){
-		return comments; 
+		List<Comment> foundComments = new ArrayList<Comment>();
+		for (Comment comment : comments) {
+			if (comment.isDeleted() == false) {
+				foundComments.add(comment);
+			}
+		}
+		return foundComments; 
 	}
 	
 	public List<Comment> findApproved(String name){
@@ -50,6 +56,14 @@ public class CommentDAO {
 		for (Comment comment : comments) {
 			if (comment.getId() == id) {
 				comment.setApproved(true);
+			}
+		}
+	}
+	
+	public void delete(int id){ 
+		for (Comment comment : comments) {
+			if (comment.getId() == id) {
+				comment.setDeleted(true);
 			}
 		}
 	}

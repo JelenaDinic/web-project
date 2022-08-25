@@ -9,13 +9,15 @@ public class Comment implements Serializable{
 	private String text;
 	private int mark;
 	private boolean approved;
+	private boolean deleted;
 	
 	public Comment() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Comment(int id, String customer, String sportsObject, String text, int mark, boolean approved) {
+
+	public Comment(int id, String customer, String sportsObject, String text, int mark, boolean approved,
+			boolean deleted) {
 		super();
 		this.id = id;
 		this.customer = customer;
@@ -23,6 +25,7 @@ public class Comment implements Serializable{
 		this.text = text;
 		this.mark = mark;
 		this.approved = approved;
+		this.deleted = deleted;
 	}
 
 	public int getId() {
@@ -73,6 +76,14 @@ public class Comment implements Serializable{
 
 	public void setApproved(boolean approved) {
 		this.approved = approved;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 	
 }

@@ -74,6 +74,16 @@ public class CommentService {
 		dao.save();
 	}
 	
+	@GET
+	@Path("/delete/{input}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deleteComment(@PathParam("input") int input){
+		CommentDAO dao = (CommentDAO) ctx.getAttribute("commentDAO");
+		dao.delete(input);
+		dao.save();
+	}
+	
 	@POST
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
