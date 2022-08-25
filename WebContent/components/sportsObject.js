@@ -47,7 +47,6 @@ var sportObjectsApp = new Vue({
     mounted () {
 		axios.get('rest/sportsObject/object')
 			.then((response) => {
-				console.log("ispis", response.data)
 				this.object = response.data
     		}, error => {
 				console.log(error) 
