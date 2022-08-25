@@ -21,7 +21,7 @@ var membershipFeeApp = new Vue({
                 <span>4 ulaska</span>
 				</div>
             </div>
-
+			
             <button @click="buy('WEEKLY', 700, 4)" class="buy-btn">KUPI</button>
         </div>
 
