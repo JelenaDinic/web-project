@@ -15,8 +15,8 @@ import enums.Status;
 
 public class FeeDAO {
 	private List<Fee> fees;
-	//private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\fees.json";
-	private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\fees.json";
+	private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\fees.json";
+	//private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\fees.json";
 	
 	public FeeDAO(){
 		fees = new ArrayList<Fee>();
@@ -56,9 +56,8 @@ public class FeeDAO {
 				LocalDate now = LocalDate.now();
 				int compareValue = now.compareTo(date);
 				if(compareValue > 0) {
-					return false;
+					return false; //date je prije sadasnjeg trenutka
 				}
-				//String[] parts = f.getDateTimeOfValidity().split("-");
 			}
 		}
 		return true;
