@@ -2,6 +2,7 @@ package dao;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.PromoCode;
+import beans.SportsObject;
 
 public class PromoCodeDAO {
 	private List<PromoCode> promoCodes;
@@ -17,12 +19,26 @@ public class PromoCodeDAO {
 	
 	public PromoCodeDAO() {
 		promoCodes = new ArrayList<PromoCode>();
-		//load();	
+		load();	
 	}
 
 	
 	public void add(PromoCode promoCode) {
 		promoCodes.add(promoCode);
+	}
+	
+	public int findByCode(String code) {
+
+		for (PromoCode promoCode : promoCodes) {
+			if(promoCode.getCode().equals(code)) {
+				LocalDate date = LocalDate.parse(promoCode.getExpirationDate());
+				LocalDate now = LocalDate.now();
+				int compareValue = date.compareTo(now);
+				if(promoCode.getUsesLeft() > 0 && compareValue > 0)
+				return promoCode.getDiscount();
+			}
+		}
+		return 0;
 	}
 
 	public void save() {

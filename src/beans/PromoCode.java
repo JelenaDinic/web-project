@@ -4,13 +4,13 @@ public class PromoCode {
 	private String code;
 	private String expirationDate;
 	private int usesLeft;
-	private double discount;
+	private int discount;
 	
 	public PromoCode() {
 		super();
 	}
 
-	public PromoCode(String code, String expirationDate, int usesLeft, double discount) {
+	public PromoCode(String code, String expirationDate, int usesLeft, int discount) {
 		super();
 		this.code = code;
 		this.expirationDate = expirationDate;
@@ -42,11 +42,11 @@ public class PromoCode {
 		this.usesLeft = usesLeft;
 	}
 
-	public double getDiscount() {
+	public int getDiscount() {
 		return discount;
 	}
 
-	public void setDiscount(double discount) {
+	public void setDiscount(int discount) {
 		this.discount = discount;
 	}
 	
