@@ -11,7 +11,7 @@ var loginApp = new Vue({
 			<table>
 				<tr><td>Username</td><td><input type="text" id = "username" v-model = "username"></td></tr>
 				<tr><td>Password</td><td><input type="password" id = "password" v-model = "password"></td></tr>
-				<tr><td><button v-on:click = "login">ULOGUJ SE</button></td></tr>
+				<tr><td><button class="buy-btn" v-on:click = "login">ULOGUJ SE</button></td></tr>
 			</table>
     	</div>		  
     	`,

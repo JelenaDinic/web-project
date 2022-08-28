@@ -27,6 +27,7 @@ var sportObjectsApp = new Vue({
 			<label>{{object?.logo}}</label><br>
 			<label>Prosecna ocena: </label>
 			<label>{{object?.averageGrade}}</label><br>
+			<button class="buy-btn" v-on:click = "join" >PRIDRUŽI SE</button><br>
 			<label>Komentari: </label>
 			<table border="1">
 			<tr bgcolor="lightgrey">
@@ -76,6 +77,9 @@ var sportObjectsApp = new Vue({
 		})
 	},
 	methods: {
+		join: function() {
+			
+		},
 		comment : function(){
 			let id  = 0;
 			axios.get('rest/comment/generate-id')
