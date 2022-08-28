@@ -13,7 +13,6 @@ public class Training {
 	private String description;
 	private String photo;
 	private LocalDateTime time;
-	private String user;
 	
 	public Training() {
 		super();

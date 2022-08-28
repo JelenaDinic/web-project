@@ -60,7 +60,7 @@ var registrationApp = new Vue({
 					</td>
 				</tr>
 				<tr>
-					<td><button type="submit" v-on:click = "registration">REGISTRUJ SE</button></td>
+					<td><button class="buy-btn" type="submit" v-on:click = "registration">REGISTRUJ SE</button></td>
 				</tr>
 			</table>
     	</div>		  
