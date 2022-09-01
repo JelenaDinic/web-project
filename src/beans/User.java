@@ -16,10 +16,9 @@ public class User implements Serializable {
 	private String dateOfBirth;
 	private UserType userType;
 	private List<Training> trainingsHistory;
-	private String fee; //id clanarine
-	private String sportsObject;//name sportskog objekta
+	private String fee;
+	private String sportsObject;
 	private List<String> visitedSportsObjects;
-
 	private int points;
 	private CustomerType customerType;
 	

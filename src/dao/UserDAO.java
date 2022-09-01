@@ -61,15 +61,6 @@ public class UserDAO {
 		}
 	}
 	
-	/*public void setObjectToManager(String username, SportsObject sportObject) {
-		for (User user : users) {
-			if (username.equals(user.getUsername())) {
-				user.setSportsObject(sportObject.getName());
-				save();
-			}
-		}
-	}*/
-	
 	private void loadUsers() {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -101,6 +92,7 @@ public class UserDAO {
 				u.setFee(user.getFee());
 				u.setUserType(user.getUserType());
 				u.setPoints(user.getPoints());
+				u.setVisitedSportsObjects(user.getVisitedSportsObjects());
 				return u;
 			}
 		}
