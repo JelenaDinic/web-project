@@ -50,6 +50,14 @@ public class TrainingService {
 		return dao.findForCoach(coach);
 	}
 	
+	@GET
+	@Path("/validate/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean validateDate(@PathParam("id") int id){
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
+		return dao.validateDate(id);
+	}
+	
 	@POST
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)

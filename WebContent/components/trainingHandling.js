@@ -4,9 +4,11 @@ var trainingHandlingApp = new Vue({
 	    return {
 			trainings: [],
 			isLoggedIn: null,
+			isCoach: false,
 			trainingsManager: [],
 			addPressed: false,
 			updatePressed: false,
+			validDate:false,
 			oldName: "",
 			name: "",
 			photo: "",
@@ -22,7 +24,7 @@ var trainingHandlingApp = new Vue({
     	<div>
 			<div>
 			
-				<table border="1">
+				<table v-if = "isCoach === false" border="1">
 		    		<tr bgcolor="lightgrey">
 		    			<th>Naziv</th>
 		    			<th>Tip</th>
@@ -42,11 +44,28 @@ var trainingHandlingApp = new Vue({
 		    			<td>{{t.description}}</td>
 						<td>{{t.photo}}</td>
 						<td><button v-on:click = "openUpdateForm(t)">Izmeni</button></td>
-		    		</tr>
+		    		</tr>		
 	    		</table>
+
+				<table v-if = "isCoach === true" border="1">
+				<tr bgcolor="lightgrey">
+					<th>Id</th>
+					<th>Trener</th>
+					<th>Korisnik</th>
+					<th>Datum prijave</th>
+				</tr>
+					
+				<tr v-for="(t, index) in trainingsManager">
+					<td>{{t.training}}</td>
+					<td>{{t.coach}}</td>
+					<td>{{t.user}}</td>
+					<td>{{t.joinDate}}</td>
+					<td><button @click="dismiss(t.id)">Otkazi</button></td>
+				</tr>		
+			</table>
     	</div>
 		<div>
-			<button v-on:click = "openAddForm">Dodavanje novog treninga</button>
+			<button v-if = "isCoach === false" v-on:click = "openAddForm">Dodavanje novog treninga</button>
 			<table v-if = "addPressed === true || updatePressed===true">
 				<tr>
 					<td>Naziv</td>
@@ -110,7 +129,8 @@ var trainingHandlingApp = new Vue({
 						});
 					}
 					else if(this.isLoggedIn.userType === "COACH"){
-						axios.get('rest/training/'+ this.isLoggedIn.username)
+						this.isCoach = true;
+						axios.get('rest/trainingHistory/'+ this.isLoggedIn.username)
 						.then(response => {this.trainingsManager = response.data})
 					}
 				}
@@ -129,6 +149,29 @@ var trainingHandlingApp = new Vue({
 			this.description= "";
 			this.duration =  "";
 			
+		},
+		dismiss(selected){
+			axios.get('rest/training/validate/' + selected)
+			.then((response) => {
+				this.validDate = response.data
+    		}, error => {
+				console.log(error) 
+			}
+			)
+			if (this.validDate == true){
+				axios.get(
+					'rest/trainingHistory/delete/' + selected
+				).then(
+					response => {
+						alert("Uspjesno ste otkazali trening");
+						window.location.href = "trainingHandling.html"
+					}, error => {
+						alert(error);
+					}
+				) 
+			}else{
+				alert("Trening mozete otkazati najkasnije dva dana ranije!");
+			}
 		},
 		openUpdateForm(selected) {
 			this.updatePressed = true;

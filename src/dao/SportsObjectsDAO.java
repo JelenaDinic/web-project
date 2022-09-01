@@ -15,8 +15,8 @@ import enums.ObjectType;
 public class SportsObjectsDAO {
 	
 	private List<SportsObject> sportsObjects;
-	//public String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\sportObjects.json";
-	public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\sportObjects.json";
+	public String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\sportObjects.json";
+	//public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\sportObjects.json";
 	
 	public SportsObjectsDAO() {
 		sportsObjects = new ArrayList<SportsObject>();

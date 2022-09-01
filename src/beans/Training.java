@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import enums.TrainingType;
 
 public class Training {
+	private int id;
 	private String name;
 	private TrainingType type;
 	private String sportsObject;
@@ -12,17 +13,16 @@ public class Training {
 	private String coach;
 	private String description;
 	private String photo;
-	private LocalDateTime time;
+	private String dateTime;
 	
 	public Training() {
 		super();
 	}
 
-
-
-	public Training(String name, TrainingType type, String sportsObject, int duration, String coach, String description,
-			String photo, LocalDateTime time) {
+	public Training(int id, String name, TrainingType type, String sportsObject, int duration, String coach,
+			String description, String photo, String dateTime) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.type = type;
 		this.sportsObject = sportsObject;
@@ -30,10 +30,16 @@ public class Training {
 		this.coach = coach;
 		this.description = description;
 		this.photo = photo;
-		this.time = time;
+		this.dateTime = dateTime;
 	}
 
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -90,13 +96,13 @@ public class Training {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-  
-	public LocalDateTime getTime() {
-		return time;
+
+	public String getDateTime() {
+		return dateTime;
 	}
 
-	public void setTime(LocalDateTime time) {
-		this.time = time;
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
 	}
 	
 }

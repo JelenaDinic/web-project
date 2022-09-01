@@ -2,6 +2,8 @@ package dao;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,8 +14,8 @@ import beans.Training;
 
 public class TrainingDAO {
 	private List<Training> trainings;
-	//public String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\trainings.json";
-	public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\trainings.json";
+	public String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\trainings.json";
+	//public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\trainings.json";
 	
 	public TrainingDAO() {
 		trainings = new ArrayList<Training>();
@@ -67,5 +69,22 @@ public class TrainingDAO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean validateDate(int id) {
+		for (Training training : trainings) {
+			if (training.getId() == id) {
+				String str = training.getDateTime();
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+				LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+
+				LocalDateTime now = LocalDateTime.now(); //datum otkazivanja
+				int compareValue = now.compareTo(dateTime.minusDays(2)); //uslov da mora da se otkaze dva dana ranije
+				if(compareValue < 0) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
