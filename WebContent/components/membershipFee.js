@@ -178,7 +178,8 @@ var membershipFeeApp = new Vue({
 						surname: this.customer.surname,
 						gender: this.customer.gender,
 						dateOfBirth: this.customer.dateOfBirth,
-						userType: this.customer.userType
+						userType: this.customer.userType,
+						visitedSportsObjects: this.customer.visitedSportsObjects
 		})
 				})
 			

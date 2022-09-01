@@ -23,13 +23,11 @@ var sportsObjectsApp = new Vue({
 	template: ` 
     	<div>
 			<div id="navBar">
-                <ul>
+                <ul class="nav-menu">
                     <li v-if="isLoggedIn != null">
                         <a href="sportsObjects.html">Početna</a>
                     </li>
-                </ul>
-                <ul>
-                    <li v-if="isLoggedIn === null">
+					<li v-if="isLoggedIn === null">
                         <a href="login.html">Uloguj se</a>
                     </li>
                     <li v-if="isLoggedIn === null">
@@ -70,49 +68,64 @@ var sportsObjectsApp = new Vue({
                     </li>
                 </ul>
             </div>
-    		<h3>Prikaz sportskih objekata</h3>
-			<label>Pretrazi:</label><input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
-			<div>
-				<label>Parametar:</label>
-				<select id="comboBox" v-model = "sortCombo">
-				  <option value="0a">Naziv sportskog objekta(rastuci)</option>
-				  <option value="0d">Naziv sportskog objekta(opadajuci)</option>
-				  <option value="1a">Lokacija(rastuci)</option>
-		          <option value="1d">Lokacija(opadajuci)</option>
-				  <option value="2a">Prosecna ocena(rastuci)</option>
-		          <option value="2d">Prosecna ocena(opadajuci)</option>
-				</select> 
-				<button v-on:click = "sorting">Sortiraj</button>
+    		
+			<div class="main-content">
+				<h3>Prikaz sportskih objekata</h3>
+				
+				<div class="search">
+					<label>Pretrazi:</label>
+					<input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
+				</div>
+				
+				<div class="sort">
+					<div>
+						<label>Parametar:</label>
+						<select id="comboBox" v-model = "sortCombo">
+						  <option value="0a">Naziv sportskog objekta(rastuci)</option>
+						  <option value="0d">Naziv sportskog objekta(opadajuci)</option>
+						  <option value="1a">Lokacija(rastuci)</option>
+				          <option value="1d">Lokacija(opadajuci)</option>
+						  <option value="2a">Prosecna ocena(rastuci)</option>
+				          <option value="2d">Prosecna ocena(opadajuci)</option>
+						</select> 
+					</div>
+					<button v-on:click = "sorting">Sortiraj</button>
+				</div>
+				
+				<div ref = "filter" class="filter">
+					<div>
+						<label>TERETANA</label><input type="checkbox" id="checkbox1" v-model="filter1">
+						<label>BAZEN</label><input type="checkbox" id="checkbox2" v-model="filter2">
+						<label>SPORTSKI CENTAR</label><input type="checkbox" id="checkbox3" v-model="filter3">
+						<label>PLESNI STUDIO</label><input type="checkbox" id="checkbox4" v-model="filter4">
+						<label>OTVORENO</label><input type="checkbox" id="checkbox5" v-model="filter5">
+					</div>
+					<button v-on:click = "filter">Filtriraj</button>
+				</div>
+				
+	    		<table class="table">
+		    		<tr>
+		    			<th>Naziv</th>
+		    			<th>Tip</th>
+	                    <th>Lokacija</th>
+	                    <th>Logo</th>
+	                    <th>Prosecna ocena objekta</th>
+	                    <th>Radno vrijeme</th>
+		    		</tr>
+		    			
+		    		<tr v-for="(s, index) in sportsObjects">
+		    			<td>{{s.name}}</td>
+		    			<td>{{s.type}}</td>
+	                    <td>{{s.location.address.city}}</td>
+		    			<td><img src="./missfit.png"/></td>
+	                    <td>{{s.averageGrade}}</td>
+		    			<td>{{s.startWorkingHour}} - {{s.endWorkingHour}}</td>
+						<td><button @click="details(s.name)">Prikazi</button></td>
+		    		</tr>
+		    	</table>
+		    	<button v-if="isAdmin === true" onclick="window.location='addSportsObject.html';">Dodaj</button>
 			</div>
-			<div ref = "filter">
-				<label>TERETANA</label><input type="checkbox" id="checkbox1" v-model="filter1">
-				<label>BAZEN</label><input type="checkbox" id="checkbox2" v-model="filter2">
-				<label>SPORTSKI CENTAR</label><input type="checkbox" id="checkbox3" v-model="filter3">
-				<label>PLESNI STUDIO</label><input type="checkbox" id="checkbox4" v-model="filter4">
-				<label>OTVORENO</label><input type="checkbox" id="checkbox5" v-model="filter5">
-				<button v-on:click = "filter">Filtriraj</button>
-			</div>
-    		<table border="1">
-	    		<tr bgcolor="lightgrey">
-	    			<th>Naziv</th>
-	    			<th>Tip</th>
-                    <th>Lokacija</th>
-                    <th>Logo</th>
-                    <th>Prosecna ocena objekta</th>
-                    <th>Radno vrijeme</th>
-	    		</tr>
-	    			
-	    		<tr v-for="(s, index) in sportsObjects">
-	    			<td>{{s.name}}</td>
-	    			<td>{{s.type}}</td>
-                    <td>{{s.location.address.city}}</td>
-	    			<td><img src="./missfit.png"/></td>
-                    <td>{{s.averageGrade}}</td>
-	    			<td>{{s.startWorkingHour}} - {{s.endWorkingHour}}</td>
-					<td><button @click="details(s.name)">Prikazi</button></td>
-	    		</tr>
-	    	</table>
-	    	<button v-if="isAdmin === true" onclick="window.location='addSportsObject.html';">Dodaj</button>
+
     	</div>		  
     	`,
     mounted () {
@@ -139,7 +152,8 @@ var sportsObjectsApp = new Vue({
 											gender: this.isLoggedIn.gender,
 											dateOfBirth: this.isLoggedIn.dateOfBirth,
 											userType: this.isLoggedIn.userType,
-											points: this.points
+											points: this.points,
+											visitedSportsObjects: this.isLoggedIn.visitedSportsObjects
 						});
 							})
 							}

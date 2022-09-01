@@ -7,12 +7,10 @@ var loginApp = new Vue({
 	    }
 	},
 	template: ` 
-    	<div>
-			<table>
-				<tr><td>Username</td><td><input type="text" id = "username" v-model = "username"></td></tr>
-				<tr><td>Password</td><td><input type="password" id = "password" v-model = "password"></td></tr>
-				<tr><td><button class="buy-btn" v-on:click = "login">ULOGUJ SE</button></td></tr>
-			</table>
+    	<div class="login">
+			<div>Username <input type="text" id = "username" v-model = "username"></div>
+			<div>Password <input type="password" id = "password" v-model = "password"></div>
+			<button class="login-btn" v-on:click = "login">ULOGUJ SE</button>			
     	</div>		  
     	`,
     mounted () {

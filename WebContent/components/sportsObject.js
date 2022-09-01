@@ -78,6 +78,26 @@ var sportObjectsApp = new Vue({
 	},
 	methods: {
 		join: function() {
+			if(this.isLoggedIn.userType === "CUSTOMER"){
+				let customer = this.isLoggedIn;
+				customer.visitedSportsObjects.push(this.object.name)
+				axios.put('rest/user/' + customer.username, {
+						fee: customer.fee,
+						username: customer.username,
+						password: customer.password,
+						name: customer.name,
+						surname: customer.surname,
+						gender: customer.gender,
+						dateOfBirth: customer.dateOfBirth,
+						userType: customer.userType,
+						visitedSportsObjects: customer.visitedSportsObjects,
+						points: customer.points
+						
+		})     
+				.then(response => alert("Uspešno ste se pridružili treningu!"))
+			} else {
+				alert("Samo kupac može da se prijavi na određeni trening!")
+			}
 			
 		},
 		comment : function(){
