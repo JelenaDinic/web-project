@@ -10,9 +10,11 @@ var sportObjectsApp = new Vue({
 			isAdmin: false,
 			isCoach: false,
 			text: "",
-			mark: null
+			mark: null,
+			trainings:[]
 	    }
 	},
+	that: this,
 	template: ` 
     	<div>
 			<label>Naziv: </label>
@@ -27,28 +29,56 @@ var sportObjectsApp = new Vue({
 			<label>{{object?.logo}}</label><br>
 			<label>Prosecna ocena: </label>
 			<label>{{object?.averageGrade}}</label><br>
-			<button class="buy-btn" v-on:click = "join" >PRIDRUŽI SE</button><br>
-			<label>Komentari: </label>
+
 			<table border="1">
 			<tr bgcolor="lightgrey">
-				<th>Tekst</th>
+				<th>Nazic</th>
+				<th>Tip</th>
+				<th>Sportski objekat</th>
+				<th>Trajanje</th>
+				<th>Trener</th>
+				<th>Datum i vrijeme</th>
+				<th></th>
 			</tr>
-			<tr v-for="(s, index) in comments">
-				<td>{{s.text}}</td>
+				
+			<tr v-for="(t, index) in trainings">
+				<td>{{t.name}}</td>
+				<td>{{t.type}}</td>
+				<td>{{t.sportsObject}}</td>
+				<td>{{t.duration}}</td>
+				<td>{{t.coach}}</td>
+				<td>{{t.dateTime}}</td>
+				
 			</tr>
-			<label>Dodaj komentar:</label><br>
-			<label>Komentar:</label>
-			<input v-model = "text" type="text" name="text" id="text" required><br>
-			<label>Ocjena:</label>
-			<input v-model = "mark" type="number" name="mark" id="mark" required><br>
-			<button v-on:click ="comment">Dodaj komentar</button>
 		</table>
+			<button class="buy-btn" v-on:click = "join" >PRIDRUŽI SE</button><br>
+
+			<label>Komentari: </label>
+
+			<table border="1">
+				<tr bgcolor="lightgrey">
+					<th>Tekst</th>
+				</tr>
+				<tr v-for="(s, index) in comments">
+					<td>{{s.text}}</td>
+				</tr>
+				<label>Dodaj komentar:</label><br>
+				<label>Komentar:</label>
+				<input v-model = "text" type="text" name="text" id="text" required><br>
+				<label>Ocjena:</label>
+				<input v-model = "mark" type="number" name="mark" id="mark" required><br>
+				<button v-on:click ="comment">Dodaj komentar</button>
+		</table>
+
     	</div>		  
     	`,
+		
     mounted () {
 		axios.get('rest/sportsObject/object')
 			.then((response) => {
-				this.object = response.data
+				let temp =this.object = response.data;
+				axios.get('rest/training/object/' + temp.name)
+				.then(response => {this.trainings = response.data})
     		}, error => {
 				console.log(error) 
 			}
@@ -57,25 +87,31 @@ var sportObjectsApp = new Vue({
 		.then(response => {
 			this.isLoggedIn =  response.data ? response.data : null;
 			if(this.isLoggedIn != null) {
-				if(this.isLoggedIn.userType === "MANAGER")
+				if(this.isLoggedIn.userType === "MANAGER"){
 					this.isManager = true;
 					axios.get('rest/comment/')
 					.then(response => {this.comments = response.data})
-				if(this.isLoggedIn.userType === "CUSTOMER")
+				}
+				if(this.isLoggedIn.userType === "CUSTOMER"){
 					this.isCustomer = true;
 					axios.get('rest/comment/name/'+this.object.name)
 					.then(response => {this.comments = response.data})
-				if(this.isLoggedIn.userType === "ADMIN")
+				}
+				if(this.isLoggedIn.userType === "ADMIN"){
 					this.isAdmin = true;
 					axios.get('rest/comment/')
 					.then(response => {this.comments = response.data})
-				if(this.isLoggedIn.userType === "COACH")
+				}					
+				if(this.isLoggedIn.userType === "COACH"){
 					this.isCoach = true;
 					axios.get('rest/comment/name/'+this.object.name)
 					.then(response => {this.comments = response.data})
+				}
 			}
 		})
+		
 	},
+
 	methods: {
 		join: function() {
 			if(this.isLoggedIn.userType === "CUSTOMER"){

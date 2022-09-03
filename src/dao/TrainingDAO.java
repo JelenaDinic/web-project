@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beans.SportsObject;
 import beans.Training;
 
 public class TrainingDAO {
@@ -24,6 +25,16 @@ public class TrainingDAO {
 	
 	public List<Training> findAll(){
 		return trainings; 
+	}
+	
+	public List<Training> findForSportObject(String sportObject){
+		 List<Training> foundTrainings = new ArrayList<Training>();
+		 for(Training t : trainings) {
+			if (t.getSportsObject().equals(sportObject)) {
+				foundTrainings.add(t);
+			}
+		 }
+		return foundTrainings; 
 	}
 	
 	public List<Training> findForCoach(String coach){
@@ -86,5 +97,24 @@ public class TrainingDAO {
 			}
 		}
 		return false;
+	}
+	
+	public List<Training> search(String input){
+		List<Training> foundObjects = new ArrayList<Training>();
+		for (Training tr : trainings) {
+			if (tr.getSportsObject().contains(input)) {
+				foundObjects.add(tr);
+			}
+		}
+		return foundObjects;
+	}
+	
+	public Training getById(int id) {
+		for (Training tr : trainings) {
+			if (tr.getId() == id) {
+				return tr;
+			}
+		}
+		return null;
 	}
 }
