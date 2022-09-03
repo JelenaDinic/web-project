@@ -15,7 +15,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import beans.SportsObject;
 import beans.Training;
+import dao.SportsObjectsDAO;
 import dao.TrainingDAO;
 
 @Path("training")
@@ -51,6 +53,14 @@ public class TrainingService {
 	}
 	
 	@GET
+	@Path("/object/{sportObject}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Training> getTrainingsForSportObject(@PathParam("sportObject") String sportObject){
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
+		return dao.findForSportObject(sportObject);
+	}
+	
+	@GET
 	@Path("/validate/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean validateDate(@PathParam("id") int id){
@@ -77,5 +87,24 @@ public class TrainingService {
 		dao.update(name, training);
 		dao.save();
 	}
+	
+	@GET
+	@Path("/search/{input}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Collection<Training> searchTrainings(@PathParam("input") String input){
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
+		return dao.search(input);
+	}
+	
+	@GET
+	@Path("/id/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Training getById(@PathParam("id") int id){
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
+		return dao.getById(id);
+	}
+	
 	
 }

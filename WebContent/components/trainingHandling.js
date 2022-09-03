@@ -1,14 +1,18 @@
 var trainingHandlingApp = new Vue({
-	el:'#trainingHandling',
+	el: '#trainingHandling',
 	data: function () {
-	    return {
+		return {
 			trainings: [],
+			searchedTrainings: [],
+			pom: [],
 			isLoggedIn: null,
 			isCoach: false,
+			isCustomer: false,
+			searchText: "",
 			trainingsManager: [],
 			addPressed: false,
 			updatePressed: false,
-			validDate:false,
+			validDate: false,
 			oldName: "",
 			name: "",
 			photo: "",
@@ -17,35 +21,38 @@ var trainingHandlingApp = new Vue({
 			description: "",
 			duration: "",
 			coaches: [],
-			coach: ""
-	    }
+			coach: "",
+			list: [],
+			tableView: []
+		}
 	},
 	template: ` 
-    	<div>
+		<div>
 			<div>
-			
+			<label v-if = "isCoach === true || isCustomer === true">Pretrazi po sportskom objektu:</label><input id = "searchText" type = "text" v-model = "searchText">
+			<button v-on:click = "search">Pretrazi</button>a
 				<table v-if = "isCoach === false" border="1">
-		    		<tr bgcolor="lightgrey">
-		    			<th>Naziv</th>
-		    			<th>Tip</th>
-	                    <th>Sportski objekat</th>
-	                    <th>Trajanje</th>
-	                    <th>Trener</th>
-	                    <th>Opis</th>
+					<tr bgcolor="lightgrey">
+						<th>Naziv</th>
+						<th>Tip</th>
+						<th>Sportski objekat</th>
+						<th>Trajanje</th>
+						<th>Trener</th>
+						<th>Opis</th>
 						<th>Slika</th>
-		    		</tr>
-		    			
-		    		<tr v-for="(t, index) in trainingsManager">
-		    			<td>{{t.name}}</td>
-		    			<td>{{t.type}}</td>
-	                    <td>{{t.sportsObject}}</td>
-		    			<td>{{t.duration}}</td>
-	                    <td>{{t.coach}}</td>
-		    			<td>{{t.description}}</td>
+					</tr>
+						
+					<tr v-for="(t, index) in trainingsManager">
+						<td>{{t.name}}</td>
+						<td>{{t.type}}</td>
+						<td>{{t.sportsObject}}</td>
+						<td>{{t.duration}}</td>
+						<td>{{t.coach}}</td>
+						<td>{{t.description}}</td>
 						<td>{{t.photo}}</td>
 						<td><button v-on:click = "openUpdateForm(t)">Izmeni</button></td>
-		    		</tr>		
-	    		</table>
+					</tr>		
+				</table>
 
 				<table v-if = "isCoach === true" border="1">
 				<tr bgcolor="lightgrey">
@@ -55,7 +62,7 @@ var trainingHandlingApp = new Vue({
 					<th>Datum prijave</th>
 				</tr>
 					
-				<tr v-for="(t, index) in trainingsManager">
+				<tr v-for="(t, index) in tableView">
 					<td>{{t.training}}</td>
 					<td>{{t.coach}}</td>
 					<td>{{t.user}}</td>
@@ -63,7 +70,7 @@ var trainingHandlingApp = new Vue({
 					<td><button @click="dismiss(t.id)">Otkazi</button></td>
 				</tr>		
 			</table>
-    	</div>
+		</div>
 		<div>
 			<button v-if = "isCoach === false" v-on:click = "openAddForm">Dodavanje novog treninga</button>
 			<table v-if = "addPressed === true || updatePressed===true">
@@ -89,8 +96,8 @@ var trainingHandlingApp = new Vue({
 					<td>Trener</td>
 					<td>
 					<select v-model="coach" required>
-                		<option v-for="c in coaches" :value="c.username">{{c.name}} {{c.surname}}</option>
-            		</select>
+						<option v-for="c in coaches" :value="c.username">{{c.name}} {{c.surname}}</option>
+					</select>
 					</td>
 				</tr>
 				<tr>
@@ -106,59 +113,80 @@ var trainingHandlingApp = new Vue({
 				</tr>
 			</table>
 		</div>
-    	</div>		  
-    	`,
-    mounted () {
+		</div>		  
+		`,
+	mounted() {
 		axios.get('rest/user/all-coaches')
-		.then( response => {
-			this.coaches = response.data;
-		})
-		axios.get('rest/training/')
-          .then(response => 
-				{this.trainings = response.data;
-		axios.get('rest/sportsObject/isLoggedIn')
 			.then(response => {
-				this.isLoggedIn =  response.data ? response.data : null;
-				this.sportsObject = this.isLoggedIn.sportsObject;
-				if(this.isLoggedIn != null) {
-					if(this.isLoggedIn.userType === "MANAGER"){
-						Array.from(this.trainings).forEach(element => {
-							if (element.sportsObject === this.isLoggedIn.sportsObject){
-								this.trainingsManager.push(element);
-							}
-						});
-					}
-					else if(this.isLoggedIn.userType === "COACH"){
-						this.isCoach = true;
-						axios.get('rest/trainingHistory/'+ this.isLoggedIn.username)
-						.then(response => {this.trainingsManager = response.data})
-					}
-				}
+				this.coaches = response.data;
 			})
-		})
-		
-},
+		axios.get('rest/training/')
+			.then(response => {
+				this.trainings = response.data;
+				axios.get('rest/sportsObject/isLoggedIn')
+					.then(response => {
+						this.isLoggedIn = response.data ? response.data : null;
+						this.sportsObject = this.isLoggedIn.sportsObject;
+						if (this.isLoggedIn != null) {
+							if (this.isLoggedIn.userType === "MANAGER") {
+								Array.from(this.trainings).forEach(element => {
+									if (element.sportsObject === this.isLoggedIn.sportsObject) {
+										this.trainingsManager.push(element);
+									}
+
+								});
+								this.tableView = this.trainingsManager;
+							}
+							else if (this.isLoggedIn.userType === "COACH") {
+								this.isCoach = true;
+								axios.get('rest/trainingHistory/' + this.isLoggedIn.username)
+									.then(response => { this.trainingsManager = response.data; this.pom = this.trainingsManager; })
+									.then(() => { this.tableView = this.trainingsManager })
+							}
+							else if (this.isLoggedIn.userType === "CUSTOMER") {
+								this.isCustomer = true;
+							}
+						}
+					})
+			})
+	},
 	methods: {
-		openAddForm: function() {
+		openAddForm: function () {
 			this.addPressed = true;
 			this.updatePressed = false;
 			this.name = "";
 			this.photo = "";
 			this.type = "";
 			this.coach = "",
-			this.description= "";
-			this.duration =  "";
-			
+				this.description = "";
+			this.duration = "";
+
 		},
-		dismiss(selected){
+		search: function () {
+
+			const result = [];
+
+			this.trainingsManager.forEach(element => {
+
+				axios.get('rest/training/id/' + element.training).then(
+					(response) => {
+						if (response.data.sportsObject.includes(this.searchText)) result.push(element)
+					}
+				)
+			});
+
+			this.tableView = result;
+
+		},
+		dismiss(selected) {
 			axios.get('rest/training/validate/' + selected)
-			.then((response) => {
-				this.validDate = response.data
-    		}, error => {
-				console.log(error) 
-			}
-			)
-			if (this.validDate == true){
+				.then((response) => {
+					this.validDate = response.data
+				}, error => {
+					console.log(error)
+				}
+				)
+			if (this.validDate == true) {
 				axios.get(
 					'rest/trainingHistory/delete/' + selected
 				).then(
@@ -168,8 +196,8 @@ var trainingHandlingApp = new Vue({
 					}, error => {
 						alert(error);
 					}
-				) 
-			}else{
+				)
+			} else {
 				alert("Trening mozete otkazati najkasnije dva dana ranije!");
 			}
 		},
@@ -181,46 +209,46 @@ var trainingHandlingApp = new Vue({
 			this.photo = selected.photo;
 			this.type = selected.type;
 			this.coach = selected.coach;
-			this.description= selected.description;
-			this.duration =  selected.duration;
+			this.description = selected.description;
+			this.duration = selected.duration;
 		},
-		add : function(){
-			if(this.addPressed === true) {
+		add: function () {
+			if (this.addPressed === true) {
 				axios.post('rest/training/', {
-				name: this.name,
-				type: this.type,
-				photo: this.photo,
-				sportsObject: this.sportsObject,
-				coach: this.coach,
-				duration: this.duration,
-				description: this.description
-			})
-			.then(response => {
-				alert("Uspesno ste se dodali novi trening!");
-				window.location.href = 'trainingHandling.html';
-			})
-			.catch( error => {
-                alert("Greska prilikom dodavanja treninga!");
-            })
+					name: this.name,
+					type: this.type,
+					photo: this.photo,
+					sportsObject: this.sportsObject,
+					coach: this.coach,
+					duration: this.duration,
+					description: this.description
+				})
+					.then(response => {
+						alert("Uspesno ste se dodali novi trening!");
+						window.location.href = 'trainingHandling.html';
+					})
+					.catch(error => {
+						alert("Greska prilikom dodavanja treninga!");
+					})
 			} else {
-						axios.put('rest/training/' + this.oldName, {
-						name: this.name,
-						type: this.type,
-						photo: this.photo,
-						sportsObject: this.sportsObject,
-						coach: this.coach,
-						duration: this.duration,
-						description: this.description
+				axios.put('rest/training/' + this.oldName, {
+					name: this.name,
+					type: this.type,
+					photo: this.photo,
+					sportsObject: this.sportsObject,
+					coach: this.coach,
+					duration: this.duration,
+					description: this.description
 				})
 					.then(response => {
 						alert("Uspesno ste izmenili trening!");
 						window.location.reload();
 					})
 					.catch(error => {
-		                alert("Greska prilikom izmene treninga!");
-		            })
+						alert("Greska prilikom izmene treninga!");
+					})
 			}
-			
+
 		}
 	}
 })
