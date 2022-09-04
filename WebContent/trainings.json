@@ -1,4 +1,4 @@
 [{"id":0,"name":"Pilates","type":"GROUP","sportsObject":"MissFit","duration":60,"coach":"trener123","description":"","photo":"Slika9","dateTime":"2022-08-31 11:30","price":0},
 {"id":1,"name":"Personalni","type":"PERSONAL","sportsObject":"MissFit","duration":40,"coach":"trener123","description":"ecwdcwec","photo":"slika1","dateTime":"2022-09-04 11:30","price":0},
-{"id":2,"name":"Personalni","type":"PERSONAL","sportsObject":"FitZone","duration":40,"coach":"trener123","description":"ecwdcwec","photo":"slika1","dateTime":"2022-10-10 11:30","price":1000},
+{"id":2,"name":"Personalni","type":"PERSONAL","sportsObject":"FitZone","duration":40,"coach":"trener123","description":"ecwdcwec","photo":"slika1","dateTime":"2022-09-03 11:30","price":1000},
 {"id":3,"name":"Personalni","type":"PERSONAL","sportsObject":"RoyalGym","duration":35,"coach":"trener123","description":"","photo":"slika2","dateTime":"2022-09-02 11:30","price":1500}]
