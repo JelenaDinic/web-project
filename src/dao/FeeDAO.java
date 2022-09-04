@@ -62,7 +62,23 @@ public class FeeDAO {
 		}
 		return true;
 	}
-	
+	public Fee update(String id, Fee fee) {
+		for(Fee f : fees) {
+			if(f.getId().equals(id)) {
+				f.setUsedEntries(fee.getUsedEntries());
+				return f;
+			}
+		}
+		return null;
+	}
+	public Fee checkFee(String id) {
+		for(Fee f : fees) {
+			if(f.getId().equals(id) && f.getStatus().equals(Status.ACTIVE) && f.getUsedEntries() < f.getNumberOfEntries()) {
+				return f;
+			}
+		}
+		return null;
+	}
 	private void load() {
 		ObjectMapper mapper = new ObjectMapper();
 		try {

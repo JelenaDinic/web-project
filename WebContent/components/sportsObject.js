@@ -48,10 +48,9 @@ var sportObjectsApp = new Vue({
 				<td>{{t.duration}}</td>
 				<td>{{t.coach}}</td>
 				<td>{{t.dateTime}}</td>
-				
+				<td><button class="buy-btn" v-on:click = "join(t)" >PRIDRUŽI SE</button></td>
 			</tr>
 		</table>
-			<button class="buy-btn" v-on:click = "join" >PRIDRUŽI SE</button><br>
 
 			<label>Komentari: </label>
 
@@ -113,24 +112,40 @@ var sportObjectsApp = new Vue({
 	},
 
 	methods: {
-		join: function() {
+		join(training) {
 			if(this.isLoggedIn.userType === "CUSTOMER"){
-				let customer = this.isLoggedIn;
-				customer.visitedSportsObjects.push(this.object.name)
-				axios.put('rest/user/' + customer.username, {
-						fee: customer.fee,
-						username: customer.username,
-						password: customer.password,
-						name: customer.name,
-						surname: customer.surname,
-						gender: customer.gender,
-						dateOfBirth: customer.dateOfBirth,
-						userType: customer.userType,
-						visitedSportsObjects: customer.visitedSportsObjects,
-						points: customer.points
+				axios.get('rest/sportsObject/check-fee/' + this.isLoggedIn.fee)
+					.then( response => {
+						let fee = response.data
+						if(fee !== null) {
+							let customer = this.isLoggedIn;
+							customer.visitedSportsObjects.push(this.object.name)
+							axios.put('rest/user/' + customer.username, {
+									fee: customer.fee,
+									username: customer.username,
+									password: customer.password,
+									name: customer.name,
+									surname: customer.surname,
+									gender: customer.gender,
+									dateOfBirth: customer.dateOfBirth,
+									userType: customer.userType,
+									visitedSportsObjects: customer.visitedSportsObjects,
+									points: customer.points
 						
-		})     
-				.then(response => alert("Uspešno ste se pridružili treningu!"))
+				})     
+								.then(response => {
+									axios.put('rest/sportsObject/fee/' + customer.fee, {
+										usedEntries: (fee.usedEntries + 1)
+									})
+										.then(response => alert("Uspešno ste se pridružili treningu!"))
+									
+								})
+						} 
+						else {
+							alert("Nemate aktivnu članarinu ili nemate dovoljno preostalih termina da bi posetili ovaj trening!")
+						}
+					})
+				
 			} else {
 				alert("Samo kupac može da se prijavi na određeni trening!")
 			}
@@ -160,7 +175,6 @@ var sportObjectsApp = new Vue({
 				alert("Niste posjetili ovaj sportski objekat!");
 			}
 		}
-		
 		
 	}
 })

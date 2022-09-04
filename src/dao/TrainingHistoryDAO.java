@@ -17,9 +17,8 @@ import beans.TrainingHistory;
 
 public class TrainingHistoryDAO {
 	private List<TrainingHistory> trainingHistory;
-	
-	//public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\trainingHistory.json";
-	public String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\trainingHistory.json";
+	public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\trainingHistory.json";
+	//public String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\trainingHistory.json";
 	
 	public TrainingHistoryDAO() {
 		trainingHistory = new ArrayList<TrainingHistory>();

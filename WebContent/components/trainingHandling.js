@@ -276,34 +276,6 @@ var trainingHandlingApp = new Vue({
 		},
 		sorting : function(){
 		},
-		filter : function(){
-
-			var result = [];
-			let ovaj = this;
-			this.trainingsManager.forEach(element => {
-
-				axios.get('rest/training/id/' + element.training).then(
-					(response) => {
-						if (response.data.type == "PERSONAL" && this.filter5 != false) result.find((word) => { word == element }) ?? result.push(element);
-						if (response.data.type == "GROUP" && this.filter6 != false) result.find((word) => { word == element }) ?? result.push(element)
-						if (response.data.type == "GYM" && this.filter7 != false) result.find((word) => { word == element }) ?? result.push(element)
-						axios.get('rest/sportsObject/find/' + response.data.sportsObject).then(
-							(response) => {
-								if (response.data.type == "GYM" && this.filter1 != false) result.find((word) => { word == element }) ?? result.push(element)
-								if (response.data.type == "POOL" && this.filter2 != false) result.find((word) => { word == element }) ?? result.push(element)
-								if (response.data.type == "SPORT_CENTER" && this.filter3 != false) result.find((word) => { word == element }) ?? result.push(element)
-								if (response.data.type == "DANCE_STUDIO" && this.filter4 != false) result.find((word) => { word == element }) ?? result.push(element)
-							}
-						)
-					}
-				)
-			});
-
-			if(this.filter1 == false && this.filter2 == false && this.filter3 == false && this.filter4 == false && this.filter5 == false  && this.filter6 == false  && this.filter7 == false){
-				result = this.trainingsManager;
-			}
-			this.tableView = result;
-		},
 		changePrice(){
 			const result = [];
 

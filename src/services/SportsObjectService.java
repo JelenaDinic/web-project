@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -131,6 +132,14 @@ public class SportsObjectService {
 		return Response.status(200).build();
 	}
 	@GET
+	@Path("/check-fee/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Fee checkFee(@PathParam("id") String id) {
+		FeeDAO dao = (FeeDAO) ctx.getAttribute("feeDAO");
+		return dao.checkFee(id);
+	}
+	@GET
 	@Path("/fee-validity/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -145,5 +154,14 @@ public class SportsObjectService {
 	public int calculatePoints(@PathParam("username") String username) {
 		FeeDAO dao = (FeeDAO) ctx.getAttribute("feeDAO");
 		return dao.calculatePoints(username);
+	}
+	@PUT
+	@Path("/fee/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void update(@PathParam("id") String id, Fee fee) {
+		FeeDAO dao = (FeeDAO) ctx.getAttribute("feeDAO");
+		dao.update(id, fee);
+		dao.save();
 	}
 }
