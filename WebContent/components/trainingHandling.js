@@ -26,6 +26,14 @@ var trainingHandlingApp = new Vue({
 			price: 3000,
 			startDate: null,
 			endDate:null,
+			sortCombo: null,
+			filter1: false,
+			filter2: false,
+			filter3: false,
+			filter4: false,
+			filter5: false,
+			filter6: false,
+			filter7: false,
 			tableView: []
 		}
 	},
@@ -44,6 +52,32 @@ var trainingHandlingApp = new Vue({
 				<input type="date" id="start" name="trip-start" v-model = "startDate" value="2018-07-22" min="2018-01-01" max="2022-09-04">
 				<label for="end">Do: </label>
 				<input type="date" id="end" name="trip-end" v-model = "endDate" value="2018-07-22" min="2018-01-01" max="2022-09-04" @change="dateChange">
+			</div>
+			<div class="sort">
+			<div>
+				<label>Parametar:</label>
+				<select id="comboBox" v-model = "sortCombo">
+				  <option value="0a">Naziv sportskog objekta(rastuci)</option>
+				  <option value="0d">Naziv sportskog objekta(opadajuci)</option>
+				  <option value="1a">Cena(rastuci)</option>
+				  <option value="1d">Cena(opadajuci)</option>
+				  <option value="2a">Datum prijave(rastuci)</option>
+				  <option value="2d">Datum prijave(opadajuci)</option>
+				</select> 
+			</div>
+				<button v-on:click = "sorting">Sortiraj</button>
+			</div>
+			<div ref = "filter" class="filter">
+				<div>
+					<label>TERETANA</label><input type="checkbox" id="checkbox1" v-model="filter1">
+					<label>BAZEN</label><input type="checkbox" id="checkbox2" v-model="filter2">
+					<label>SPORTSKI CENTAR</label><input type="checkbox" id="checkbox3" v-model="filter3">
+					<label>PLESNI STUDIO</label><input type="checkbox" id="checkbox4" v-model="filter4">
+					<label>PERSONALNI</label><input type="checkbox" id="checkbox5" v-model="filter5">
+					<label>GRUPNI</label><input type="checkbox" id="checkbox6" v-model="filter6">
+					<label>U TERETANI</label><input type="checkbox" id="checkbox7" v-model="filter7">
+				</div>
+				<button v-on:click = "filter">Filtriraj</button>
 			</div>
 				<table v-if = "isCoach === false" border="1">
 					<tr bgcolor="lightgrey">
@@ -239,6 +273,36 @@ var trainingHandlingApp = new Vue({
 			} else {
 				alert("Trening mozete otkazati najkasnije dva dana ranije!");
 			}
+		},
+		sorting : function(){
+		},
+		filter : function(){
+
+			var result = [];
+			let ovaj = this;
+			this.trainingsManager.forEach(element => {
+
+				axios.get('rest/training/id/' + element.training).then(
+					(response) => {
+						if (response.data.type == "PERSONAL" && this.filter5 != false) result.find((word) => { word == element }) ?? result.push(element);
+						if (response.data.type == "GROUP" && this.filter6 != false) result.find((word) => { word == element }) ?? result.push(element)
+						if (response.data.type == "GYM" && this.filter7 != false) result.find((word) => { word == element }) ?? result.push(element)
+						axios.get('rest/sportsObject/find/' + response.data.sportsObject).then(
+							(response) => {
+								if (response.data.type == "GYM" && this.filter1 != false) result.find((word) => { word == element }) ?? result.push(element)
+								if (response.data.type == "POOL" && this.filter2 != false) result.find((word) => { word == element }) ?? result.push(element)
+								if (response.data.type == "SPORT_CENTER" && this.filter3 != false) result.find((word) => { word == element }) ?? result.push(element)
+								if (response.data.type == "DANCE_STUDIO" && this.filter4 != false) result.find((word) => { word == element }) ?? result.push(element)
+							}
+						)
+					}
+				)
+			});
+
+			if(this.filter1 == false && this.filter2 == false && this.filter3 == false && this.filter4 == false && this.filter5 == false  && this.filter6 == false  && this.filter7 == false){
+				result = this.trainingsManager;
+			}
+			this.tableView = result;
 		},
 		changePrice(){
 			const result = [];
