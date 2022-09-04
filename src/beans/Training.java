@@ -14,13 +14,14 @@ public class Training {
 	private String description;
 	private String photo;
 	private String dateTime;
+	private int price;
 	
 	public Training() {
 		super();
 	}
 
 	public Training(int id, String name, TrainingType type, String sportsObject, int duration, String coach,
-			String description, String photo, String dateTime) {
+			String description, String photo, String dateTime, int price) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -31,6 +32,7 @@ public class Training {
 		this.description = description;
 		this.photo = photo;
 		this.dateTime = dateTime;
+		this.price = price;
 	}
 
 	public int getId() {
@@ -103,6 +105,14 @@ public class Training {
 
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 	
 }
