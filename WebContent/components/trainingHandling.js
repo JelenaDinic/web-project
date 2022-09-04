@@ -24,17 +24,26 @@ var trainingHandlingApp = new Vue({
 			coach: "",
 			list: [],
 			price: 3000,
+			startDate: null,
+			endDate:null,
 			tableView: []
 		}
 	},
 	template: ` 
 		<div>
-		<div>
+			<div>
 			<label v-if = "isCoach === true || isCustomer === true">Pretrazi po sportskom objektu:</label><input id = "searchText" type = "text" v-model = "searchText">
 			<button v-on:click = "search">Pretrazi</button>
 			<div>
 				<label for="price">Maksimalna cijena: {{this.price}}</label>
 				<input type="range" id="price" name="price" v-model = "price" min="0" max="3000" @change="changePrice">
+			</div>
+			<div>
+				<label for="price">Datum prijave: </label>
+				<label for="start">Od: </label>
+				<input type="date" id="start" name="trip-start" v-model = "startDate" value="2018-07-22" min="2018-01-01" max="2022-09-04">
+				<label for="end">Do: </label>
+				<input type="date" id="end" name="trip-end" v-model = "endDate" value="2018-07-22" min="2018-01-01" max="2022-09-04" @change="dateChange">
 			</div>
 				<table v-if = "isCoach === false" border="1">
 					<tr bgcolor="lightgrey">
@@ -167,6 +176,31 @@ var trainingHandlingApp = new Vue({
 			this.duration = "";
 
 		},
+		dateChange: function(){
+			console.log("Start date: ",this.startDate, "End date: ",this.endDate)
+
+			const result = [];
+			var dateFrom = this.startDate;
+			var dateTo = this.endDate;
+
+			var d1 = dateFrom.split("-");
+			var d2 = dateTo.split("-");
+
+			this.trainingsManager.forEach(element => {
+
+				var dateCheck = element.joinDate;
+				var c = dateCheck.split("-");
+				var from = new Date(d1);  // -1 because months are from 0 to 11
+				var to   = new Date(d2);
+				var check = new Date(c);
+				
+				if (check > from && check < to){
+					result.push(element)
+				}
+			});
+
+			this.tableView = result;
+		},
 		search: function () {
 
 			const result = [];
@@ -175,7 +209,7 @@ var trainingHandlingApp = new Vue({
 
 				axios.get('rest/training/id/' + element.training).then(
 					(response) => {
-						if (response.data.sportsObject.includes(this.searchText)) result.push(element)
+						if (response.data.dateTime) result.push(element)
 					}
 				)
 			});
