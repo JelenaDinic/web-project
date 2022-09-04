@@ -23,14 +23,19 @@ var trainingHandlingApp = new Vue({
 			coaches: [],
 			coach: "",
 			list: [],
+			price: 3000,
 			tableView: []
 		}
 	},
 	template: ` 
 		<div>
-			<div>
+		<div>
 			<label v-if = "isCoach === true || isCustomer === true">Pretrazi po sportskom objektu:</label><input id = "searchText" type = "text" v-model = "searchText">
-			<button v-on:click = "search">Pretrazi</button>a
+			<button v-on:click = "search">Pretrazi</button>
+			<div>
+				<label for="price">Maksimalna cijena: {{this.price}}</label>
+				<input type="range" id="price" name="price" v-model = "price" min="0" max="3000" @change="changePrice">
+			</div>
 				<table v-if = "isCoach === false" border="1">
 					<tr bgcolor="lightgrey">
 						<th>Naziv</th>
@@ -200,6 +205,20 @@ var trainingHandlingApp = new Vue({
 			} else {
 				alert("Trening mozete otkazati najkasnije dva dana ranije!");
 			}
+		},
+		changePrice(){
+			const result = [];
+
+			this.trainingsManager.forEach(element => {
+
+				axios.get('rest/training/id/' + element.training).then(
+					(response) => {
+						if (response.data.price <= this.price) result.push(element)
+					}
+				)
+			});
+
+			this.tableView = result;
 		},
 		openUpdateForm(selected) {
 			this.updatePressed = true;
