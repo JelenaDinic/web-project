@@ -135,7 +135,7 @@ public class SportsObjectService {
 	@Path("/check-fee/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Fee checkFee(@PathParam("id") String id) {
+	public int checkFee(@PathParam("id") String id) {
 		FeeDAO dao = (FeeDAO) ctx.getAttribute("feeDAO");
 		return dao.checkFee(id);
 	}

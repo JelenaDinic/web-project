@@ -1,14 +1,12 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -16,10 +14,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import beans.Training;
+import beans.Fee;
 import beans.TrainingHistory;
-import dao.CommentDAO;
-import dao.TrainingDAO;
+import dao.FeeDAO;
 import dao.TrainingHistoryDAO;
 
 @Path("trainingHistory")
@@ -44,7 +41,24 @@ public class TrainingHistoryService {
 		TrainingHistoryDAO dao = (TrainingHistoryDAO) ctx.getAttribute("trainingHistoryDAO");
 		return dao.findAll();
 	}
-	
+	@GET
+	@Path("/generate-id")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int generateId(){
+		TrainingHistoryDAO dao = (TrainingHistoryDAO) ctx.getAttribute("trainingHistoryDAO");
+		return dao.findAll().size();
+	}
+	@POST
+	@Path("/")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response add(TrainingHistory triningHistory) {
+		TrainingHistoryDAO dao = (TrainingHistoryDAO) ctx.getAttribute("trainingHistoryDAO");
+		dao.add(triningHistory);
+		dao.save();
+		return Response.status(200).build();
+	}
 	@GET
 	@Path("/delete/{input}")
 	@Produces(MediaType.APPLICATION_JSON)
