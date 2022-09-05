@@ -39,9 +39,6 @@ var sportsObjectsApp = new Vue({
                     <li  v-if="isManager === true">
                         <a>Moj sportski objekat</a>
                     </li>
-                    <li  v-if="isCustomer === true">
-                        <a>Moji treninzi</a>
-                    </li>
                     <li v-if="isManager === true">
                         <a href="trainingHandling.html">Treninzi</a>
                     </li>
@@ -63,7 +60,7 @@ var sportsObjectsApp = new Vue({
 					<li v-if="isAdmin === true">
 					<a href="comments.html">Komentari</a>
 					</li>
-                    <li v-if="isCoach === true">
+                    <li v-if="isCoach === true || isCustomer === true">
                         <a href="trainingHandling.html">Pregled svih treninga</a>
                     </li>
                 </ul>
@@ -117,10 +114,10 @@ var sportsObjectsApp = new Vue({
 		    			<td>{{s.name}}</td>
 		    			<td>{{s.type}}</td>
 	                    <td>{{s.location.address.city}}</td>
-		    			<td><img src="./missfit.png"/></td>
+		    			<td><img src="../images/missfit.jfif" alt="logo"></img></td>
 	                    <td>{{s.averageGrade}}</td>
 		    			<td>{{s.startWorkingHour}} - {{s.endWorkingHour}}</td>
-						<td><button @click="details(s.name)">Prikazi</button></td>
+						<td><button class="show-button" @click="details(s.name)">Prikazi</button></td>
 		    		</tr>
 		    	</table>
 		    	<button v-if="isAdmin === true" onclick="window.location='addSportsObject.html';">Dodaj</button>
