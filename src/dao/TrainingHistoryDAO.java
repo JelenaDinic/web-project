@@ -11,9 +11,11 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Comment;
+import beans.Fee;
 import beans.SportsObject;
 import beans.Training;
 import beans.TrainingHistory;
+import enums.Status;
 
 public class TrainingHistoryDAO {
 	private List<TrainingHistory> trainingHistory;
@@ -36,6 +38,10 @@ public class TrainingHistoryDAO {
 	
 	public List<TrainingHistory> findAll(){
 		return trainingHistory;
+	}
+	
+	public void add(TrainingHistory training) {
+		trainingHistory.add(training);
 	}
 	
 	public List<TrainingHistory> findForCoach(String coach){

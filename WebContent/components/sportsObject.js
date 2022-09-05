@@ -11,7 +11,8 @@ var sportObjectsApp = new Vue({
 			isCoach: false,
 			text: "",
 			mark: null,
-			trainings:[]
+			trainings:[],
+			generatedId: -1
 	    }
 	},
 	that: this,
@@ -115,12 +116,22 @@ var sportObjectsApp = new Vue({
 		join(training) {
 			if(this.isLoggedIn.userType === "CUSTOMER"){
 				axios.get('rest/sportsObject/check-fee/' + this.isLoggedIn.fee)
-					.then( response => {
-						let fee = response.data
-						if(fee !== null) {
+					.then( response => 
+					{
+						let entries = response.data
+						if(entries > -1) 
+						{
 							let customer = this.isLoggedIn;
-							customer.visitedSportsObjects.push(this.object.name)
-							axios.put('rest/user/' + customer.username, {
+							let add = true
+							customer.visitedSportsObjects.forEach((item) => {
+								if(item === this.object.name)
+									add = false
+							})
+							if(add) {
+								customer.visitedSportsObjects.push(this.object.name)
+							}				
+							axios.put('rest/user/' + customer.username, 
+							{
 									fee: customer.fee,
 									username: customer.username,
 									password: customer.password,
@@ -132,24 +143,45 @@ var sportObjectsApp = new Vue({
 									visitedSportsObjects: customer.visitedSportsObjects,
 									points: customer.points
 						
-				})     
-								.then(response => {
-									axios.put('rest/sportsObject/fee/' + customer.fee, {
-										usedEntries: (fee.usedEntries + 1)
-									})
-										.then(response => alert("Uspešno ste se pridružili treningu!"))
-									
+							})  
+							 
+							axios.put('rest/sportsObject/fee/' + customer.fee, 
+							{
+								usedEntries: (entries + 1)
+							})
+							
+							axios.get('rest/trainingHistory/generate-id')
+			 				.then(response => {
+								this.generatedId =  response.data
+								alert("Uspešno ste se pridružili treningu!")
+								var today = new Date();
+								var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+								axios.post('rest/trainingHistory/', 
+								{
+									id: this.generatedId,
+									joinDate: date,
+									training: training.id,
+									user: this.isLoggedIn.username,
+									coach: training.coach,
+									deleted: false
 								})
+							})
+									
 						} 
-						else {
+						else 
+						{
 							alert("Nemate aktivnu članarinu ili nemate dovoljno preostalih termina da bi posetili ovaj trening!")
 						}
 					})
 				
-			} else {
+			} else 
+			{
 				alert("Samo kupac može da se prijavi na određeni trening!")
 			}
 			
+		},
+		generateId() {
+		
 		},
 		comment : function(){
 			let id  = 0;

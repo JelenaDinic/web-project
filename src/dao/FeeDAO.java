@@ -71,13 +71,13 @@ public class FeeDAO {
 		}
 		return null;
 	}
-	public Fee checkFee(String id) {
+	public int checkFee(String id) {
 		for(Fee f : fees) {
 			if(f.getId().equals(id) && f.getStatus().equals(Status.ACTIVE) && f.getUsedEntries() < f.getNumberOfEntries()) {
-				return f;
+				return f.getUsedEntries();
 			}
 		}
-		return null;
+		return -1;
 	}
 	private void load() {
 		ObjectMapper mapper = new ObjectMapper();
