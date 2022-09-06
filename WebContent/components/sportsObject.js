@@ -17,7 +17,8 @@ var sportObjectsApp = new Vue({
 	},
 	that: this,
 	template: ` 
-    	<div>
+    	<div class="main-content">
+			<h4>Osnovne informacije:</h4>
 			<label>Naziv: </label>
 			<label>{{object?.name}}</label><br>
 			<label>Tip: </label>
@@ -31,9 +32,10 @@ var sportObjectsApp = new Vue({
 			<label>Prosecna ocena: </label>
 			<label>{{object?.averageGrade}}</label><br>
 
-			<table border="1">
-			<tr bgcolor="lightgrey">
-				<th>Nazic</th>
+			<h4>Treninzi:</h4>
+			<table class="table">
+			<tr>
+				<th>Naziv</th>
 				<th>Tip</th>
 				<th>Sportski objekat</th>
 				<th>Trajanje</th>
@@ -53,22 +55,29 @@ var sportObjectsApp = new Vue({
 			</tr>
 		</table>
 
-			<label>Komentari: </label>
+		<h4>Komentari:</h4>
 
-			<table border="1">
-				<tr bgcolor="lightgrey">
+			<table class="table">
+				<tr>
+					<th>Korisnik</th>
 					<th>Tekst</th>
 				</tr>
 				<tr v-for="(s, index) in comments">
+					<td>{{s.customer}}</td>
 					<td>{{s.text}}</td>
 				</tr>
-				<label>Dodaj komentar:</label><br>
-				<label>Komentar:</label>
-				<input v-model = "text" type="text" name="text" id="text" required><br>
-				<label>Ocjena:</label>
-				<input v-model = "mark" type="number" name="mark" id="mark" required><br>
-				<button v-on:click ="comment">Dodaj komentar</button>
 		</table>
+
+		<h5>Dodaj komentar:</h5>
+		<div>
+			<label>Komentar:</label>
+			<input class="prettyInput" v-model = "text" type="text" name="text" id="text" required><br>
+		</div>
+		<div>
+			<label>Ocjena:</label>
+			<input class="prettyInput" v-model = "mark" type="number" name="mark" id="mark" required><br>
+		</div>
+		<button class="buy-btn" v-on:click ="comment">Dodaj komentar</button>
 
     	</div>		  
     	`,

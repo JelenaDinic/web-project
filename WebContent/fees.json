@@ -1,1 +1,1 @@
-[{"id":"0","feeType":"WEEKLY","paymentDate":"2022-8-15","dateTimeOfValidity":"2022-09-23","price":700,"customer":"jelena1","status":"ACTIVE","numberOfEntries":4,"usedEntries":4}]
+[{"id":"0","feeType":"WEEKLY","paymentDate":"2022-8-15","dateTimeOfValidity":"2022-09-23","price":700,"customer":"jelena1","status":"INACTIVE","numberOfEntries":4,"usedEntries":4},{"id":"1","feeType":"MONTHLY","paymentDate":"2022-9-5","dateTimeOfValidity":"2022-10-05","price":2000,"customer":"jelena1","status":"ACTIVE","numberOfEntries":12,"usedEntries":0}]

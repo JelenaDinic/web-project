@@ -17,50 +17,66 @@ var registrationApp = new Vue({
 	    }
 	},
 	template: ` 
-    	<div>
+    	<div class="registration">
     		<h2>REGISTRACIJA</h2>
 			
 			<table>
 				<tr>
-					<td>Korisnicko ime</td>
-					<td><input type="text" id = "username" v-model = "username"></td>
+					<div>
+						<td>Korisnicko ime</td>
+						<td><input type="text" id = "username" v-model = "username"></td>
+					</div>
 				</tr>
 				<tr>
-					<td>Sifra</td>
-					<td><input type="password" id = "password" v-model = "password"></td>
+					<div>
+						<td>Sifra</td>
+						<td><input type="password" id = "password" v-model = "password"></td>
+					</div>
 				</tr>
 				<tr>
-					<td>Ime</td>
-					<td><input type="text" id = "name" v-model = "name"></td>
+					<div>
+						<td>Ime</td>
+						<td><input type="text" id = "name" v-model = "name"></td>
+					</div>
 				</tr>
 				<tr>
-					<td>Prezime</td>
-					<td><input type="text" id = "surname" v-model = "surname"></td>
+					<div>
+						<td>Prezime</td>
+						<td><input type="text" id = "surname" v-model = "surname"></td>
+					</div>
 				</tr>
 				<tr>
-					<td>Pol</td>
-					<td>
-						<select v-model = "gender" id="gender">
-  							<option value="MALE">Muški</option>
-  							<option value="FEMALE">Ženski</option>
-  						</select>
-					</td>
+					<div>
+						<td>Pol</td>
+						<td>
+							<select v-model = "gender" id="gender">
+								<option value="MALE">Muški</option>
+								<option value="FEMALE">Ženski</option>
+							</select>
+						</td>
+					</div>
 				</tr>
 				<tr>
-					<td>Datum rodjenja</td>
-					<td><input type="text" id = "dateOfBirth" v-model = "dateOfBirth"></td>
+					<div>
+						<td>Datum rodjenja</td>
+						<td><input type="text" id = "dateOfBirth" v-model = "dateOfBirth"></td>
+					</div>
 				</tr>
-				<tr v-if="isAdmin === true">
-					<td>Tip korisnika</td>
-					<td>
-						<select v-model = "userType" id="userType">
-  							<option value="MANAGER">Menadzer</option>
-  							<option value="COACH">Trener</option>
-  						</select>
-					</td>
-				</tr>
+					<div>
+						<tr v-if="isAdmin === true">
+							<td>Tip korisnika</td>
+							<td>
+								<select v-model = "userType" id="userType">
+									<option value="MANAGER">Menadzer</option>
+									<option value="COACH">Trener</option>
+								</select>
+							</td>
+						</tr>
+					</div>
 				<tr>
-					<td><button class="buy-btn" type="submit" v-on:click = "registration">REGISTRUJ SE</button></td>
+					<div>
+						<td><button class="registration-btn" type="submit" v-on:click = "registration">REGISTRUJ SE</button></td>
+					</div>
 				</tr>
 			</table>
     	</div>		  

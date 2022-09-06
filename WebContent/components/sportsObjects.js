@@ -200,6 +200,7 @@ var sportsObjectsApp = new Vue({
 			if(this.sortCombo === "0d") {
 				this.sportsObjects = this.sportsObjects.sort(
 				(a, b) => {
+					
 					return b.name.localeCompare(a.name)
 				}
 			)

@@ -8,8 +8,8 @@ var loginApp = new Vue({
 	},
 	template: ` 
     	<div class="login">
-			<div>Username <input type="text" id = "username" v-model = "username"></div>
-			<div>Password <input type="password" id = "password" v-model = "password"></div>
+			<div>Korisnicko ime <input type="text" id = "username" v-model = "username"></div>
+			<div>Sifra <input type="password" id = "password" v-model = "password"></div>
 			<button class="login-btn" v-on:click = "login">ULOGUJ SE</button>			
     	</div>		  
     	`,

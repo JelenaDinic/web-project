@@ -10,7 +10,7 @@ var addSportsObjectApp = new Vue({
 		  postalCode: 0,
 	      logo: "",
 		  manager: null,
-		  allManagers: []
+		  allManagers: [],
 	    }
 	},
 	template: ` 
@@ -60,7 +60,9 @@ var addSportsObjectApp = new Vue({
 					<td><button type="submit" v-on:click = "registration">KREIRAJ</button></td>
 				</tr>
 			</table>
-    	</div>		  
+			<!DOCTYPE html>
+
+    	</div>	  
     	`,
     mounted () {
 		axios.get('rest/sportsObject/isLoggedIn')
@@ -77,6 +79,7 @@ var addSportsObjectApp = new Vue({
 			})
 		axios.get('rest/user/freeManagers')
 			.then(response => {this.allManagers = response.data})
+
 
     },
 	methods: {
