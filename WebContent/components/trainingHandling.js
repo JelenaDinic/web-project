@@ -102,7 +102,7 @@ var trainingHandlingApp = new Vue({
 					</tr>		
 				</table>
 
-				<table v-if = "isCoach === true" border="1">
+				<table v-if = "isCoach === true || isCustomer === true" border="1">
 				<tr bgcolor="lightgrey">
 					<th>Id</th>
 					<th>Trener</th>

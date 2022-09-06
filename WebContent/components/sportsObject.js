@@ -189,9 +189,6 @@ var sportObjectsApp = new Vue({
 			}
 			
 		},
-		generateId() {
-		
-		},
 		comment : function(){
 			let id  = 0;
 			axios.get('rest/comment/generate-id')

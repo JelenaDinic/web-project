@@ -9,28 +9,28 @@ var promoCodeApp = new Vue({
 	    }
 	},
 	template: ` 
-    	<div>
+    	<div class="promo-code">
     		<h2>DEFINIŠI NOVI PROMO KOD</h2>
 			
-			<table>
+			<table class="promo-code-table">
 				<tr>
 					<td>Kod</td>
-					<td><input type="text" id = "code" v-model = "code"></td>
+					<td><input class="membership-input" style="font-size: 20px; width: 200px" type="text" id = "code" v-model = "code"></td>
 				</tr>
 				<tr>
 					<td>Datum važenja</td>
-					<td><input type="date" id = "date" v-model = "date"></td>
+					<td><input class="membership-input" style="font-size: 20px; width: 200px"  type="date" id = "date" v-model = "date"></td>
 				</tr>
 				<tr>
 					<td>Broj upotrebi</td>
-					<td><input type="number" id = "uses" v-model = "uses"></td>
+					<td><input class="membership-input" style="font-size: 20px; width: 200px" type="number" id = "uses" v-model = "uses"></td>
 				</tr>
 				<tr>
 					<td>Procenat umanjenja iznosa</td>
-					<td><input type="number" id = "discount" v-model = "discount"></td>
-					<td>%</td>
+					<td><input class="membership-input" style="font-size: 20px; width: 200px" type="number" id = "discount" v-model = "discount"></td>
 				</tr>
 				<tr>
+					<td></td>
 					<td><button type="submit" v-on:click = "addPromoCode">KREIRAJ</button></td>
 				</tr>
 			</table>

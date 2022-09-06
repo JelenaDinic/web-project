@@ -298,27 +298,62 @@ body {
 	border-bottom: 1px solid rgba(253,198,0,0.46);
 }
 
+.show-button {
+	border: 2px solid orange;
+	border-radius: 10px;
+	padding: 5px;
+	background: white;
+	color: orange;
+	cursor: pointer;
+	text-transform: uppercase;
+	font-weight: bold;
+}
 
+.membership-input {
+	border: none;
+	border-bottom: 1px solid orange;	
+}
 
+.membership-input:focus {
+	border: none;
+	outline: 0;
+	border-bottom: 1px solid orange;
+}
 
+.promo-code h2{
+	text-align: center;
+}
 
+.promo-code-table {
+	margin: auto;
+	margin-top: 40px;
+	border-collapse:separate;
+    border-spacing: 10px 15px;
+	font-size: 20px;
+	border: 3px solid rgba(253,198,0,0.46);
+	border-radius: 10px;
+	width: fit-content;
+	padding: 20px;
+	height: 350px;
+	box-shadow: 13px 11px 23px 2px rgba(253,198,0,0.46);
+	-webkit-box-shadow: 13px 11px 23px 2px rgba(253,198,0,0.46);
+	-moz-box-shadow: 13px 11px 23px 2px rgba(253,198,0,0.46);
 
+}
 
+.promo-code-table tr {
+	margin-bottom: 20px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.promo-code-table button {
+	border: none;	
+	border-radius: 10px;
+	padding: 10px;
+	background: orange;
+	color: white;
+	cursor: pointer;
+	width: 100px;
+	float: right;
+	text-transform: uppercase;
+	font-size: 17px;
+}

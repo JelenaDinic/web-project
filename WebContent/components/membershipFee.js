@@ -30,7 +30,7 @@ var membershipFeeApp = new Vue({
 				</div>
             </div>
 			<div>
-				<input type="text" id = "code1" v-model = "code1">
+				<input class="membership-input" type="text" id = "code1" v-model = "code1">
 				<button @click="usePromoCode(1, code1)" class="buy-btn">PRIMENI KOD</button>
 			</div>
             <button @click="buy('WEEKLY', price1, 4)" class="buy-btn">KUPI</button>
@@ -50,7 +50,7 @@ var membershipFeeApp = new Vue({
 				</div>
             </div>
 			<div>
-				<input type="text" id = "code2" v-model = "code2">
+				<input class="membership-input" type="text" id = "code2" v-model = "code2">
 				<button @click="usePromoCode(2, code2)" class="buy-btn">PRIMENI KOD</button>
 			</div>
             <button @click="buy('MONTHLY', price2, 12)" class="buy-btn">KUPI</button>
@@ -70,7 +70,7 @@ var membershipFeeApp = new Vue({
 				</div>
             </div>
 			<div>
-				<input type="text" id = "code3" v-model = "code3">
+				<input class="membership-input" type="text" id = "code3" v-model = "code3">
 				<button @click="usePromoCode(3, code3)" class="buy-btn">PRIMENI KOD</button>
 			</div>
             <button @click="buy('MONTHLY', price3, 20)" class="buy-btn">KUPI</button>
@@ -90,7 +90,7 @@ var membershipFeeApp = new Vue({
 				</div>
             </div>
 			<div>
-				<input type="text" id = "code4" v-model = "code4">
+				<input class="membership-input" type="text" id = "code4" v-model = "code4">
 				<button @click="usePromoCode(4, code4)" class="buy-btn">PRIMENI KOD</button>
 			</div>
             <button @click="buy('ANNUALY', price4, 200)" class="buy-btn">KUPI</button>
