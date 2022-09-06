@@ -12,8 +12,8 @@ import beans.Comment;
 
 public class CommentDAO {
 	private List<Comment> comments;
-	private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\comments.json";
-	//private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\comments.json";
+	//private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\comments.json";
+	private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\comments.json";
 	
 	public CommentDAO() {
 		comments = new ArrayList<Comment>();

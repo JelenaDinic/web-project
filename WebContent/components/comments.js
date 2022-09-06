@@ -23,7 +23,7 @@ var CommentsApp = new Vue({
 			<li v-if="isLoggedIn === null">
 				<a href="registration.html">Registruj se</a>
 			</li>
-			<li v-if="isLoggedIn != null">
+			<li v-if="isLoggedIn != null" @click="logout">
 				<a>Izloguj se</a>
 			</li>
 			<li  v-if="isManager === true">
@@ -116,5 +116,14 @@ var CommentsApp = new Vue({
                     }
                 )   
             },
+		logout() {
+				axios.post('rest/user/logout');
+				this.isLoggedIn = null;
+				this.isAdmin = false;
+				this.isManager = false;
+				this.isCustomer = false;
+				this.isCoach = false;
+				window.location.href = 'sportsObjects.html';
+			}
 	}
 })

@@ -241,6 +241,14 @@ body {
 	cursor: pointer;
 }
 
+.combo select {
+	background: orange;
+	border: none;
+	outline: none;
+	padding: 5px;
+	border-radius: 10px;
+	cursor: pointer;
+}
 .sort button {
 	border: none;	
 	border-radius: 10px;

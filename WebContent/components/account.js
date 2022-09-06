@@ -7,14 +7,13 @@ var accountApp = new Vue({
 			oldUsername: "",
 			username: "",
 			password: "",
-			isMale: false,
-			isFemale: false,
+			gender: "",
 			dateOfBirth: "",
 			userType: "",
 			fee: "",
-			visitedObjects: [],
 			points: "",
-			customerType: null,
+			customerType: "",
+			sportsObject: "",
 			isLoggedIn:null,
 			isManager:false,
 			isCustomer:false,
@@ -36,7 +35,7 @@ var accountApp = new Vue({
 					<li v-if="isLoggedIn === null">
 						<a href="registration.html">Registruj se</a>
 					</li>
-					<li v-if="isLoggedIn != null">
+					<li v-if="isLoggedIn != null" @click="logout">
 						<a>Izloguj se</a>
 					</li>
 					<li  v-if="isManager === true">
@@ -69,77 +68,70 @@ var accountApp = new Vue({
 				</ul>
 			</div>
 				<div class="registration">
-				    <h2>MOJ NALOG</h2>
+				    <h2>MOJ PROFIL</h2>
 
 					<div>
 						<label>Korisničko ime</label><br>
 						<input v-model = "username" type="text" name="username" id="username" required><br>	
 					</div>
 
-				
 					<div>
 						<label>Lozinka</label><br>
 						<input v-model = "password" type="password" name="psw" id="psw" required><br>
 					</div>
 
-
 					<div>
 						<label>Ime</label><br>
 						<input v-model = "name" type="text" name="name" id="name" required><br>
 					</div>
-
-
+					
 					<div>
 						<label>Prezime</label><br>
 						<input v-model = "surname" type="text" name="email" id="email" required><br>
 					</div>
 
-
-					<div>
+					<div class="combo">
 						<label>Pol</label><br>
-						<input v-model = "isMale" type="radio" name="gender" value="male" checked> Muški
-						<input v-model = "isFemale" type="radio" name="gender" value="female"> Ženski<br>
+						<select v-model = "gender" id="gender">
+								<option value="MALE">Muški</option>
+								<option value="FEMALE">Ženski</option>
+						</select>
 					</div>
-
-				
+					
 					<div>
 						<label>Datum rođenja</label><br>
 				    	<input v-model = "dateOfBirth" type="text" name="dob" id="dob" required><br>
 					</div>
 
-
 					<div>
 						<label>Tip korisnika</label><br>
 				    	<input v-model = "userType" type="text" name="user" id="user" disabled><br>
 					</div>
+					
+					<div v-if="isManager ===true">
+						<label>Sportski objekat</label><br>
+				    	<input v-model = "sportsObject" type="text" name="sportsObject" id="sportsObject" disabled><br>
+					</div>
 
-
-					<div>
+					<div v-if="isCustomer ===true">
 						<label>Članarina</label><br>
 						<input v-model = "fee" type="text" name="fee" id="fee" disabled><br>
 					</div>
 
-				
-					<div>
-						<label>Posećeni objekti</label><br>
-						<input v-model = "visitedObjects" type="text" name="visit" id="visit" disabled><br>
-					</div>
-
-
-					<div>
+					<div v-if="isCustomer ===true">
 						<label>Broj sakupljenih bodova</label><br>
 						<input v-model = "points" type="text" name="points" id="points" disabled><br>
 					</div>
 
-
-					<div>
-					<label>Tip kupca</label><br>
-				    <input v-model = "customerType" type="text" name="type" id="type" disabled><br>
-				
-				    <button v-on:click ="update" class="registration-btn">Sačuvaj izmene</button>
+					<div v-if="isCustomer ===true">
+						<label>Tip kupca</label><br>
+					    <input v-model = "customerType" type="text" name="type" id="type" disabled><br>
 					</div>
+					
+				    <button v-on:click ="update" class="registration-btn">Sačuvaj izmene</button>
+					
 
-				  </div>
+				</div>
     	</div>		  
     	`,
     mounted () {
@@ -153,11 +145,15 @@ var accountApp = new Vue({
 					this.name = this.isLoggedIn.name;
 					this.surname = this.isLoggedIn.surname;
 					this.points = this.isLoggedIn.points;
-					if (this.isLoggedIn.gender === "MALE")
-						this.isMale = true
-					else
-						this.isFemale = true;
 					this.dateOfBirth = this.isLoggedIn.dateOfBirth;
+					this.customerType = this.isLoggedIn.customerType.name;
+					this.userType = this.isLoggedIn.userType;
+					this.fee = this.isLoggedIn.fee;
+					this.sportsObject = this.isLoggedIn.sportsObject
+					if(this.isLoggedIn.gender === "MALE")
+						this.gender = "MALE"
+					else
+						this.gender = "FEMALE"
 					if (this.isLoggedIn != null) {
 						if (this.isLoggedIn.userType === "MANAGER")
 							this.isManager = true;
@@ -201,7 +197,7 @@ var accountApp = new Vue({
 				password: this.password,
 				name: this.name,
 				surname: this.surname,
-				gender: "MALE",
+				gender: this.gender,
 				dateOfBirth: this.dateOfBirth
 		})
 			.then(response => {
@@ -212,7 +208,16 @@ var accountApp = new Vue({
 			.catch(error => {
                 alert("Greska prilikom izmene podataka!");
             })
-		}
+		},
+		logout() {
+				axios.post('rest/user/logout');
+				this.isLoggedIn = null;
+				this.isAdmin = false;
+				this.isManager = false;
+				this.isCustomer = false;
+				this.isCoach = false;
+				window.location.href = 'sportsObjects.html';
+			}
 		
 		
 	}

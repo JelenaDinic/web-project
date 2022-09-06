@@ -74,15 +74,12 @@ public class UserService {
 		return Response.status(200).build();
 	}
 	
-	/*@POST
-	@Path("/{username}")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response setObjectToManager(@PathParam("username") String username, SportsObject sportsObject) {
-		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
-		dao.setObjectToManager(username, sportsObject);
-		return Response.status(200).build();
-	}*/
+	@POST
+	@Path("/logout")
+	public Response logout(@Context HttpServletRequest request) {
+		request.getSession().invalidate();
+		return Response.ok().build();
+	}
 	
 	@POST
 	@Path("/login")
