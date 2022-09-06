@@ -18,6 +18,49 @@ var sportObjectsApp = new Vue({
 	that: this,
 	template: ` 
     	<div class="main-content">
+		<div id="navBar">
+		<ul class="nav-menu">
+			<li v-if="isLoggedIn != null">
+				<a href="sportsObjects.html">Početna</a>
+			</li>
+			<li v-if="isLoggedIn === null">
+				<a href="login.html">Uloguj se</a>
+			</li>
+			<li v-if="isLoggedIn === null">
+				<a href="registration.html">Registruj se</a>
+			</li>
+			<li v-if="isLoggedIn != null">
+				<a>Izloguj se</a>
+			</li>
+			<li  v-if="isManager === true">
+				<a>Moj sportski objekat</a>
+			</li>
+			<li v-if="isManager === true">
+				<a href="trainingHandling.html">Treninzi</a>
+			</li>
+			<li v-if="isLoggedIn != null">
+				<a href="account.html">Moj profil</a>
+			</li>
+			<li  v-if="isCustomer === true">
+				<a href="membershipFee.html">Kupite članarinu</a>
+			</li>
+			<li v-if="isAdmin === true">
+				<a href="users.html">Pregled svih registrovanih korisnika</a>
+			</li>
+			<li v-if="isAdmin === true">
+				<a href="registration.html">Kreiraj menadzera/trenera</a>
+			</li>
+			<li v-if="isAdmin === true">
+				<a href="addPromoCode.html">Definiši novi promo kod</a>
+			</li>
+			<li v-if="isAdmin === true">
+			<a href="comments.html">Komentari</a>
+			</li>
+			<li v-if="isCoach === true || isCustomer === true">
+				<a href="trainingHandling.html">Pregled svih treninga</a>
+			</li>
+		</ul>
+	</div>
 			<h4>Osnovne informacije:</h4>
 			<label>Naziv: </label>
 			<label>{{object?.name}}</label><br>
@@ -29,7 +72,7 @@ var sportObjectsApp = new Vue({
 			<label>{{object?.location.address.city}}</label><br>
 			<label>Logo: </label>
 			<label>{{object?.logo}}</label><br>
-			<label>Prosecna ocena: </label>
+			<label>Prosečna ocena: </label>
 			<label>{{object?.averageGrade}}</label><br>
 
 			<h4>Treninzi:</h4>
@@ -40,7 +83,7 @@ var sportObjectsApp = new Vue({
 				<th>Sportski objekat</th>
 				<th>Trajanje</th>
 				<th>Trener</th>
-				<th>Datum i vrijeme</th>
+				<th>Datum i vreme</th>
 				<th></th>
 			</tr>
 				
@@ -74,7 +117,7 @@ var sportObjectsApp = new Vue({
 			<input class="prettyInput" v-model = "text" type="text" name="text" id="text" required><br>
 		</div>
 		<div>
-			<label>Ocjena:</label>
+			<label>Ocena:</label>
 			<input class="prettyInput" v-model = "mark" type="number" name="mark" id="mark" required><br>
 		</div>
 		<button class="buy-btn" v-on:click ="comment">Dodaj komentar</button>

@@ -20,65 +20,58 @@ var registrationApp = new Vue({
     	<div class="registration">
     		<h2>REGISTRACIJA</h2>
 			
-			<table>
-				<tr>
+
 					<div>
-						<td>Korisnicko ime</td>
-						<td><input type="text" id = "username" v-model = "username"></td>
+						<label>Korisničko ime</label>
+						<input type="text" id = "username" v-model = "username">
 					</div>
-				</tr>
-				<tr>
+
 					<div>
-						<td>Sifra</td>
-						<td><input type="password" id = "password" v-model = "password"></td>
+						<label>Šifra</label>
+						<input type="password" id = "password" v-model = "password">
 					</div>
-				</tr>
-				<tr>
+
 					<div>
-						<td>Ime</td>
-						<td><input type="text" id = "name" v-model = "name"></td>
+						<label>Ime</label>
+						<input type="text" id = "name" v-model = "name">
 					</div>
-				</tr>
-				<tr>
+
 					<div>
-						<td>Prezime</td>
-						<td><input type="text" id = "surname" v-model = "surname"></td>
+						<label>Prezime</label>
+						<input type="text" id = "surname" v-model = "surname">
 					</div>
-				</tr>
-				<tr>
+
 					<div>
-						<td>Pol</td>
-						<td>
+						<label>Pol</label>
+						<div>
 							<select v-model = "gender" id="gender">
 								<option value="MALE">Muški</option>
 								<option value="FEMALE">Ženski</option>
 							</select>
-						</td>
+						</div>
 					</div>
-				</tr>
-				<tr>
+
 					<div>
-						<td>Datum rodjenja</td>
-						<td><input type="text" id = "dateOfBirth" v-model = "dateOfBirth"></td>
+						<label>Datum rođenja</label>
+						<input type="text" id = "dateOfBirth" v-model = "dateOfBirth">
 					</div>
-				</tr>
-					<div>
-						<tr v-if="isAdmin === true">
-							<td>Tip korisnika</td>
-							<td>
+
+					<div v-if="isAdmin === true">
+
+							<label>Tip korisnika</label>
+							<div>
 								<select v-model = "userType" id="userType">
-									<option value="MANAGER">Menadzer</option>
+									<option value="MANAGER">Menadžer</option>
 									<option value="COACH">Trener</option>
 								</select>
-							</td>
-						</tr>
+							</div>
+
 					</div>
-				<tr>
+
 					<div>
-						<td><button class="registration-btn" type="submit" v-on:click = "registration">REGISTRUJ SE</button></td>
+						<button class="registration-btn" type="submit" v-on:click = "registration">REGISTRUJ SE</button>
 					</div>
-				</tr>
-			</table>
+
     	</div>		  
     	`,
     mounted () {

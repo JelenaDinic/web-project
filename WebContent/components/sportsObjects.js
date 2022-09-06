@@ -70,7 +70,7 @@ var sportsObjectsApp = new Vue({
 				<h3>Prikaz sportskih objekata</h3>
 				
 				<div class="search">
-					<label>Pretrazi:</label>
+					<label>Pretraži:</label>
 					<input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
 				</div>
 				
@@ -78,12 +78,12 @@ var sportsObjectsApp = new Vue({
 					<div>
 						<label>Parametar:</label>
 						<select id="comboBox" v-model = "sortCombo">
-						  <option value="0a">Naziv sportskog objekta(rastuci)</option>
-						  <option value="0d">Naziv sportskog objekta(opadajuci)</option>
-						  <option value="1a">Lokacija(rastuci)</option>
-				          <option value="1d">Lokacija(opadajuci)</option>
-						  <option value="2a">Prosecna ocena(rastuci)</option>
-				          <option value="2d">Prosecna ocena(opadajuci)</option>
+						  <option value="0a">Naziv sportskog objekta(rastući)</option>
+						  <option value="0d">Naziv sportskog objekta(opadajući)</option>
+						  <option value="1a">Lokacija(rastući)</option>
+				          <option value="1d">Lokacija(opadajući)</option>
+						  <option value="2a">Prosečna ocena(rastući)</option>
+				          <option value="2d">Prosečna ocena(opadajući)</option>
 						</select> 
 					</div>
 					<button v-on:click = "sorting">Sortiraj</button>
@@ -106,8 +106,8 @@ var sportsObjectsApp = new Vue({
 		    			<th>Tip</th>
 	                    <th>Lokacija</th>
 	                    <th>Logo</th>
-	                    <th>Prosecna ocena objekta</th>
-	                    <th>Radno vrijeme</th>
+	                    <th>Prosečna ocena objekta</th>
+	                    <th>Radno vreme</th>
 		    		</tr>
 		    			
 		    		<tr v-for="(s, index) in sportsObjects">
@@ -120,7 +120,7 @@ var sportsObjectsApp = new Vue({
 						<td><button class="show-button" @click="details(s.name)">Prikazi</button></td>
 		    		</tr>
 		    	</table>
-		    	<button v-if="isAdmin === true" onclick="window.location='addSportsObject.html';">Dodaj</button>
+		    	<button v-if="isAdmin === true" onclick="window.location='addSportsObject.html';"  class="buy-btn">Dodaj</button>
 			</div>
 
     	</div>		  

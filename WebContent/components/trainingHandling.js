@@ -8,6 +8,8 @@ var trainingHandlingApp = new Vue({
 			isLoggedIn: null,
 			isCoach: false,
 			isCustomer: false,
+			isAdmin:false,
+			isManager:false,
 			searchText: "",
 			trainingsManager: [],
 			addPressed: false,
@@ -38,49 +40,53 @@ var trainingHandlingApp = new Vue({
 		}
 	},
 	template: ` 
-		<div>
+		<div class="main-content">
+		<div id="navBar">
+		<ul class="nav-menu">
+			<li v-if="isLoggedIn != null">
+				<a href="sportsObjects.html">Početna</a>
+			</li>
+			<li v-if="isLoggedIn === null">
+				<a href="login.html">Uloguj se</a>
+			</li>
+			<li v-if="isLoggedIn === null">
+				<a href="registration.html">Registruj se</a>
+			</li>
+			<li v-if="isLoggedIn != null">
+				<a>Izloguj se</a>
+			</li>
+			<li  v-if="isManager === true">
+				<a>Moj sportski objekat</a>
+			</li>
+			<li v-if="isManager === true">
+				<a href="trainingHandling.html">Treninzi</a>
+			</li>
+			<li v-if="isLoggedIn != null">
+				<a href="account.html">Moj profil</a>
+			</li>
+			<li  v-if="isCustomer === true">
+				<a href="membershipFee.html">Kupite članarinu</a>
+			</li>
+			<li v-if="isAdmin === true">
+				<a href="users.html">Pregled svih registrovanih korisnika</a>
+			</li>
+			<li v-if="isAdmin === true">
+				<a href="registration.html">Kreiraj menadzera/trenera</a>
+			</li>
+			<li v-if="isAdmin === true">
+				<a href="addPromoCode.html">Definiši novi promo kod</a>
+			</li>
+			<li v-if="isAdmin === true">
+			<a href="comments.html">Komentari</a>
+			</li>
+			<li v-if="isCoach === true || isCustomer === true">
+				<a href="trainingHandling.html">Pregled svih treninga</a>
+			</li>
+		</ul>
+	</div>
 			<div>
-			<label v-if = "isCoach === true || isCustomer === true">Pretrazi po sportskom objektu:</label><input id = "searchText" type = "text" v-model = "searchText">
-			<button v-on:click = "search">Pretrazi</button>
-			<div>
-				<label for="price">Maksimalna cijena: {{this.price}}</label>
-				<input type="range" id="price" name="price" v-model = "price" min="0" max="3000" @change="changePrice">
-			</div>
-			<div>
-				<label for="price">Datum prijave: </label>
-				<label for="start">Od: </label>
-				<input type="date" id="start" name="trip-start" v-model = "startDate" value="2018-07-22" min="2018-01-01" max="2022-09-04">
-				<label for="end">Do: </label>
-				<input type="date" id="end" name="trip-end" v-model = "endDate" value="2018-07-22" min="2018-01-01" max="2022-09-04" @change="dateChange">
-			</div>
-			<div class="sort">
-			<div>
-				<label>Parametar:</label>
-				<select id="comboBox" v-model = "sortCombo">
-				  <option value="0a">Naziv sportskog objekta(rastuci)</option>
-				  <option value="0d">Naziv sportskog objekta(opadajuci)</option>
-				  <option value="1a">Cena(rastuci)</option>
-				  <option value="1d">Cena(opadajuci)</option>
-				  <option value="2a">Datum prijave(rastuci)</option>
-				  <option value="2d">Datum prijave(opadajuci)</option>
-				</select> 
-			</div>
-				<button v-on:click = "sorting">Sortiraj</button>
-			</div>
-			<div ref = "filter" class="filter">
-				<div>
-					<label>TERETANA</label><input type="checkbox" id="checkbox1" v-model="filter1">
-					<label>BAZEN</label><input type="checkbox" id="checkbox2" v-model="filter2">
-					<label>SPORTSKI CENTAR</label><input type="checkbox" id="checkbox3" v-model="filter3">
-					<label>PLESNI STUDIO</label><input type="checkbox" id="checkbox4" v-model="filter4">
-					<label>PERSONALNI</label><input type="checkbox" id="checkbox5" v-model="filter5">
-					<label>GRUPNI</label><input type="checkbox" id="checkbox6" v-model="filter6">
-					<label>U TERETANI</label><input type="checkbox" id="checkbox7" v-model="filter7">
-				</div>
-				<button v-on:click = "filter">Filtriraj</button>
-			</div>
-				<table v-if = "isCoach === false" border="1">
-					<tr bgcolor="lightgrey">
+				<table class="table" v-if = "isCoach === false">
+					<tr>
 						<th>Naziv</th>
 						<th>Tip</th>
 						<th>Sportski objekat</th>
@@ -98,39 +104,39 @@ var trainingHandlingApp = new Vue({
 						<td>{{t.coach}}</td>
 						<td>{{t.description}}</td>
 						<td>{{t.photo}}</td>
-						<td><button v-on:click = "openUpdateForm(t)">Izmeni</button></td>
+						<td><button v-on:click = "openUpdateForm(t)" class="buy-btn">Izmeni</button></td>
 					</tr>		
 				</table>
 
-				<table v-if = "isCoach === true || isCustomer === true" border="1">
-				<tr bgcolor="lightgrey">
+				<table class="table" v-if = "isCoach === true || isCustomer === true">
+				<tr>
 					<th>Id</th>
 					<th>Trener</th>
 					<th>Korisnik</th>
 					<th>Datum prijave</th>
 				</tr>
 					
-				<tr v-for="(t, index) in tableView">
+				<tr v-for="(t, index) in trainingsManager">
 					<td>{{t.training}}</td>
 					<td>{{t.coach}}</td>
 					<td>{{t.user}}</td>
 					<td>{{t.joinDate}}</td>
-					<td><button @click="dismiss(t.id)">Otkazi</button></td>
+					<td><button @click="dismiss(t.id)" class="buy-btn">Otkazi</button></td>
 				</tr>		
 			</table>
 		</div>
 		<div>
-			<button v-if = "isCoach === false" v-on:click = "openAddForm">Dodavanje novog treninga</button>
-			<table v-if = "addPressed === true || updatePressed===true">
-				<tr>
+			<button v-if = "isCoach === false" v-on:click = "openAddForm" class="buy-btn">Dodavanje novog treninga</button>
+			<div v-if = "addPressed === true || updatePressed===true">
+				<div>
 					<td>Naziv</td>
-					<td><input type="text" id = "name" v-model = "name" required></td>
-				</tr>
-				<tr>
+					<td><input type="text" id = "name" v-model = "name" required class="prettyInput"></td>
+				</div>
+				<div>
 					<td>Slika</td>
-					<td><input type="text" id = "photo" v-model = "photo" required></td>
-				</tr>
-				<tr>
+					<td><input type="text" id = "photo" v-model = "photo" required class="prettyInput"></td>
+				</div>
+				<div>
 					<td>Tip</td>
 					<td>
 						<select v-model = "type" id="type" required>
@@ -139,27 +145,27 @@ var trainingHandlingApp = new Vue({
 							<option value="GYM">Teretana</option>
   						</select>
 					</td>
-				</tr>
-				<tr>
+				</div>
+				<div>
 					<td>Trener</td>
 					<td>
-					<select v-model="coach" required>
-						<option v-for="c in coaches" :value="c.username">{{c.name}} {{c.surname}}</option>
-					</select>
-					</td>
-				</tr>
-				<tr>
+						<select v-model="coach" required>
+							<option v-for="c in coaches" :value="c.username">{{c.name}} {{c.surname}}</option>
+						</select>
+					<td>
+				</div>
+				<div>
 					<td>Trajanje</td>
-					<td><input type="text" id = "duration" v-model = "duration"></td>
-				</tr>
-				<tr>
+					<td><input type="text" id = "duration" v-model = "duration" class="prettyInput"></td>
+				</div>
+				<div>
 					<td>Opis</td>
-					<td><input type="text" id = "description" v-model = "description"></td>
-				</tr>
-				<tr>
-					<td><button type="submit" v-on:click = "add">POTVRDI</button></td>
-				</tr>
-			</table>
+					<td><input type="text" id = "description" v-model = "description" class="prettyInput"></td>
+				</div>
+				<div>
+					<td><button type="submit" v-on:click = "add" class="buy-btn">POTVRDI</button></td>
+				</div>
+			</div>
 		</div>
 		</div>		  
 		`,
@@ -177,22 +183,24 @@ var trainingHandlingApp = new Vue({
 						this.sportsObject = this.isLoggedIn.sportsObject;
 						if (this.isLoggedIn != null) {
 							if (this.isLoggedIn.userType === "MANAGER") {
+								this.isManager = true;
 								Array.from(this.trainings).forEach(element => {
 									if (element.sportsObject === this.isLoggedIn.sportsObject) {
 										this.trainingsManager.push(element);
 									}
 
 								});
-								this.tableView = this.trainingsManager;
 							}
 							else if (this.isLoggedIn.userType === "COACH") {
 								this.isCoach = true;
 								axios.get('rest/trainingHistory/' + this.isLoggedIn.username)
 									.then(response => { this.trainingsManager = response.data; this.pom = this.trainingsManager; })
-									.then(() => { this.tableView = this.trainingsManager })
 							}
 							else if (this.isLoggedIn.userType === "CUSTOMER") {
 								this.isCustomer = true;
+							}
+							else if (this.isLoggedIn.userType === "ADMIN") {
+								this.isAdmin = true;
 							}
 						}
 					})
@@ -273,36 +281,6 @@ var trainingHandlingApp = new Vue({
 			} else {
 				alert("Trening mozete otkazati najkasnije dva dana ranije!");
 			}
-		},
-		sorting : function(){
-		},
-		filter : function(){
-
-			var result = [];
-			let ovaj = this;
-			this.trainingsManager.forEach(element => {
-
-				axios.get('rest/training/id/' + element.training).then(
-					(response) => {
-						if (response.data.type == "PERSONAL" && this.filter5 != false)  result.push(element);
-						if (response.data.type == "GROUP" && this.filter6 != false)  result.push(element)
-						if (response.data.type == "GYM" && this.filter7 != false)  result.push(element)
-						axios.get('rest/sportsObject/find/' + response.data.sportsObject).then(
-							(response) => {
-								if (response.data.type == "GYM" && this.filter1 != false)  result.push(element)
-								if (response.data.type == "POOL" && this.filter2 != false)  result.push(element)
-								if (response.data.type == "SPORT_CENTER" && this.filter3 != false)  result.push(element)
-								if (response.data.type == "DANCE_STUDIO" && this.filter4 != false)  result.push(element)
-							}
-						)
-					}
-				)
-			});
-
-			if(this.filter1 == false && this.filter2 == false && this.filter3 == false && this.filter4 == false && this.filter5 == false  && this.filter6 == false  && this.filter7 == false){
-				result = this.trainingsManager;
-			}
-			this.tableView = result;
 		},
 		changePrice(){
 			const result = [];
