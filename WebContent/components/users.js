@@ -13,46 +13,101 @@ var usersApp = new Vue({
 			filter5: false,
 			filter6: false,
 			filter7: false,
-			user: null
+			user: null,
+			isLoggedIn: null,
+            isManager: false,
+            isCustomer: false,
+            isAdmin: false,
+            isCoach: false
 	    }
 	},
 	template: ` 
-    	<div>
-		<label>Pretrazi:</label><input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
-		<div>
-		<label>Parametar:</label>
-		<select id="comboBox" v-model = "sortCombo">
-		  <option value="0r">Ime(rastuci)</option>
-		  <option value="0o">Ime(opadajuci)</option>
-		  <option value="1r">Prezime(rastuci)</option>
-		  <option value="1o">Prezime(opadajuci)</option>
-		  <option value="2r">Korisnicko ime(rastuci)</option>
-		  <option value="2o">Korisnicko ime(opadajuci)</option>
-		  <option value="3r">Broj sakupljenih bodova(rastuci)</option>
-		  <option value="3o">Broj sakupljenih bodova(opadajuci)</option>
-		</select> 
-		<button v-on:click = "sorting">Sortiraj</button>
-		</div>
-		<div ref = "filter">
-			<label>ADMIN</label><input type="checkbox" id="checkbox1" v-model="filter1">
-			<label>MENADZER</label><input type="checkbox" id="checkbox2" v-model="filter2">
-			<label>TRENER</label><input type="checkbox" id="checkbox3" v-model="filter3">
-			<label>KUPAC</label><input type="checkbox" id="checkbox4" v-model="filter4">
-			<label>ZLATNI</label><input type="checkbox" id="checkbox5" v-model="filter5">
-			<label>SREBRNI</label><input type="checkbox" id="checkbox6" v-model="filter6">
-			<label>BRONZANI</label><input type="checkbox" id="checkbox7" v-model="filter7">
-			<button v-on:click = "filter">Filtriraj</button>
-		</div>
-    		<table border="1">
-	    		<tr bgcolor="lightgrey">
+    	<div class="main-content">
+		<div id="navBar">
+		<ul class="nav-menu">
+			<li v-if="isLoggedIn != null">
+				<a href="sportsObjects.html">Početna</a>
+			</li>
+			<li v-if="isLoggedIn === null">
+				<a href="login.html">Uloguj se</a>
+			</li>
+			<li v-if="isLoggedIn === null">
+				<a href="registration.html">Registruj se</a>
+			</li>
+			<li v-if="isLoggedIn != null">
+				<a>Izloguj se</a>
+			</li>
+			<li  v-if="isManager === true">
+				<a>Moj sportski objekat</a>
+			</li>
+			<li v-if="isManager === true">
+				<a href="trainingHandling.html">Treninzi</a>
+			</li>
+			<li v-if="isLoggedIn != null">
+				<a href="account.html">Moj profil</a>
+			</li>
+			<li  v-if="isCustomer === true">
+				<a href="membershipFee.html">Kupite članarinu</a>
+			</li>
+			<li v-if="isAdmin === true">
+				<a href="users.html">Pregled svih registrovanih korisnika</a>
+			</li>
+			<li v-if="isAdmin === true">
+				<a href="registration.html">Kreiraj menadzera/trenera</a>
+			</li>
+			<li v-if="isAdmin === true">
+				<a href="addPromoCode.html">Definiši novi promo kod</a>
+			</li>
+			<li v-if="isAdmin === true">
+			<a href="comments.html">Komentari</a>
+			</li>
+			<li v-if="isCoach === true || isCustomer === true">
+				<a href="trainingHandling.html">Pregled svih treninga</a>
+			</li>
+		</ul>
+	</div>
+			<div class="search">
+				<label>Pretraži:</label>
+				<input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
+			</div>
+			<div class="sort">
+				<div>
+					<label>Parametar:</label>
+					<select id="comboBox" v-model = "sortCombo">
+					<option value="0r">Ime(rastući)</option>
+					<option value="0o">Ime(opadajući)</option>
+					<option value="1r">Prezime(rastući)</option>
+					<option value="1o">Prezime(opadajući)</option>
+					<option value="2r">Korisničko ime(rastući)</option>
+					<option value="2o">Korisničko ime(opadajući)</option>
+					<option value="3r">Broj sakupljenih bodova(rastući)</option>
+					<option value="3o">Broj sakupljenih bodova(opadajući)</option>
+					</select> 
+				</div>
+				<button v-on:click = "sorting">Sortiraj</button>
+			</div>
+			<div ref = "filter" class="filter">
+				<div>
+					<label>ADMIN</label><input type="checkbox" id="checkbox1" v-model="filter1">
+					<label>MENADŽER</label><input type="checkbox" id="checkbox2" v-model="filter2">
+					<label>TRENER</label><input type="checkbox" id="checkbox3" v-model="filter3">
+					<label>KUPAC</label><input type="checkbox" id="checkbox4" v-model="filter4">
+					<label>ZLATNI</label><input type="checkbox" id="checkbox5" v-model="filter5">
+					<label>SREBRNI</label><input type="checkbox" id="checkbox6" v-model="filter6">
+					<label>BRONZANI</label><input type="checkbox" id="checkbox7" v-model="filter7">
+				</div>
+				<button v-on:click = "filter">Filtriraj</button>
+			</div>
+    		<table class="table">
+	    		<tr>
 	    			<th>Ime</th>
 	    			<th>Prezime</th>
-                    <th>Korisnicko ime</th>
+                    <th>Korisničko ime</th>
                     <th>Pol</th>
-                    <th>Datum rodjenja</th>
+                    <th>Datum rođenja</th>
                     <th>Tip korisnika</th>
                     <th>Poeni</th>
-                    <th>Clanarina</th>
+                    <th>Članarina</th>
 	    		</tr>
 	    			
 	    		<tr v-for="(s, index) in users" :key="index">
@@ -71,6 +126,20 @@ var usersApp = new Vue({
     mounted () {
         axios.get('rest/user/')
           .then(response => {this.users = response.data;this.allUsers = response.data})
+		axios.get('rest/sportsObject/isLoggedIn')
+		  .then(response => {
+			  this.isLoggedIn =  response.data ? response.data : null;
+			  if(this.isLoggedIn != null) {
+				  if(this.isLoggedIn.userType === "MANAGER")
+					  this.isManager = true;
+				  if(this.isLoggedIn.userType === "CUSTOMER")
+					  this.isCustomer = true;
+				  if(this.isLoggedIn.userType === "ADMIN")
+					  this.isAdmin = true;
+				  if(this.isLoggedIn.userType === "COACH")
+					  this.isCoach = true;
+			  }
+		  })
     },
 	methods: {
 		search : function(){
