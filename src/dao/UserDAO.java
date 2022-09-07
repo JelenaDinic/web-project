@@ -7,14 +7,15 @@ import java.util.Arrays;
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beans.CustomerType;
 import beans.SportsObject;
 import beans.User;
 import enums.UserType;
 
 public class UserDAO {
 	private List<User> users;
-	//private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\users.json";
-	private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\users.json";
+	private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\users.json";
+	//private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\users.json";
 	
 	public UserDAO() {
 		users = new ArrayList<User>();
@@ -93,11 +94,24 @@ public class UserDAO {
 				u.setUserType(user.getUserType());
 				u.setPoints(user.getPoints());
 				u.setVisitedSportsObjects(user.getVisitedSportsObjects());
+				u.setCustomerType(updateCustomerType(user.getPoints()));
 				return u;
 			}
 		}
 		return null;
 	}
+	
+	public CustomerType updateCustomerType(int points) {
+		if(points >= 3000)
+			return new CustomerType("ZLATNI", 0.2, 3000);
+		else if (2000 <= points && points < 3000) 
+			return new CustomerType("SREBRNI", 0.1, 2000);
+		else if (1000 <= points && points < 2000)
+			return new CustomerType("BRONZANI", 0.05, 1000);
+		else 
+			return null;
+	}
+	
 	public List<User> findAllCoaches(){
 		List<User> coaches = new ArrayList<User>();
 		for(User user : users) {
