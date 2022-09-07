@@ -103,6 +103,17 @@ public class UserService {
 		dao.update(username, user);
 		dao.save();
 	}
+	
+	@PUT
+	@Path("/addSportObject/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addSportObject(@PathParam("username") String username, SportsObject obj) {
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		dao.addSportObject(username, obj);
+		dao.save();
+	}
+	
 	@GET
 	@Path("/all-coaches")
 	@Consumes(MediaType.APPLICATION_JSON)

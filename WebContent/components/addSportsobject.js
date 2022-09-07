@@ -16,6 +16,12 @@ var addSportsObjectApp = new Vue({
 		  isAdmin: false,
 		  isCoach: false,
 		  allManagers: [],
+		  surname: "",
+		  nameM: "",
+		  username: "",
+		  password: "",
+		  gender: null,
+		  dateOfBirth: "",
 	    }
 	},
 	template: ` 
@@ -108,10 +114,48 @@ var addSportsObjectApp = new Vue({
 							<option v-for="item in allManagers" :value="item">{{item.name +" "+ item.surname}}</option>
 						</select>
 					</div>
-					<button onclick="window.location='registration.html';" v-on:click = "registerManager" class="buy-btn">Dodaj menadžera</button>
+				</div>
+				<div v-if="allManagers.length === 0">
+					<h5>Registruj novog menadžera za ovaj sportski objekat:</h5>
+					<div>
+						<label>Korisničko ime</label>
+						<input type="text" id = "username" v-model = "username">
+					</div>
+
+					<div>
+						<label>Šifra</label>
+						<input type="password" id = "password" v-model = "password">
+					</div>
+
+					<div>
+						<label>Ime</label>
+						<input type="text" id = "name" v-model = "nameM">
+					</div>
+
+					<div>
+						<label>Prezime</label>
+						<input type="text" id = "surname" v-model = "surname">
+					</div>
+
+					<div>
+						<label>Pol</label>
+						<div>
+							<select v-model = "gender" id="gender">
+								<option value="MALE">Muški</option>
+								<option value="FEMALE">Ženski</option>
+							</select>
+						</div>
+					</div>
+
+					<div>
+						<label>Datum rođenja</label>
+						<input type="text" id = "dateOfBirth" v-model = "dateOfBirth">
+					</div>
+
+					<button type="submit" v-on:click = "registerManager" class="registration-btn" >KREIRAJ</button>
 				</div>
 				<div>
-					<td><button type="submit" v-on:click = "registration" class="registration-btn" >KREIRAJ</button></td>
+					<td><button  v-if="allManagers.length > 0" type="submit" v-on:click = "registration" class="registration-btn" >KREIRAJ</button></td>
 				</div>
 			</table>
 			<!DOCTYPE html>
@@ -156,11 +200,9 @@ var addSportsObjectApp = new Vue({
                 alert("Greska!");
             })
 
-			axios.post('rest/user/'+ this.manager.username, {
+			const username = this.manager.username;
+			axios.put('rest/user/addSportObject/'+ username, {
 				name: this.name,
-				type: this.type,
-				location: location,
-				logo: this.logo
 			})
 		},
 		registerManager : function(){
@@ -172,14 +214,21 @@ var addSportsObjectApp = new Vue({
 				location: location,
 				logo: this.logo
 			})
+
+			axios.post('rest/user/', {
+				username: this.username,
+				password: this.password,
+				name: this.nameM,
+				surname: this.surname,
+				gender: this.gender,
+				dateOfBirth: this.dateOfBirth,
+				userType: "MANAGER",
+				sportsObject: this.name
+			})
 			.then(response => {
-				alert("Uspesno ste kreirali sportski objekat!");
+				alert("Uspesno ste kreirali sportski objekat sa menadzerom!");
 				window.location.href = 'sportsObjects.html';
 			})
-			.catch( error => {
-                alert("Greska!");
-            })
-			this.$root.$emit('messageFromAddSportsObject',this.name)
 		},
 		logout() {
 				axios.post('rest/user/logout');
