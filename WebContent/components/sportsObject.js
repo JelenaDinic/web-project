@@ -68,12 +68,14 @@ var sportObjectsApp = new Vue({
 			<label>{{object?.type}}</label><br>
 			<label>Status: </label>
 			<label>{{object?.status}}</label><br>
-			<label>Lokacija: </label>
-			<label>{{object?.location.address.city}}</label><br>
 			<label>Logo: </label>
 			<label>{{object?.logo}}</label><br>
 			<label>Prosečna ocena: </label>
 			<label>{{object?.averageGrade}}</label><br>
+			<label>Lokacija: </label>
+			<label>{{object?.location.address.city}}</label>
+			<button class="buy-btn" v-on:click ="showMap">Prikaži na mapi</button><br>
+			<div id="map" class="map"></div>
 
 			<h4>Treninzi:</h4>
 			<table class="table">
@@ -255,6 +257,20 @@ var sportObjectsApp = new Vue({
 			}else{
 				alert("Niste posjetili ovaj sportski objekat!");
 			}
+		},
+		showMap:function(){
+			var map = new ol.Map({
+				target: 'map',
+				layers: [
+					new ol.layer.Tile({
+						source: new ol.source.OSM()
+					})
+				],
+				view: new ol.View({
+					center: ol.proj.fromLonLat([this.object.location?.longitude,this.object.location?.latitude]),
+					zoom:18
+				})
+			});
 		},
 		logout() {
 				axios.post('rest/user/logout');

@@ -37,6 +37,11 @@
     border-bottom: 1px solid orange;
 }
 
+.map{
+	height:200px;
+	width:100%;
+}
+
 .buy-btn {
     margin: 10px;
     border: none;
