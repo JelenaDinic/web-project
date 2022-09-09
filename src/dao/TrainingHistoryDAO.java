@@ -70,6 +70,18 @@ public class TrainingHistoryDAO {
 		return trainingsForCoach;
 	}
 	
+	public List<TrainingHistory> findForCustomer(String username){
+		 List<TrainingHistory> trainingsForCustomer = new ArrayList<TrainingHistory>();
+		 for(TrainingHistory t : trainingHistory) {
+			if (t.getUser().equals(username)) {
+				if (t.isDeleted() == false) {
+					trainingsForCustomer.add(t);
+				}
+			}
+		 }
+		return trainingsForCustomer;
+	}
+	
 	public void save() {
 		ObjectMapper mapper = new ObjectMapper();
 		try {

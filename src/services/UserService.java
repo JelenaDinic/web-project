@@ -64,6 +64,14 @@ public class UserService {
 	}
 	
 	@GET
+	@Path("/visited/{object}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Collection<String> getCustomersBySO(@PathParam("object") String object){
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		return dao.getCustomersBySO(object);
+   }
+  @GET
 	@Path("/manager/{name}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)

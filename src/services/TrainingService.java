@@ -117,5 +117,14 @@ public class TrainingService {
 		return dao.getById(id);
 	}
 	
+	@GET
+	@Path("/coaches/{object}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Collection<String> getCoachesBySO(@PathParam("object") String object){
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
+		return dao.getCoachesBySO(object);
+	}
+	
 	
 }
