@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -116,5 +117,17 @@ public class TrainingDAO {
 			}
 		}
 		return null;
+	}
+
+	public List<String> getCoachesBySO(String object) {
+		List<String> coaches = new ArrayList<String>();
+	    for (Training t : trainings) {
+	    	if(t.getSportsObject().equals(object)) {
+	    			if(!coaches.contains(t.getCoach())) {
+	    				coaches.add(t.getCoach());	
+	    			}
+	    		}
+	    	}
+	    return coaches;
 	}
 }

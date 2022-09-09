@@ -36,20 +36,20 @@ var sportsObjectsApp = new Vue({
                     <li v-if="isLoggedIn != null" @click="logout">
                         <a>Izloguj se</a>
                     </li>
-                    <li v-if="isManager === true">
-                        <a href="trainingHandling.html">Treninzi</a>
-                    </li>
                     <li v-if="isLoggedIn != null">
                         <a href="account.html">Moj profil</a>
+                    </li>
+					<li v-if="isManager === true">
+                        <a href="managerView.html">Moj sportski objekat</a>
                     </li>
 					<li  v-if="isCustomer === true">
                         <a href="membershipFee.html">Kupite članarinu</a>
                     </li>
-                    <li v-if="isAdmin === true">
-                        <a href="users.html">Pregled svih registrovanih korisnika</a>
+                    <li v-if="isAdmin === true || isManager === true">
+                        <a href="users.html">Korisnici</a>
                     </li>
                     <li v-if="isAdmin === true">
-                        <a href="registration.html">Kreiraj menadzera/trenera</a>
+                        <a href="registration.html">Registruj menadzera/trenera</a>
                     </li>
 					<li v-if="isAdmin === true">
                         <a href="addPromoCode.html">Definiši novi promo kod</a>
@@ -57,8 +57,8 @@ var sportsObjectsApp = new Vue({
 					<li v-if="isAdmin === true">
 					<a href="comments.html">Komentari</a>
 					</li>
-                    <li v-if="isCoach === true || isCustomer === true">
-                        <a href="trainingHandling.html">Pregled svih treninga</a>
+                    <li v-if="isAdmin != true && isLoggedIn != null">
+                        <a href="trainingHandling.html">Treninzi</a>
                     </li>
                 </ul>
             </div>
@@ -111,7 +111,7 @@ var sportsObjectsApp = new Vue({
 		    			<td>{{s.name}}</td>
 		    			<td>{{s.type}}</td>
 	                    <td>{{s.location.address.city}}</td>
-		    			<td><img src="../images/missfit.jfif" alt="logo"></img></td>
+		    			<td><img src="http://localhost:8080/WebShopREST/images/missfit.png" alt="logo"></td>
 	                    <td>{{s.averageGrade}}</td>
 		    			<td>{{s.startWorkingHour}} - {{s.endWorkingHour}}</td>
 						<td><button class="show-button" @click="details(s.name)">Prikazi</button></td>

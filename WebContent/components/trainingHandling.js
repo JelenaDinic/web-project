@@ -85,7 +85,7 @@ var trainingHandlingApp = new Vue({
 		</ul>
 	</div>
 			<div>
-				<table class="table" v-if = "isCoach === false">
+				<table class="table" v-if = "isManager === true">
 					<tr>
 						<th>Naziv</th>
 						<th>Tip</th>
@@ -121,12 +121,12 @@ var trainingHandlingApp = new Vue({
 					<td>{{t.coach}}</td>
 					<td>{{t.user}}</td>
 					<td>{{t.joinDate}}</td>
-					<td><button @click="dismiss(t.id)" class="buy-btn">Otkazi</button></td>
+					<td v-if= "isCoach === true" ><button @click="dismiss(t.id)" class="buy-btn">Otkazi</button></td>
 				</tr>		
 			</table>
 		</div>
 		<div>
-			<button v-if = "isCoach === false" v-on:click = "openAddForm" class="buy-btn">Dodavanje novog treninga</button>
+			<button v-if = "isManager === true" v-on:click = "openAddForm" class="buy-btn">Dodavanje novog treninga</button>
 			<div v-if = "addPressed === true || updatePressed===true">
 				<div>
 					<td>Naziv</td>
@@ -198,6 +198,8 @@ var trainingHandlingApp = new Vue({
 							}
 							else if (this.isLoggedIn.userType === "CUSTOMER") {
 								this.isCustomer = true;
+								axios.get('rest/trainingHistory/customer/' + this.isLoggedIn.username)
+									.then(response => { this.trainingsManager = response.data;})
 							}
 							else if (this.isLoggedIn.userType === "ADMIN") {
 								this.isAdmin = true;

@@ -76,4 +76,11 @@ public class TrainingHistoryService {
 		TrainingHistoryDAO dao = (TrainingHistoryDAO) ctx.getAttribute("trainingHistoryDAO");
 		return dao.findForCoach(coach);
 	}
+	@GET
+	@Path("/customer/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<TrainingHistory> getTrainingsForCustomer(@PathParam("username") String username){
+		TrainingHistoryDAO dao = (TrainingHistoryDAO) ctx.getAttribute("trainingHistoryDAO");
+		return dao.findForCustomer(username);
+	}
 }

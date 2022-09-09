@@ -63,6 +63,15 @@ public class UserService {
 		return dao.search(input);
 	}
 	
+	@GET
+	@Path("/visited/{object}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Collection<String> getCustomersBySO(@PathParam("object") String object){
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		return dao.getCustomersBySO(object);
+	}
+	
 	@POST
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
