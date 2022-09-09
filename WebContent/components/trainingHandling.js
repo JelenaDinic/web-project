@@ -83,7 +83,36 @@ var trainingHandlingApp = new Vue({
 				<a href="trainingHandling.html">Pregled svih treninga</a>
 			</li>
 		</ul>
-	</div>
+		</div>
+	
+			<div class="search">
+				<label v-if = "isCoach === true || isCustomer === true">Pretrazi po sportskom objektu:</label>
+				<input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
+			</div>
+			<div>
+				<label for="price">Maksimalna cijena: {{this.price}}</label>
+				<input type="range" id="price" name="price" v-model = "price" min="0" max="3000" @change="changePrice" class="slider">
+			</div>
+			<div>
+				<label for="price">Datum prijave: </label>
+				<label for="start">Od: </label>
+				<input type="date" id="start" name="trip-start" v-model = "startDate" value="2018-07-22" min="2018-01-01" max="2022-09-04">
+				<label for="end">Do: </label>
+				<input type="date" id="end" name="trip-end" v-model = "endDate" value="2018-07-22" min="2018-01-01" max="2022-09-04" @change="dateChange">
+			</div>
+			<div ref = "filter" class="filter">
+				<div>
+					<label>TERETANA</label><input type="checkbox" id="checkbox1" v-model="filter1">
+					<label>BAZEN</label><input type="checkbox" id="checkbox2" v-model="filter2">
+					<label>SPORTSKI CENTAR</label><input type="checkbox" id="checkbox3" v-model="filter3">
+					<label>PLESNI STUDIO</label><input type="checkbox" id="checkbox4" v-model="filter4">
+					<label>PERSONALNI</label><input type="checkbox" id="checkbox5" v-model="filter5">
+					<label>GRUPNI</label><input type="checkbox" id="checkbox6" v-model="filter6">
+					<label>U TERETANI</label><input type="checkbox" id="checkbox7" v-model="filter7">
+				</div>
+				<button v-on:click = "filter">Filtriraj</button>
+			</div>
+		
 			<div>
 				<table class="table" v-if = "isCoach === false">
 					<tr>
@@ -96,7 +125,7 @@ var trainingHandlingApp = new Vue({
 						<th>Slika</th>
 					</tr>
 						
-					<tr v-for="(t, index) in trainingsManager">
+					<tr v-for="(t, index) in tableView">
 						<td>{{t.name}}</td>
 						<td>{{t.type}}</td>
 						<td>{{t.sportsObject}}</td>
@@ -116,15 +145,15 @@ var trainingHandlingApp = new Vue({
 					<th>Datum prijave</th>
 				</tr>
 					
-				<tr v-for="(t, index) in trainingsManager">
+				<tr v-for="(t, index) in tableView">
 					<td>{{t.training}}</td>
 					<td>{{t.coach}}</td>
 					<td>{{t.user}}</td>
 					<td>{{t.joinDate}}</td>
 					<td><button @click="dismiss(t.id)" class="buy-btn">Otkazi</button></td>
 				</tr>		
-			</table>
-		</div>
+				</table>
+			</div>
 		<div>
 			<button v-if = "isCoach === false" v-on:click = "openAddForm" class="buy-btn">Dodavanje novog treninga</button>
 			<div v-if = "addPressed === true || updatePressed===true">
@@ -152,7 +181,7 @@ var trainingHandlingApp = new Vue({
 						<select v-model="coach" required>
 							<option v-for="c in coaches" :value="c.username">{{c.name}} {{c.surname}}</option>
 						</select>
-					<td>
+					</td>
 				</div>
 				<div>
 					<td>Trajanje</td>
@@ -190,11 +219,13 @@ var trainingHandlingApp = new Vue({
 									}
 
 								});
+								this.tableView = this.trainingsManager;
 							}
 							else if (this.isLoggedIn.userType === "COACH") {
 								this.isCoach = true;
 								axios.get('rest/trainingHistory/' + this.isLoggedIn.username)
 									.then(response => { this.trainingsManager = response.data; this.pom = this.trainingsManager; })
+									.then(() => { this.tableView = this.trainingsManager })
 							}
 							else if (this.isLoggedIn.userType === "CUSTOMER") {
 								this.isCustomer = true;
@@ -258,6 +289,34 @@ var trainingHandlingApp = new Vue({
 
 			this.tableView = result;
 
+		},
+		filter : function(){
+
+			var result = [];
+			let ovaj = this;
+			this.trainingsManager.forEach(element => {
+
+				axios.get('rest/training/id/' + element.training).then(
+					(response) => {
+						if (response.data.type == "PERSONAL" && this.filter5 != false)  result.push(element);
+						if (response.data.type == "GROUP" && this.filter6 != false)  result.push(element)
+						if (response.data.type == "GYM" && this.filter7 != false)  result.push(element)
+						axios.get('rest/sportsObject/find/' + response.data.sportsObject).then(
+							(response) => {
+								if (response.data.type == "GYM" && this.filter1 != false)  result.push(element)
+								if (response.data.type == "POOL" && this.filter2 != false)  result.push(element)
+								if (response.data.type == "SPORT_CENTER" && this.filter3 != false)  result.push(element)
+								if (response.data.type == "DANCE_STUDIO" && this.filter4 != false)  result.push(element)
+							}
+						)
+					}
+				)
+			});
+
+			if(this.filter1 == false && this.filter2 == false && this.filter3 == false && this.filter4 == false && this.filter5 == false  && this.filter6 == false  && this.filter7 == false){
+				result = this.trainingsManager;
+			}
+			this.tableView = result;
 		},
 		dismiss(selected) {
 			axios.get('rest/training/validate/' + selected)
