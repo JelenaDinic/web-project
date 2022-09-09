@@ -137,7 +137,10 @@ var sportsObjectsApp = new Vue({
 								if(!response.date) {
 									axios.get('rest/sportsObject/fee/' + this.isLoggedIn.username)
 										.then(response => {	
-										this.points = response.data;
+										if(response.data === 0)
+											this.points = this.isLoggedIn.points
+										else 
+											this.points = response.data;
 										axios.put('rest/user/' + this.isLoggedIn.username, {
 											fee: this.isLoggedIn.fee,
 											username: this.isLoggedIn.username,

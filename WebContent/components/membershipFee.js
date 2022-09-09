@@ -165,6 +165,13 @@ var membershipFeeApp = new Vue({
 					if(this.isLoggedIn.userType === "COACH")
 						this.isCoach = true;
 				}
+				if(this.isLoggedIn.customerType != null) {
+					let discount = this.isLoggedIn.customerType.discount
+					this.price1 = this.price1 - (this.price1 * discount)
+					this.price2 = this.price2 - (this.price2 * discount)
+					this.price3 = this.price3 - (this.price3 * discount)
+					this.price3 = this.price3 - (this.price3 * discount)
+				}
 			})
     },
 	methods: {
@@ -186,7 +193,7 @@ var membershipFeeApp = new Vue({
 								this.price3 = this.price3 - (this.price3 * (discount * 0.01))
 								break;
 							default:  
-								this.price4 = this.price4 - (this.price4 * (discount * 0.01))
+								this.price3 = this.price3 - (this.price3 * (discount * 0.01))
 								break;
 							
 						}

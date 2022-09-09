@@ -146,10 +146,10 @@ var accountApp = new Vue({
 					this.surname = this.isLoggedIn.surname;
 					this.points = this.isLoggedIn.points;
 					this.dateOfBirth = this.isLoggedIn.dateOfBirth;
-					this.customerType = this.isLoggedIn.customerType?.name;
+					if(this.isLoggedIn.customerType != null ) this.customerType = this.isLoggedIn.customerType.name;
 					this.userType = this.isLoggedIn.userType;
 					this.fee = this.isLoggedIn.fee;
-					this.sportsObject = this.isLoggedIn.sportsObject
+					this.sportsObject = this.isLoggedIn.sportsObject;
 					if(this.isLoggedIn.gender === "MALE")
 						this.gender = "MALE"
 					else
@@ -164,6 +164,9 @@ var accountApp = new Vue({
 									if (!response.date) {
 										axios.get('rest/sportsObject/fee/' + this.isLoggedIn.username)
 											.then(response => {
+											if(response.data === 0)
+												this.points = this.isLoggedIn.points
+											else 
 												this.points = response.data;
 												axios.put('rest/user/' + this.isLoggedIn.username, {
 													fee: this.isLoggedIn.fee,
