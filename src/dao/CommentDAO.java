@@ -14,8 +14,8 @@ import beans.TrainingHistory;
 
 public class CommentDAO {
 	private List<Comment> comments;
-	//private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\comments.json";
-	private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\comments.json";
+	private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\comments.json";
+	//private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\comments.json";
 	
 	public CommentDAO() {
 		comments = new ArrayList<Comment>();
@@ -42,6 +42,24 @@ public class CommentDAO {
 			}
 		}
 		return randomNum;
+	}
+	
+	public double getAverageMarkForSportObj(String name) {
+		double averageMark= 1;
+		double sumOfMarks= 0;
+		int br = 0;
+		for (Comment comment : comments) {
+			if (comment.getSportsObject().equals(name)) {
+				if (comment.isDeleted() == false) {
+					if (comment.isApproved() == true) {
+						sumOfMarks = sumOfMarks + comment.getMark();
+						br = br + 1;
+					}
+				}
+			}
+		}
+		averageMark = sumOfMarks/br;
+		return averageMark;
 	}
 	
 	public List<Comment> findAll(){

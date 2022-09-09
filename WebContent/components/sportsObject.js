@@ -134,6 +134,14 @@ var sportObjectsApp = new Vue({
 				let temp =this.object = response.data;
 				axios.get('rest/training/object/' + temp.name)
 				.then(response => {this.trainings = response.data})
+				axios.get('rest/comment/averageMark/'+ temp.name)
+				.then(response => {
+					let averageMark = response.data;
+					axios.put('rest/sportsObject/averageMark',{
+						name : this.object.name,
+						averageGrade : averageMark
+					})
+				})
     		}, error => {
 				console.log(error) 
 			}
