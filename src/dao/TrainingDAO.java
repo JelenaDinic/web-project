@@ -24,14 +24,21 @@ public class TrainingDAO {
 	}
 	
 	public List<Training> findAll(){
-		return trainings; 
+		 List<Training> foundTrainings = new ArrayList<Training>();
+		 for(Training t : trainings) {
+			if (t.isDeleted() == false) {
+				foundTrainings.add(t);
+			}
+		 }
+		return foundTrainings;  
 	}
 	
 	public List<Training> findForSportObject(String sportObject){
 		 List<Training> foundTrainings = new ArrayList<Training>();
 		 for(Training t : trainings) {
 			if (t.getSportsObject().equals(sportObject)) {
-				foundTrainings.add(t);
+				if (t.isDeleted() == false)
+					foundTrainings.add(t);
 			}
 		 }
 		return foundTrainings; 
@@ -116,5 +123,13 @@ public class TrainingDAO {
 			}
 		}
 		return null;
+	}
+	
+	public void delete(int id){
+		for (Training training : trainings) {
+			if (training.getId() == id) {
+				training.setDeleted(true);
+			}
+		}
 	}
 }

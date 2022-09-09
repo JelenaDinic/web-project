@@ -5,10 +5,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Comment;
+import beans.TrainingHistory;
 
 public class CommentDAO {
 	private List<Comment> comments;
@@ -27,6 +29,19 @@ public class CommentDAO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public int generateId() {
+		Random rand = new Random(); 
+		int min = 1;
+		int max = 10000;
+		int randomNum = rand.nextInt((max - min) + 1) + min;
+		for (Comment th : comments) {
+			if (th.getId() == randomNum) {
+				 return generateId();
+			}
+		}
+		return randomNum;
 	}
 	
 	public List<Comment> findAll(){

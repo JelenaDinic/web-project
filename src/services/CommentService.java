@@ -61,7 +61,7 @@ public class CommentService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public int generateCommentId(){
 		CommentDAO dao = (CommentDAO) ctx.getAttribute("commentDAO");
-		return dao.findAll().size();
+		return dao.generateId();
 	}
 	
 	@GET

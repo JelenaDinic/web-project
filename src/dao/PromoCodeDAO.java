@@ -11,17 +11,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.PromoCode;
 import beans.SportsObject;
+import beans.Training;
 
 public class PromoCodeDAO {
 	private List<PromoCode> promoCodes;
-	public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\promoCodes.json";
-	
+	//public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\promoCodes.json";
+	public String pathToFile ="C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\promoCodes.json";
 	
 	public PromoCodeDAO() {
 		promoCodes = new ArrayList<PromoCode>();
 		load();	
 	}
 
+	public List<PromoCode> findAll(){
+		 List<PromoCode> list = new ArrayList<PromoCode>();
+		 for(PromoCode p : promoCodes) {
+			if (p.isDeleted() == false) {
+				list.add(p);
+			}
+		 }
+		return list;  
+	}
 	
 	public void add(PromoCode promoCode) {
 		promoCodes.add(promoCode);
@@ -40,6 +50,14 @@ public class PromoCodeDAO {
 		}
 		return 0;
 	}
+	
+	public void delete(String code) {
+		for (PromoCode promoCode : promoCodes) {
+			if (promoCode.getCode().equals(code)) {
+				promoCode.setDeleted(true);
+			}
+		}
+	}
 
 	public void save() {
 		ObjectMapper mapper = new ObjectMapper();
@@ -56,5 +74,7 @@ public class PromoCodeDAO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-}
+	}
+	
+	
 }
