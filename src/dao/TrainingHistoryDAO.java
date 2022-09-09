@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,6 +35,19 @@ public class TrainingHistoryDAO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public int generateId() {
+		Random rand = new Random(); 
+		int min = 1;
+		int max = 10000;
+		int randomNum = rand.nextInt((max - min) + 1) + min;
+		for (TrainingHistory th : trainingHistory) {
+			if (th.getId() == randomNum) {
+				 return generateId();
+			}
+		}
+		return randomNum;
 	}
 	
 	public List<TrainingHistory> findAll(){

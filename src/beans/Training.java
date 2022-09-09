@@ -15,13 +15,14 @@ public class Training {
 	private String photo;
 	private String dateTime;
 	private int price;
+	private boolean deleted;
 	
 	public Training() {
 		super();
 	}
 
 	public Training(int id, String name, TrainingType type, String sportsObject, int duration, String coach,
-			String description, String photo, String dateTime, int price) {
+			String description, String photo, String dateTime, int price, boolean deleted) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -33,6 +34,7 @@ public class Training {
 		this.photo = photo;
 		this.dateTime = dateTime;
 		this.price = price;
+		this.deleted = deleted;
 	}
 
 	public int getId() {
@@ -113,6 +115,14 @@ public class Training {
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 	
 }

@@ -47,7 +47,7 @@ public class TrainingHistoryService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public int generateId(){
 		TrainingHistoryDAO dao = (TrainingHistoryDAO) ctx.getAttribute("trainingHistoryDAO");
-		return dao.findAll().size();
+		return dao.generateId();
 	}
 	@POST
 	@Path("/")

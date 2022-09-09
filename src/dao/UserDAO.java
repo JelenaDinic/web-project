@@ -23,7 +23,38 @@ public class UserDAO {
 	}
 	
 	public List<User> findAll(){
-		return users; 
+		List<User> allUsers = new ArrayList<User>();
+		for (User user : users) {
+			if(user.isDeleted() == false) {
+				allUsers.add(user);
+			}
+		}
+		return allUsers;
+	}
+	
+	public void deleteSportObjectFromManager(String name) {
+		for (User user : users) {
+			String tmp = "";
+			if (user.getSportsObject() == null) {
+				continue;
+			}
+			if (user.getSportsObject().equals(name)) {
+				user.setSportsObject(null);
+			}
+		}
+	}
+	
+	public void deleteSportObjectFromCustomer(String name) {
+		for (User user : users) {
+			if (user.getVisitedSportsObjects() == null) {
+				continue;
+			}
+			for (String so : user.getVisitedSportsObjects()) {
+				if (so.equals(name)) {
+					user.getVisitedSportsObjects().remove(so);
+				}
+			}
+		}
 	}
 	
 	public List<User> findFreeManagers(){
@@ -126,6 +157,14 @@ public class UserDAO {
 		for (User u : users) {
 			if (u.getUsername().equals(username)) {
 				u.setSportsObject(obj.getName());
+			}
+		}
+	}
+	
+	public void delete(String username) {
+		for (User user : users) {
+			if (user.getUsername().equals(username)) {
+				user.setDeleted(true);
 			}
 		}
 	}

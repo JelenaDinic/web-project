@@ -63,6 +63,36 @@ public class UserService {
 		return dao.search(input);
 	}
 	
+	@GET
+	@Path("/manager/{name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deleteSportObjectFromManager(@PathParam("name") String name){
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		dao.deleteSportObjectFromManager(name);
+		dao.save();
+	}
+	
+	@GET
+	@Path("/customer/{name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deleteSportObjectFromCustomers(@PathParam("name") String name){
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		dao.deleteSportObjectFromCustomer(name);
+		dao.save();
+	}
+	
+	@GET
+	@Path("/delete/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deleteUser(@PathParam("username") String username){
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		dao.delete(username);
+		dao.save();
+	}
+	
 	@POST
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)

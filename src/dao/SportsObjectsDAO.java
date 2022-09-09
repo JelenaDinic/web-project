@@ -5,10 +5,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.SportsObject;
+import beans.TrainingHistory;
 import beans.User;
 import enums.ObjectType;
 
@@ -25,11 +27,25 @@ public class SportsObjectsDAO {
 	}
 	
 	public List<SportsObject> findAll(){
-		return sportsObjects; 
+		List<SportsObject> foundObjects = new ArrayList<SportsObject>();
+		for (SportsObject so : sportsObjects) {
+			if (so.isDeleted() == false) {
+				foundObjects.add(so);
+			}
+		}
+		return foundObjects;
 	}
 	
 	public void add(SportsObject sportObject) {
 		sportsObjects.add(sportObject);
+	}
+	
+	public void delete(String name) {
+		for (SportsObject so : sportsObjects) {
+			if (so.getName().equals(name)) {
+				so.setDeleted(true);
+			}
+		}
 	}
 	
 	public void save() {

@@ -119,6 +119,7 @@ var usersApp = new Vue({
 	    			<td>{{s.userType}}</td>
 	    			<td>{{s.points}}</td>
 	    			<td>{{s.fee}}</td>
+					<td><button @click="deleteUser(s.username)" class="buy-btn" v-if="isAdmin === true">Obriši</button></td>
 	    		</tr>
 	    	</table>
     	</div>		  
@@ -248,6 +249,16 @@ var usersApp = new Vue({
 				this.isCustomer = false;
 				this.isCoach = false;
 				window.location.href = 'sportsObjects.html';
-			}
+			},
+			deleteUser(selected) {
+				axios.get('rest/user/delete/' + selected)
+					.then((response) => {
+						alert("Uspjesno ste obrisali korisnika!");
+						window.location.href = "users.html"
+					}, error => {
+						console.log(error)
+					}
+					)
+				}
 	}
 });

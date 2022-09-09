@@ -10,12 +10,12 @@ var promoCodeApp = new Vue({
 			isManager: false,
 			isCustomer: false,
 			isAdmin: false,
-			isCoach: false
+			isCoach: false,
+			promoCodes:[]
 	    }
 	},
 	template: ` 
     	<div class="promo-code">
-		<div>
 		<div id="navBar">
 			<ul class="nav-menu">
 				<li v-if="isLoggedIn != null">
@@ -83,7 +83,22 @@ var promoCodeApp = new Vue({
 					<td><button type="submit" v-on:click = "addPromoCode">KREIRAJ</button></td>
 				</tr>
 			</table>
-    	</div>		  
+
+			<table class="table">
+			<tr>
+				<th>Kod</th>
+				<th>Datum isteka</th>
+				<th>Popust</th>
+			</tr>
+				
+			<tr v-for="(t, index) in promoCodes">
+				<td>{{t.code}}</td>
+				<td>{{t.expirationDate}}</td>
+				<td>{{t.discount}}</td>
+				<td><button @click="dismiss(t.code)" class="buy-btn">Odbaci</button></td>
+			</tr>
+		</table>	
+		</div>  
     	`,
 		mounted () {
 			axios.get('rest/sportsObject/isLoggedIn')
@@ -128,6 +143,8 @@ var promoCodeApp = new Vue({
 			axios.get('rest/sportsObject/')
 			  .then(response => {this.sportsObjects = response.data;
 								 this.allSportsObjects = response.data})
+			axios.get('rest/promoCode/')
+				.then(response => {this.promoCodes = response.data})
 		},
 	methods: {
 		addPromoCode : function(){
@@ -154,6 +171,17 @@ var promoCodeApp = new Vue({
 				this.isCustomer = false;
 				this.isCoach = false;
 				window.location.href = 'sportsObjects.html';
-			}
+			},
+		dismiss(selected){
+                axios.get(
+                    'rest/promoCode/delete/' + selected
+                ).then(
+                    response => {
+                        window.location.href = "addPromoCode.html"
+                    }, error => {
+                        alert(error);
+                    }
+                )   
+            },
 	}
 });
