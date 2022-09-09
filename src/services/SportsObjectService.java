@@ -174,4 +174,14 @@ public class SportsObjectService {
 		dao.update(id, fee);
 		dao.save();
 	}
+	
+	@PUT
+	@Path("/averageMark")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void updateAverageMark(SportsObject so) {
+		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
+		dao.updateAverageMark(so);
+		dao.save();
+	}
 }

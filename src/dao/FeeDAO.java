@@ -17,8 +17,8 @@ import enums.Status;
 
 public class FeeDAO {
 	private List<Fee> fees;
-	private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\fees.json";
-	//private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\fees.json";
+	//private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\fees.json";
+	private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\fees.json";
 	
 	public FeeDAO(){
 		fees = new ArrayList<Fee>();
