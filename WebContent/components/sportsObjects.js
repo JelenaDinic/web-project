@@ -114,7 +114,8 @@ var sportsObjectsApp = new Vue({
 		    			<td><img src="http://localhost:8080/WebShopREST/images/missfit.png" alt="logo"></td>
 	                    <td>{{s.averageGrade}}</td>
 		    			<td>{{s.startWorkingHour}} - {{s.endWorkingHour}}</td>
-						<td><button class="show-button" @click="details(s.name)">Prikazi</button></td>
+						<td><button class="show-button" @click="details(s.name)">Prikaži</button></td>
+						<td><button class="show-button" @click="deleteObject(s.name)" v-if="isAdmin === true">Obriši</button></td>
 		    		</tr>
 		    	</table>
 		    	<button v-if="isAdmin === true" onclick="window.location='addSportsObject.html';"  class="buy-btn">Dodaj</button>
@@ -254,10 +255,26 @@ var sportsObjectsApp = new Vue({
 				}, error => {
 					alert(error);
 				}
-			)
-			
-			
-			
+			)	
+		},
+		deleteObject(selected){
+			axios.get('rest/sportsObject/delete/' + selected)
+			//obrisi taj so iz svih korisnika
+			axios.get('rest/user/manager/'+selected
+			).then(
+				response => {
+				}, error => {
+					alert(error);
+				})
+				axios.get('rest/user/customer/'+selected
+				).then(
+					response => {
+						alert("Uspjesno ste obrisali trening!");
+						window.location.href = "sportsObjects.html"
+					}, error => {
+						alert(error);
+					})
+
 		},
 		logout() {
 				axios.post('rest/user/logout');

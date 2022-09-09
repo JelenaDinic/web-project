@@ -56,12 +56,21 @@ public class CommentService {
 	}
 	
 	@GET
+	@Path("/averageMark/{name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public double getAverageMark(@PathParam("name") String name){
+		CommentDAO dao = (CommentDAO) ctx.getAttribute("commentDAO");
+		return dao.getAverageMarkForSportObj(name);
+	}
+	
+	@GET
 	@Path("/generate-id")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public int generateCommentId(){
 		CommentDAO dao = (CommentDAO) ctx.getAttribute("commentDAO");
-		return dao.findAll().size();
+		return dao.generateId();
 	}
 	
 	@GET

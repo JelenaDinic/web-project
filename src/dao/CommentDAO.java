@@ -5,15 +5,17 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Comment;
+import beans.TrainingHistory;
 
 public class CommentDAO {
 	private List<Comment> comments;
-	//private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\comments.json";
-	private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\comments.json";
+	private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\comments.json";
+	//private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\comments.json";
 	
 	public CommentDAO() {
 		comments = new ArrayList<Comment>();
@@ -27,6 +29,37 @@ public class CommentDAO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public int generateId() {
+		Random rand = new Random(); 
+		int min = 1;
+		int max = 10000;
+		int randomNum = rand.nextInt((max - min) + 1) + min;
+		for (Comment th : comments) {
+			if (th.getId() == randomNum) {
+				 return generateId();
+			}
+		}
+		return randomNum;
+	}
+	
+	public double getAverageMarkForSportObj(String name) {
+		double averageMark= 1;
+		double sumOfMarks= 0;
+		int br = 0;
+		for (Comment comment : comments) {
+			if (comment.getSportsObject().equals(name)) {
+				if (comment.isDeleted() == false) {
+					if (comment.isApproved() == true) {
+						sumOfMarks = sumOfMarks + comment.getMark();
+						br = br + 1;
+					}
+				}
+			}
+		}
+		averageMark = sumOfMarks/br;
+		return averageMark;
 	}
 	
 	public List<Comment> findAll(){

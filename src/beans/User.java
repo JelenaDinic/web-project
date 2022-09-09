@@ -21,14 +21,15 @@ public class User implements Serializable {
 	private List<String> visitedSportsObjects;
 	private int points;
 	private CustomerType customerType;
+	private boolean deleted;
 	
 	public User() {
 		super();
 	}
-	
+
 	public User(String username, String password, String name, String surname, Gender gender, String dateOfBirth,
 			UserType userType, List<Training> trainingsHistory, String fee, String sportsObject,
-			List<String> visitedSportsObjects, int points, CustomerType customerType) {
+			List<String> visitedSportsObjects, int points, CustomerType customerType, boolean deleted) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -43,6 +44,7 @@ public class User implements Serializable {
 		this.visitedSportsObjects = visitedSportsObjects;
 		this.points = points;
 		this.customerType = customerType;
+		this.deleted = deleted;
 	}
 
 	public String getUsername() {
@@ -175,8 +177,6 @@ public class User implements Serializable {
 		this.points = points;
 	}
 
-
-
 	public CustomerType getCustomerType() {
 		return customerType;
 	}
@@ -194,13 +194,19 @@ public class User implements Serializable {
 	public void setVisitedSportsObjects(List<String> visitedSportsObjects) {
 		this.visitedSportsObjects = visitedSportsObjects;
 	}
+	
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-
-
 
 	private static final long serialVersionUID = 6640936480584723344L;
 

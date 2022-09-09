@@ -16,6 +16,7 @@ public class SportsObject {
 	public double averageGrade;
 	private String startWorkingHour;
 	private String endWorkingHour;
+	private boolean deleted;
 	
 	public SportsObject() {
 		super();
@@ -23,7 +24,7 @@ public class SportsObject {
 	}
 
 	public SportsObject(String name, ObjectType type, List<ContentType> content, boolean status, Location location,
-			String logo, double averageGrade, String startWorkingHour, String endWorkingHour) {
+			String logo, double averageGrade, String startWorkingHour, String endWorkingHour, boolean deleted) {
 		super();
 		this.name = name;
 		this.type = type;
@@ -34,6 +35,15 @@ public class SportsObject {
 		this.averageGrade = averageGrade;
 		this.startWorkingHour = startWorkingHour;
 		this.endWorkingHour = endWorkingHour;
+		this.deleted = deleted;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public String getName() {

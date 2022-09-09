@@ -16,8 +16,8 @@ import beans.Training;
 
 public class TrainingDAO {
 	private List<Training> trainings;
-	//public String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\trainings.json";
-	public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\trainings.json";
+	public String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\trainings.json";
+	//public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\trainings.json";
 	
 	public TrainingDAO() {
 		trainings = new ArrayList<Training>();
@@ -25,14 +25,21 @@ public class TrainingDAO {
 	}
 	
 	public List<Training> findAll(){
-		return trainings; 
+		 List<Training> foundTrainings = new ArrayList<Training>();
+		 for(Training t : trainings) {
+			if (t.isDeleted() == false) {
+				foundTrainings.add(t);
+			}
+		 }
+		return foundTrainings;  
 	}
 	
 	public List<Training> findForSportObject(String sportObject){
 		 List<Training> foundTrainings = new ArrayList<Training>();
 		 for(Training t : trainings) {
 			if (t.getSportsObject().equals(sportObject)) {
-				foundTrainings.add(t);
+				if (t.isDeleted() == false)
+					foundTrainings.add(t);
 			}
 		 }
 		return foundTrainings; 
@@ -129,5 +136,12 @@ public class TrainingDAO {
 	    		}
 	    	}
 	    return coaches;
+	
+	public void delete(int id){
+		for (Training training : trainings) {
+			if (training.getId() == id) {
+				training.setDeleted(true);
+			}
+		}
 	}
 }

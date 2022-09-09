@@ -19,6 +19,7 @@ import beans.SportsObject;
 import beans.Training;
 import dao.SportsObjectsDAO;
 import dao.TrainingDAO;
+import dao.TrainingHistoryDAO;
 
 @Path("training")
 public class TrainingService {
@@ -50,6 +51,16 @@ public class TrainingService {
 	public Collection<Training> getTrainingsForCoach(@PathParam("coach") String coach){
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
 		return dao.findForCoach(coach);
+	}
+	
+	@GET
+	@Path("/delete/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void deleteTraining(@PathParam("id") int id){
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingDAO");
+		TrainingHistoryDAO daoh = (TrainingHistoryDAO) ctx.getAttribute("trainingHistoryDAO");
+		dao.delete(id);
+		dao.save();
 	}
 	
 	@GET

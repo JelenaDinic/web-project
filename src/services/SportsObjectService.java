@@ -59,9 +59,9 @@ public class SportsObjectService {
 	@Path("/fee/generate-id")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public int generateFeeId(){
+	public String generateFeeId(){
 		FeeDAO dao = (FeeDAO) ctx.getAttribute("feeDAO");
-		return dao.findAll().size();
+		return dao.generateId();
 	}
 	
 	@POST
@@ -82,6 +82,16 @@ public class SportsObjectService {
 	public Collection<SportsObject> searchSportsObjects(@PathParam("input") String input){
 		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
 		return dao.search(input);
+	}
+	
+	@GET
+	@Path("/delete/{name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deleteSportsObjects(@PathParam("name") String name){
+		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
+		dao.delete(name);
+		dao.save();
 	}
 	
 	@GET
@@ -162,6 +172,16 @@ public class SportsObjectService {
 	public void update(@PathParam("id") String id, Fee fee) {
 		FeeDAO dao = (FeeDAO) ctx.getAttribute("feeDAO");
 		dao.update(id, fee);
+		dao.save();
+	}
+	
+	@PUT
+	@Path("/averageMark")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void updateAverageMark(SportsObject so) {
+		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
+		dao.updateAverageMark(so);
 		dao.save();
 	}
 }

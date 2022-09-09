@@ -97,6 +97,7 @@ var sportObjectsApp = new Vue({
 				<td>{{t.coach}}</td>
 				<td>{{t.dateTime}}</td>
 				<td><button class="buy-btn" v-on:click = "join(t)" >PRIDRUŽI SE</button></td>
+				<td><button class="buy-btn" v-on:click = "deleteTraining(t.id)" v-if="isAdmin === true">OBRIŠI</button></td>
 			</tr>
 		</table>
 
@@ -133,6 +134,14 @@ var sportObjectsApp = new Vue({
 				let temp =this.object = response.data;
 				axios.get('rest/training/object/' + temp.name)
 				.then(response => {this.trainings = response.data})
+				axios.get('rest/comment/averageMark/'+ temp.name)
+				.then(response => {
+					let averageMark = response.data;
+					axios.put('rest/sportsObject/averageMark',{
+						name : this.object.name,
+						averageGrade : averageMark
+					})
+				})
     		}, error => {
 				console.log(error) 
 			}
@@ -280,7 +289,17 @@ var sportObjectsApp = new Vue({
 				this.isCustomer = false;
 				this.isCoach = false;
 				window.location.href = 'sportsObjects.html';
-			}
+			},
+		deleteTraining(selected) {
+				axios.get('rest/training/delete/' + selected)
+					.then((response) => {
+						alert("Uspjesno ste obrisali trening!");
+						window.location.href = "sportsObjects.html"
+					}, error => {
+						console.log(error)
+					}
+					)
+				}
 		
 	}
 })

@@ -6,17 +6,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Fee;
+import beans.TrainingHistory;
 import beans.User;
 import enums.Status;
 
 public class FeeDAO {
 	private List<Fee> fees;
-	private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\fees.json";
-	//private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\fees.json";
+	//private String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\fees.json";
+	private String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\fees.json";
 	
 	public FeeDAO(){
 		fees = new ArrayList<Fee>();
@@ -35,6 +37,7 @@ public class FeeDAO {
 		}
 		fees.add(fee);
 	}
+	
 	public int calculatePoints(String username) {
 		for(Fee f: fees) {
 			if(f.getCustomer().equals(username) && f.getStatus().equals(Status.ACTIVE)) {
@@ -95,5 +98,17 @@ public class FeeDAO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public String generateId() {
+		Random rand = new Random(); 
+		int min = 0;
+		int max = 9;
+		String id = "";
+		for (int i = 0; i < 9; i++) {
+			int randomNum = rand.nextInt((max - min) + 1) + min;
+			id.concat(Integer.toString(randomNum));
+		}
+		return id;
 	}
 }
