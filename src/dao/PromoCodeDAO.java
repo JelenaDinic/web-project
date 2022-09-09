@@ -15,8 +15,8 @@ import beans.Training;
 
 public class PromoCodeDAO {
 	private List<PromoCode> promoCodes;
-	//public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\promoCodes.json";
-	public String pathToFile ="C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\promoCodes.json";
+	public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\promoCodes.json";
+	//public String pathToFile ="C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\promoCodes.json";
 	
 	public PromoCodeDAO() {
 		promoCodes = new ArrayList<PromoCode>();
