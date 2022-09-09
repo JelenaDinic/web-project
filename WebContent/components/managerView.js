@@ -16,48 +16,45 @@ var promoCodeApp = new Vue({
 	template: ` 
     	<div class="main-content">
 		<div id="navBar">
-			<ul class="nav-menu">
-				<li v-if="isLoggedIn != null">
-					<a href="sportsObjects.html">Početna</a>
-				</li>
-				<li v-if="isLoggedIn === null">
-					<a href="login.html">Uloguj se</a>
-				</li>
-				<li v-if="isLoggedIn === null">
-					<a href="registration.html">Registruj se</a>
-				</li>
-				<li v-if="isLoggedIn != null" @click="logout">
-					<a>Izloguj se</a>
-				</li>
-				<li  v-if="isManager === true">
-					<a>Moj sportski objekat</a>
-				</li>
-				<li v-if="isManager === true">
-					<a href="trainingHandling.html">Treninzi</a>
-				</li>
-				<li v-if="isLoggedIn != null">
-					<a href="account.html">Moj profil</a>
-				</li>
-				<li  v-if="isCustomer === true">
-					<a href="membershipFee.html">Kupite članarinu</a>
-				</li>
-				<li v-if="isAdmin === true">
-					<a href="users.html">Pregled svih registrovanih korisnika</a>
-				</li>
-				<li v-if="isAdmin === true">
-					<a href="registration.html">Kreiraj menadzera/trenera</a>
-				</li>
-				<li v-if="isAdmin === true">
-					<a href="addPromoCode.html">Definiši novi promo kod</a>
-				</li>
-				<li v-if="isAdmin === true">
-				<a href="comments.html">Komentari</a>
-				</li>
-				<li v-if="isCoach === true || isCustomer === true">
-					<a href="trainingHandling.html">Pregled svih treninga</a>
-				</li>
-			</ul>
-		</div>
+                <ul class="nav-menu">
+                    <li v-if="isLoggedIn != null">
+                        <a href="sportsObjects.html">Početna</a>
+                    </li>
+					<li v-if="isLoggedIn === null">
+                        <a href="login.html">Uloguj se</a>
+                    </li>
+                    <li v-if="isLoggedIn === null">
+                        <a href="registration.html">Registruj se</a>
+                    </li>
+                    <li v-if="isLoggedIn != null" @click="logout">
+                        <a>Izloguj se</a>
+                    </li>
+                    <li v-if="isLoggedIn != null">
+                        <a href="account.html">Moj profil</a>
+                    </li>
+					<li v-if="isManager === true">
+                        <a href="managerView.html">Moj sportski objekat</a>
+                    </li>
+					<li  v-if="isCustomer === true">
+                        <a href="membershipFee.html">Kupite članarinu</a>
+                    </li>
+                    <li v-if="isAdmin === true">
+                        <a href="users.html">Korisnici</a>
+                    </li>
+                    <li v-if="isAdmin === true">
+                        <a href="registration.html">Registruj menadzera/trenera</a>
+                    </li>
+					<li v-if="isAdmin === true">
+                        <a href="addPromoCode.html">Definiši novi promo kod</a>
+                    </li>
+					<li v-if="isAdmin === true">
+					<a href="comments.html">Komentari</a>
+					</li>
+                    <li v-if="isAdmin != true && isLoggedIn != null">
+                        <a href="trainingHandling.html">Treninzi</a>
+                    </li>
+                </ul>
+            </div>
 		<h3>MOJ SPORTSKI OBJEKAT</h3>
 		<table class="table">
 			<tr>

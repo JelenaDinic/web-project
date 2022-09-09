@@ -45,7 +45,7 @@ var sportsObjectsApp = new Vue({
 					<li  v-if="isCustomer === true">
                         <a href="membershipFee.html">Kupite članarinu</a>
                     </li>
-                    <li v-if="isAdmin === true || isManager === true">
+                    <li v-if="isAdmin === true">
                         <a href="users.html">Korisnici</a>
                     </li>
                     <li v-if="isAdmin === true">

@@ -16,8 +16,8 @@ import beans.Training;
 
 public class TrainingDAO {
 	private List<Training> trainings;
-	public String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\trainings.json";
-	//public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\trainings.json";
+	//public String pathToFile = "C:\\Users\\Korisnik\\Desktop\\WEB\\PROJEKAT\\WEB-Projekat\\WebContent\\trainings.json";
+	public String pathToFile = "C:\\Users\\HP\\Desktop\\veb\\WEB-Projekat\\WebContent\\trainings.json";
 	
 	public TrainingDAO() {
 		trainings = new ArrayList<Training>();
@@ -136,6 +136,7 @@ public class TrainingDAO {
 	    		}
 	    	}
 	    return coaches;
+	}
 	
 	public void delete(int id){
 		for (Training training : trainings) {
