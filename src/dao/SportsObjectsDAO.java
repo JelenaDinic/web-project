@@ -62,17 +62,27 @@ public class SportsObjectsDAO {
 		}
 	}
 	
-	public List<SportsObject> search(String input){
+	public List<SportsObject> search(SportsObject sportObject){
 		List<SportsObject> foundObjects = new ArrayList<SportsObject>();
 		for (SportsObject so : sportsObjects) {
-			if (so.getName().contains(input))
-				foundObjects.add(so);
-			else if(so.getType().toString().contains(input))
-				foundObjects.add(so);
-			else if(so.getLocation().getAddress().getCity().contains(input))
-				foundObjects.add(so);
-			else if(String.valueOf(so.getAverageGrade()).equals(input))
-				foundObjects.add(so);
+			if (!sportObject.getName().equals("")) {
+				if (so.getName().contains(sportObject.getName())) {
+					foundObjects.add(so);
+					continue;
+				}
+			}
+			if (!sportObject.getStartWorkingHour().equals("")) {
+				if(so.getType().toString().contains(sportObject.getStartWorkingHour())){
+					foundObjects.add(so);
+					continue;
+				}
+			}
+			if (!sportObject.getLocation().getAddress().getCity().equals("")) {
+				if(so.getLocation().getAddress().getCity().contains(sportObject.getLocation().getAddress().getCity())){
+					foundObjects.add(so);
+					continue;
+				}
+			}
 		}
 		return foundObjects;
 	}

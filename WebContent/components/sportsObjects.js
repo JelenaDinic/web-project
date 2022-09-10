@@ -4,7 +4,6 @@ var sportsObjectsApp = new Vue({
 	    return {
 	      sportsObjects: null,
 		  allSportsObjects: null,
-		  searchText: "",
 		  sortCombo: null,
 		  filterCombo: null,
 		  filter1: false,
@@ -17,6 +16,9 @@ var sportsObjectsApp = new Vue({
 		  isCustomer: false,
 		  isAdmin: false,
 		  isCoach: false,
+		  searchType: "",
+		  searchLocation: "",
+	      searchTName: "",
 		  points: 0
 	    }
 	},
@@ -67,8 +69,15 @@ var sportsObjectsApp = new Vue({
 				<h3>Prikaz sportskih objekata</h3>
 				
 				<div class="search">
-					<label>Pretraži:</label>
-					<input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
+					<table>
+						<tr>
+						<td>Pretraži:</td>
+						<td><input id = "searchType"     type = "text" v-model = "searchType" placeholder="(po tipu)"></td>
+						<td><input id = "searchLocation" type = "text" v-model = "searchLocation" placeholder="(po gradu)"></td>
+						<td><input id = "searchTName"    type = "text" v-model = "searchTName" placeholder="(po nazivu)"></td>
+						<td><button v-on:click = "search" class="buy-btn">Pretraži</button></td>
+						</tr>
+					</table>
 				</div>
 				
 				<div class="sort">
@@ -172,7 +181,13 @@ var sportsObjectsApp = new Vue({
     },
 	methods: {
 		search : function(){
-			axios.get('rest/sportsObject/' + this.searchText)
+			let address = {street:"", number:"", city:this.searchLocation , postalCode:""};
+			let location = {longitude: 0, latitude: 0, address:address}
+			axios.post('rest/sportsObject/search',{
+				name : this.searchTName,
+				location: location,
+				startWorkingHour : this.searchType
+			})
 			.then(response => {this.sportsObjects = response.data})
 		},
 		filter : function(){
