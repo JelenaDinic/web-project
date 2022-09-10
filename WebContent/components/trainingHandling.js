@@ -36,7 +36,9 @@ var trainingHandlingApp = new Vue({
 			filter5: false,
 			filter6: false,
 			filter7: false,
-			tableView: []
+			tableView: [],
+			mapSONames: [],
+			pathString: "http://localhost:8080/WebShopREST/images/"
 		}
 	},
 	template: ` 
@@ -129,11 +131,12 @@ var trainingHandlingApp = new Vue({
 						<td>{{t.duration}}</td>
 						<td>{{t.coach}}</td>
 						<td>{{t.description}}</td>
-						<td>{{t.photo}}</td>
+						<td><img :src="createImagePath(t.photo)" style="width: 250px; height: 150px; " alt="logo"></td>
 						<td><button v-on:click = "openUpdateForm(t)" class="buy-btn">Izmeni</button></td>
 					</tr>		
 				</table>
 
+				
 				<table class="table" v-if = "isCoach === true || isCustomer === true">
 				<tr>
 					<th>Id</th>
@@ -160,7 +163,7 @@ var trainingHandlingApp = new Vue({
 				</div>
 				<div>
 					<td>Slika</td>
-					<td><input type="text" id = "photo" v-model = "photo" required class="prettyInput"></td>
+					<td><input type="file" id = "photo" v-model = "photo" required class="prettyInput"></td>
 				</div>
 				<div>
 					<td>Tip</td>
@@ -235,8 +238,14 @@ var trainingHandlingApp = new Vue({
 						}
 					})
 			})
+			//axios.get('rest/trainingHistory/mapSONames')
+				//.then(response => console.log(response.data));
 	},
 	methods: {
+		createImagePath(imageName) {
+			let returnValue = "http://localhost:8080/WebShopREST/images/" + imageName;
+			return returnValue;
+		},
 		openAddForm: function () {
 			this.addPressed = true;
 			this.updatePressed = false;
@@ -367,10 +376,11 @@ var trainingHandlingApp = new Vue({
 		},
 		add: function () {
 			if (this.addPressed === true) {
+				let parts = this.photo.split('\\')
 				axios.post('rest/training/', {
 					name: this.name,
 					type: this.type,
-					photo: this.photo,
+					photo: parts[2],
 					sportsObject: this.sportsObject,
 					coach: this.coach,
 					duration: this.duration,
