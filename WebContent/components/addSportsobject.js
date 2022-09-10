@@ -102,7 +102,7 @@ var addSportsObjectApp = new Vue({
 				</div>
 				<div>
 					<label>Logo</label>
-					<input type="text" id = "logo" v-model = "logo">
+					<input type="file" id = "logo" v-model = "logo">
 				</div>
 				<div>
 					<label>Menadžer</label>
@@ -146,7 +146,7 @@ var addSportsObjectApp = new Vue({
 
 					<div>
 						<label>Datum rođenja</label>
-						<input type="text" id = "dateOfBirth" v-model = "dateOfBirth">
+						<input type="date" id = "dateOfBirth" v-model = "dateOfBirth">
 					</div>
 
 					<button type="submit" v-on:click = "registerManager" class="registration-btn" >KREIRAJ</button>
@@ -183,11 +183,12 @@ var addSportsObjectApp = new Vue({
 		registration : function(){
 			let address = {street:this.street, number:this.number, city:this.city , postalCode:this.postalCode};
 			let location = {longitude: 0, latitude: 0, address:address}
+			let parts = this.logo.split('\\')
 			axios.post('rest/sportsObject/', {
 				name: this.name,
 				type: this.type,
 				location: location,
-				logo: this.logo
+				logo: parts[2]
 			})
 			.then(response => {
 				alert("Uspesno ste kreirali sportski objekat!");

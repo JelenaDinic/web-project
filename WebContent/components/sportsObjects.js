@@ -17,7 +17,8 @@ var sportsObjectsApp = new Vue({
 		  isCustomer: false,
 		  isAdmin: false,
 		  isCoach: false,
-		  points: 0
+		  points: 0,
+		  pathString: "http://localhost:8080/WebShopREST/images/"
 	    }
 	},
 	template: ` 
@@ -111,7 +112,7 @@ var sportsObjectsApp = new Vue({
 		    			<td>{{s.name}}</td>
 		    			<td>{{s.type}}</td>
 	                    <td>{{s.location.address.city}}</td>
-		    			<td><img src="http://localhost:8080/WebShopREST/images/missfit.png" alt="logo"></td>
+		    			<td><img :src="createImagePath(s.logo)" style="width: 150px; height: 150px; border-radius: 50%" alt="logo"></td>
 	                    <td>{{s.averageGrade}}</td>
 		    			<td>{{s.startWorkingHour}} - {{s.endWorkingHour}}</td>
 						<td><button class="show-button" @click="details(s.name)">Prikaži</button></td>
@@ -171,6 +172,10 @@ var sportsObjectsApp = new Vue({
 							 this.allSportsObjects = response.data})
     },
 	methods: {
+		createImagePath(imageName) {
+			let returnValue = "http://localhost:8080/WebShopREST/images/" + imageName;
+			return returnValue;
+		},
 		search : function(){
 			axios.get('rest/sportsObject/' + this.searchText)
 			.then(response => {this.sportsObjects = response.data})
