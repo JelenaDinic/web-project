@@ -75,13 +75,13 @@ public class SportsObjectService {
 		return Response.status(200).build();
 	}
 	
-	@GET
-	@Path("/{input}")
+	@POST
+	@Path("/search")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Collection<SportsObject> searchSportsObjects(@PathParam("input") String input){
+	public Collection<SportsObject> searchSportsObjects(SportsObject so){
 		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
-		return dao.search(input);
+		return dao.search(so);
 	}
 	
 	@GET
