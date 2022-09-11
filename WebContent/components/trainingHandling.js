@@ -83,9 +83,9 @@ var trainingHandlingApp = new Vue({
                     </li>
                 </ul>
             </div>
-	
+			<div v-if = "isCoach === true || isCustomer === true">
 			<div class="search">
-				<label v-if = "isCoach === true || isCustomer === true">Pretrazi po sportskom objektu:</label>
+				<label >Pretrazi po sportskom objektu:</label>
 				<input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
 			</div>
 			<div>
@@ -111,7 +111,7 @@ var trainingHandlingApp = new Vue({
 				</div>
 				<button v-on:click = "filter">Filtriraj</button>
 			</div>
-		
+			</div>
 			<div>
 				<table class="table" v-if = "isManager === true">
 					<tr>
@@ -163,7 +163,7 @@ var trainingHandlingApp = new Vue({
 				</div>
 				<div>
 					<td>Slika</td>
-					<td><input type="file" id = "photo" v-model = "photo" required class="prettyInput"></td>
+					<td><input type="file" id = "photo" ref= "myFile" class="prettyInput" @change="previewFiles"></td>
 				</div>
 				<div>
 					<td>Tip</td>
@@ -230,7 +230,8 @@ var trainingHandlingApp = new Vue({
 							else if (this.isLoggedIn.userType === "CUSTOMER") {
 								this.isCustomer = true;
 								axios.get('rest/trainingHistory/customer/' + this.isLoggedIn.username)
-									.then(response => { this.trainingsManager = response.data;})
+									.then(response => { this.trainingsManager = response.data; this.pom = this.trainingsManager; })
+									.then(() => { this.tableView = this.trainingsManager })
 							}
 							else if (this.isLoggedIn.userType === "ADMIN") {
 								this.isAdmin = true;
@@ -238,8 +239,6 @@ var trainingHandlingApp = new Vue({
 						}
 					})
 			})
-			//axios.get('rest/trainingHistory/mapSONames')
-				//.then(response => console.log(response.data));
 	},
 	methods: {
 		createImagePath(imageName) {
@@ -253,7 +252,7 @@ var trainingHandlingApp = new Vue({
 			this.photo = "";
 			this.type = "";
 			this.coach = "",
-				this.description = "";
+			this.description = "";
 			this.duration = "";
 
 		},
@@ -290,7 +289,7 @@ var trainingHandlingApp = new Vue({
 
 				axios.get('rest/training/id/' + element.training).then(
 					(response) => {
-						if (response.data.dateTime) result.push(element)
+						if (response.data.sportsObject.includes(this.searchText)) result.push(element)
 					}
 				)
 			});
@@ -374,13 +373,15 @@ var trainingHandlingApp = new Vue({
 			this.description = selected.description;
 			this.duration = selected.duration;
 		},
+		previewFiles() {
+			this.photo = this.$refs.myFile.files[0].name
+		},
 		add: function () {
 			if (this.addPressed === true) {
-				let parts = this.photo.split('\\')
 				axios.post('rest/training/', {
 					name: this.name,
 					type: this.type,
-					photo: parts[2],
+					photo: this.photo,
 					sportsObject: this.sportsObject,
 					coach: this.coach,
 					duration: this.duration,

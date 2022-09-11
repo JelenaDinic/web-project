@@ -10,7 +10,8 @@ var promoCodeApp = new Vue({
             isAdmin: false,
             isCoach: false,
 			object: null,
-			trainings:[]
+			trainings:[],
+			pathString: "http://localhost:8080/WebShopREST/images/"
 	    }
 	},
 	template: ` 
@@ -79,32 +80,12 @@ var promoCodeApp = new Vue({
 			<label>{{object?.type}}</label><br>
 			<label>Status: </label>
 			<label>{{object?.status}}</label><br>
-			<label>Logo: </label>
-			<label>{{object?.logo}}</label><br>
 			<label>Prosečna ocena: </label>
 			<label>{{object?.averageGrade}}</label><br>
+			<label>Logo: </label><br>
+			<img :src="createImagePath(object?.logo)" style="width: 150px; height: 150px; border-radius: 50%"" alt="logo"><br>
+			
 
-			<h4>Treninzi:</h4>
-			<table class="table">
-			<tr>
-				<th>Naziv</th>
-				<th>Tip</th>
-				<th>Sportski objekat</th>
-				<th>Trajanje</th>
-				<th>Trener</th>
-				<th>Datum i vreme</th>
-				<th></th>
-			</tr>
-				
-			<tr v-for="(t, index) in trainings">
-				<td>{{t.name}}</td>
-				<td>{{t.type}}</td>
-				<td>{{t.sportsObject}}</td>
-				<td>{{t.duration}}</td>
-				<td>{{t.coach}}</td>
-				<td>{{t.dateTime}}</td>
-			</tr>
-		</table>
     	</div>		  
     	`,
 		mounted () {
@@ -135,6 +116,10 @@ var promoCodeApp = new Vue({
 			
 		},
 	methods: {
+		createImagePath(imageName) {
+			let returnValue = "http://localhost:8080/WebShopREST/images/" + imageName;
+			return returnValue;
+		},
 		logout() {
 				axios.post('rest/user/logout');
 				this.isLoggedIn = null;

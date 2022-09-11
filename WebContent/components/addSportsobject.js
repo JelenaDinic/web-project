@@ -102,7 +102,7 @@ var addSportsObjectApp = new Vue({
 				</div>
 				<div>
 					<label>Logo</label>
-					<input type="file" id = "logo" v-model = "logo">
+					<input type="file" ref= "myFile" id = "logo" @change="previewFiles">
 				</div>
 				<div>
 					<label>Menadžer</label>
@@ -155,8 +155,6 @@ var addSportsObjectApp = new Vue({
 					<td><button  v-if="allManagers.length > 0" type="submit" v-on:click = "registration" class="registration-btn" >KREIRAJ</button></td>
 				</div>
 			</table>
-			<!DOCTYPE html>
-
     	</div>	  
     	`,
     mounted () {
@@ -180,15 +178,18 @@ var addSportsObjectApp = new Vue({
 
     },
 	methods: {
+		previewFiles() {
+			this.logo = this.$refs.myFile.files[0].name
+		},
 		registration : function(){
 			let address = {street:this.street, number:this.number, city:this.city , postalCode:this.postalCode};
 			let location = {longitude: 0, latitude: 0, address:address}
-			let parts = this.logo.split('\\')
 			axios.post('rest/sportsObject/', {
 				name: this.name,
 				type: this.type,
 				location: location,
-				logo: parts[2]
+				logo: this.logo,
+				deleted: false
 			})
 			.then(response => {
 				alert("Uspesno ste kreirali sportski objekat!");
@@ -210,7 +211,8 @@ var addSportsObjectApp = new Vue({
 				name: this.name,
 				type: this.type,
 				location: location,
-				logo: this.logo
+				logo: this.logo,
+				deleted: false
 			})
 
 			axios.post('rest/user/', {
