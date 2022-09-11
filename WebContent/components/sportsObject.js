@@ -12,7 +12,8 @@ var sportObjectsApp = new Vue({
 			text: "",
 			mark: null,
 			trainings:[],
-			generatedId: -1
+			generatedId: -1,
+			pathString: "http://localhost:8080/WebShopREST/images/"
 	    }
 	},
 	that: this,
@@ -65,10 +66,10 @@ var sportObjectsApp = new Vue({
 			<label>{{object?.type}}</label><br>
 			<label>Status: </label>
 			<label>{{object?.status}}</label><br>
-			<label>Logo: </label>
-			<label>{{object?.logo}}</label><br>
 			<label>Prosečna ocena: </label>
 			<label>{{object?.averageGrade}}</label><br>
+			<label>Logo: </label><br>
+			<img :src="createImagePath(object?.logo)" style="width: 150px; height: 150px; " alt="logo"><br>
 			<label>Lokacija: </label>
 			<label>{{object?.location.address.city}}</label>
 			<button class="buy-btn" v-on:click ="showMap">Prikaži na mapi</button><br>
@@ -173,6 +174,10 @@ var sportObjectsApp = new Vue({
 	},
 
 	methods: {
+		createImagePath(imageName) {
+			let returnValue = "http://localhost:8080/WebShopREST/images/" + imageName;
+			return returnValue;
+		},
 		join(training) {
 			if(this.isLoggedIn.userType === "CUSTOMER"){
 				axios.get('rest/sportsObject/check-fee/' + this.isLoggedIn.fee)

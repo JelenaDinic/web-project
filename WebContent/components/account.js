@@ -97,7 +97,7 @@ var accountApp = new Vue({
 					
 					<div>
 						<label>Datum rođenja</label><br>
-				    	<input v-model = "dateOfBirth" type="text" name="dob" id="dob" required><br>
+				    	<input v-model = "dateOfBirth" type="date" name="dob" id="dob" required><br>
 					</div>
 
 					<div>
@@ -198,7 +198,12 @@ var accountApp = new Vue({
 				name: this.name,
 				surname: this.surname,
 				gender: this.gender,
-				dateOfBirth: this.dateOfBirth
+				dateOfBirth: this.dateOfBirth,
+				userType: this.userType,
+				fee: this.fee,
+				points: this.points,
+				customerType: this.customerType,
+				visitedSportsObjects: this.isLoggedIn.visitedSportsObjects
 		})
 			.then(response => {
 				alert("Uspesno ste izmenili podatke!");

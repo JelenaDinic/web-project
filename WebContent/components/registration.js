@@ -53,7 +53,7 @@ var registrationApp = new Vue({
 
 					<div>
 						<label>Datum rođenja</label>
-						<input type="text" id = "dateOfBirth" v-model = "dateOfBirth">
+						<input type="date" id = "dateOfBirth" v-model = "dateOfBirth">
 					</div>
 
 					<div v-if="isAdmin === true">
