@@ -74,7 +74,6 @@ var sportObjectsApp = new Vue({
 			<label>{{object?.location.address.city}}</label>
 			<button class="buy-btn" v-on:click ="showMap">Prikaži na mapi</button><br>
 			<div id="map" class="map"></div>
-
 			<h4>Treninzi:</h4>
 			<table class="table">
 			<tr>
@@ -98,9 +97,7 @@ var sportObjectsApp = new Vue({
 				<td><button class="buy-btn" v-on:click = "deleteTraining(t.id)" v-if="isAdmin === true">OBRIŠI</button></td>
 			</tr>
 		</table>
-
 		<h4>Komentari:</h4>
-
 			<table class="table">
 				<tr>
 					<th>Korisnik</th>
@@ -111,7 +108,7 @@ var sportObjectsApp = new Vue({
 					<td>{{s.text}}</td>
 				</tr>
 		</table>
-
+		<div v-if="isLoggedIn != null">
 		<h5>Dodaj komentar:</h5>
 		<div>
 			<label>Komentar:</label>
@@ -119,10 +116,10 @@ var sportObjectsApp = new Vue({
 		</div>
 		<div>
 			<label>Ocena:</label>
-			<input class="prettyInput" v-model = "mark" type="number" name="mark" id="mark" required><br>
+			<input class="prettyInput" v-model = "mark" type="number" name="mark" id="mark" min="1" max="5" required><br>
 		</div>
 		<button class="buy-btn" v-on:click ="comment">Dodaj komentar</button>
-
+		</div>
     	</div>		  
     	`,
 		
@@ -278,7 +275,7 @@ var sportObjectsApp = new Vue({
 					})
 				],
 				view: new ol.View({
-					center: ol.proj.fromLonLat([this.object.location?.longitude,this.object.location?.latitude]),
+					center: ol.proj.fromLonLat([this.object.location?.latitude,this.object.location?.longitude]),
 					zoom:18
 				})
 			});

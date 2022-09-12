@@ -112,7 +112,7 @@ var registrationApp = new Vue({
 				window.location.href = 'sportsObjects.html';
 			})
 			.catch( error => {
-                alert("Greska!");
+                alert("Korisnicko ime vec postoji!");
             })
 
 			axios.post('rest/user/'+ this.username, {

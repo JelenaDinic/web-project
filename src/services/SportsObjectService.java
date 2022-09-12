@@ -1,5 +1,7 @@
 package services;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 
@@ -70,9 +72,12 @@ public class SportsObjectService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response save(SportsObject sportObject) {
 		SportsObjectsDAO dao = (SportsObjectsDAO) ctx.getAttribute("sportsObjectDAO");
-		dao.add(sportObject);
-		dao.save();
-		return Response.status(200).build();
+		if (dao.validateName(sportObject.getName())) {
+			dao.add(sportObject);
+			dao.save();
+			return Response.status(200).build();
+		}
+		return Response.status(400).entity("Name already exists!").build();
 	}
 	
 	@POST

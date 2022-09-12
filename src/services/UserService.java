@@ -47,6 +47,15 @@ public class UserService {
 	}
 	
 	@GET
+	@Path("/validate-username/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public boolean validateUsername(@PathParam("username") String username){
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		return dao.validateUsername(username);
+	}
+	
+	@GET
 	@Path("/freeManagers")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<User> freeManagers(){
@@ -107,9 +116,12 @@ public class UserService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response save(User user) {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
-		dao.add(user);
-		dao.save();
-		return Response.status(200).build();
+		if (dao.validateUsername(user.getUsername())) {
+			dao.add(user);
+			dao.save();
+			return Response.status(200).build();
+		}
+		return Response.status(400).entity("Username already exists!").build();
 	}
 	
 	@POST

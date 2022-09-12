@@ -196,7 +196,7 @@ var addSportsObjectApp = new Vue({
 				window.location.href = 'sportsObjects.html';
 			})
 			.catch( error => {
-                alert("Greska!");
+                alert("Ime vec postoji u sistemu!");
             })
 
 			const username = this.manager.username;
@@ -214,6 +214,9 @@ var addSportsObjectApp = new Vue({
 				logo: this.logo,
 				deleted: false
 			})
+			.catch( error => {
+                alert("Ime vec postoji!");
+            })
 
 			axios.post('rest/user/', {
 				username: this.username,
