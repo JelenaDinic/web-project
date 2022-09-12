@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import beans.Fee;
 import beans.TrainingHistory;
 import dao.FeeDAO;
+import dao.SportsObjectsDAO;
 import dao.TrainingHistoryDAO;
 
 @Path("trainingHistory")
@@ -31,6 +32,9 @@ public class TrainingHistoryService {
 	public void init() {
 		if (ctx.getAttribute("trainingHistoryDAO") == null) {
 			ctx.setAttribute("trainingHistoryDAO", new TrainingHistoryDAO());
+		}
+		if (ctx.getAttribute("sportsObjectDAO") == null) {
+			ctx.setAttribute("sportsObjectDAO", new SportsObjectsDAO());
 		}
 	}
 	

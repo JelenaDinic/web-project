@@ -198,7 +198,12 @@ var accountApp = new Vue({
 				name: this.name,
 				surname: this.surname,
 				gender: this.gender,
-				dateOfBirth: this.dateOfBirth
+				dateOfBirth: this.dateOfBirth,
+				userType: this.userType,
+				fee: this.fee,
+				points: this.points,
+				customerType: this.customerType,
+				visitedSportsObjects: this.isLoggedIn.visitedSportsObjects
 		})
 			.then(response => {
 				alert("Uspesno ste izmenili podatke!");

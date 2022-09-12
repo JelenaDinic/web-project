@@ -174,8 +174,10 @@ public class UserDAO {
 	public List<String> getCustomersBySO(String object) {
 		List<String> customers = new ArrayList<String>();
 		for(User u : users) {
-			if(u.getVisitedSportsObjects().contains(object) && u.getUserType().equals(UserType.CUSTOMER))
-				customers.add(u.getUsername());
+			if(u.getVisitedSportsObjects() != null) {
+				if(u.getVisitedSportsObjects().contains(object) && u.getUserType().equals(UserType.CUSTOMER))
+					customers.add(u.getUsername());
+			}
 		}
 		return customers;
 	}

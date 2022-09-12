@@ -36,7 +36,9 @@ var trainingHandlingApp = new Vue({
 			filter5: false,
 			filter6: false,
 			filter7: false,
-			tableView: []
+			tableView: [],
+			mapSONames: [],
+			pathString: "http://localhost:8080/WebShopREST/images/"
 		}
 	},
 	template: ` 
@@ -81,9 +83,9 @@ var trainingHandlingApp = new Vue({
                     </li>
                 </ul>
             </div>
-	
+			<div v-if = "isCoach === true || isCustomer === true">
 			<div class="search">
-				<label v-if = "isCoach === true || isCustomer === true">Pretrazi po sportskom objektu:</label>
+				<label >Pretrazi po sportskom objektu:</label>
 				<input id = "searchText" type = "text" v-model = "searchText" v-on:input = "search">
 			</div>
 			<div>
@@ -109,7 +111,7 @@ var trainingHandlingApp = new Vue({
 				</div>
 				<button v-on:click = "filter">Filtriraj</button>
 			</div>
-		
+			</div>
 			<div>
 				<table class="table" v-if = "isManager === true">
 					<tr>
@@ -129,11 +131,12 @@ var trainingHandlingApp = new Vue({
 						<td>{{t.duration}}</td>
 						<td>{{t.coach}}</td>
 						<td>{{t.description}}</td>
-						<td>{{t.photo}}</td>
+						<td><img :src="createImagePath(t.photo)" style="width: 250px; height: 150px; " alt="logo"></td>
 						<td><button v-on:click = "openUpdateForm(t)" class="buy-btn">Izmeni</button></td>
 					</tr>		
 				</table>
 
+				
 				<table class="table" v-if = "isCoach === true || isCustomer === true">
 				<tr>
 					<th>Id</th>
@@ -160,7 +163,7 @@ var trainingHandlingApp = new Vue({
 				</div>
 				<div>
 					<td>Slika</td>
-					<td><input type="text" id = "photo" v-model = "photo" required class="prettyInput"></td>
+					<td><input type="file" id = "photo" ref= "myFile" class="prettyInput" @change="previewFiles"></td>
 				</div>
 				<div>
 					<td>Tip</td>
@@ -228,8 +231,7 @@ var trainingHandlingApp = new Vue({
 								this.isCustomer = true;
 								axios.get('rest/trainingHistory/customer/' + this.isLoggedIn.username)
 									.then(response => { this.trainingsManager = response.data; this.pom = this.trainingsManager; })
-									.then(response => { this.tableView = this.trainingsManager})
-							}
+									.then(() => { this.tableView = this.trainingsManager })
 							else if (this.isLoggedIn.userType === "ADMIN") {
 								this.isAdmin = true;
 							}
@@ -238,6 +240,10 @@ var trainingHandlingApp = new Vue({
 			})
 	},
 	methods: {
+		createImagePath(imageName) {
+			let returnValue = "http://localhost:8080/WebShopREST/images/" + imageName;
+			return returnValue;
+		},
 		openAddForm: function () {
 			this.addPressed = true;
 			this.updatePressed = false;
@@ -245,7 +251,7 @@ var trainingHandlingApp = new Vue({
 			this.photo = "";
 			this.type = "";
 			this.coach = "",
-				this.description = "";
+			this.description = "";
 			this.duration = "";
 
 		},
@@ -370,6 +376,9 @@ var trainingHandlingApp = new Vue({
 			this.coach = selected.coach;
 			this.description = selected.description;
 			this.duration = selected.duration;
+		},
+		previewFiles() {
+			this.photo = this.$refs.myFile.files[0].name
 		},
 		add: function () {
 			if (this.addPressed === true) {
