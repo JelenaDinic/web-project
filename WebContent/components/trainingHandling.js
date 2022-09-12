@@ -232,6 +232,7 @@ var trainingHandlingApp = new Vue({
 								axios.get('rest/trainingHistory/customer/' + this.isLoggedIn.username)
 									.then(response => { this.trainingsManager = response.data; this.pom = this.trainingsManager; })
 									.then(() => { this.tableView = this.trainingsManager })
+							}
 							else if (this.isLoggedIn.userType === "ADMIN") {
 								this.isAdmin = true;
 							}
