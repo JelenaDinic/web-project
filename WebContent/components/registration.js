@@ -53,7 +53,7 @@ var registrationApp = new Vue({
 
 					<div>
 						<label>Datum rođenja</label>
-						<input type="text" id = "dateOfBirth" v-model = "dateOfBirth">
+						<input type="date" id = "dateOfBirth" v-model = "dateOfBirth">
 					</div>
 
 					<div v-if="isAdmin === true">
@@ -112,7 +112,7 @@ var registrationApp = new Vue({
 				window.location.href = 'sportsObjects.html';
 			})
 			.catch( error => {
-                alert("Greska!");
+                alert("Korisnicko ime vec postoji!");
             })
 
 			axios.post('rest/user/'+ this.username, {

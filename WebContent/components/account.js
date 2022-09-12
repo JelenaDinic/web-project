@@ -97,7 +97,7 @@ var accountApp = new Vue({
 					
 					<div>
 						<label>Datum rođenja</label><br>
-				    	<input v-model = "dateOfBirth" type="text" name="dob" id="dob" required><br>
+				    	<input v-model = "dateOfBirth" type="date" name="dob" id="dob" required><br>
 					</div>
 
 					<div>

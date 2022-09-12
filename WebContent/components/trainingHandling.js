@@ -182,7 +182,7 @@ var trainingHandlingApp = new Vue({
 				</div>
 				<div>
 					<td>Trajanje</td>
-					<td><input type="text" id = "duration" v-model = "duration" class="prettyInput"></td>
+					<td><input type="number" min="0" id = "duration" v-model = "duration" class="prettyInput"></td>
 				</div>
 				<div>
 					<td>Opis</td>
@@ -227,7 +227,8 @@ var trainingHandlingApp = new Vue({
 							else if (this.isLoggedIn.userType === "CUSTOMER") {
 								this.isCustomer = true;
 								axios.get('rest/trainingHistory/customer/' + this.isLoggedIn.username)
-									.then(response => { this.trainingsManager = response.data;})
+									.then(response => { this.trainingsManager = response.data; this.pom = this.trainingsManager; })
+									.then(response => { this.tableView = this.trainingsManager})
 							}
 							else if (this.isLoggedIn.userType === "ADMIN") {
 								this.isAdmin = true;
@@ -281,7 +282,7 @@ var trainingHandlingApp = new Vue({
 
 				axios.get('rest/training/id/' + element.training).then(
 					(response) => {
-						if (response.data.dateTime) result.push(element)
+						if (response.data.sportsObject.includes(this.searchText)) result.push(element)
 					}
 				)
 			});
@@ -325,20 +326,25 @@ var trainingHandlingApp = new Vue({
 					console.log(error)
 				}
 				)
-			if (this.validDate == true) {
-				axios.get(
-					'rest/trainingHistory/delete/' + selected
-				).then(
-					response => {
-						alert("Uspjesno ste otkazali trening");
-						window.location.href = "trainingHandling.html"
-					}, error => {
-						alert(error);
-					}
-				)
-			} else {
-				alert("Trening mozete otkazati najkasnije dva dana ranije!");
+			if (this.sportsObject.type == "PERSONAL"){
+				if (this.validDate == true) {
+					axios.get(
+						'rest/trainingHistory/delete/' + selected
+					).then(
+						response => {
+							alert("Uspjesno ste otkazali trening");
+							window.location.href = "trainingHandling.html"
+						}, error => {
+							alert(error);
+						}
+					)
+				} else {
+					alert("Trening mozete otkazati najkasnije dva dana ranije!");
+				}
+			}else{
+				alert("Mozete otkazati samo personalne treninge!");
 			}
+
 		},
 		changePrice(){
 			const result = [];

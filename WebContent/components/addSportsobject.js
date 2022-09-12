@@ -146,7 +146,7 @@ var addSportsObjectApp = new Vue({
 
 					<div>
 						<label>Datum rođenja</label>
-						<input type="text" id = "dateOfBirth" v-model = "dateOfBirth">
+						<input type="date" id = "dateOfBirth" v-model = "dateOfBirth">
 					</div>
 
 					<button type="submit" v-on:click = "registerManager" class="registration-btn" >KREIRAJ</button>
@@ -194,7 +194,7 @@ var addSportsObjectApp = new Vue({
 				window.location.href = 'sportsObjects.html';
 			})
 			.catch( error => {
-                alert("Greska!");
+                alert("Ime vec postoji u sistemu!");
             })
 
 			const username = this.manager.username;
@@ -211,6 +211,9 @@ var addSportsObjectApp = new Vue({
 				location: location,
 				logo: this.logo
 			})
+			.catch( error => {
+                alert("Ime vec postoji!");
+            })
 
 			axios.post('rest/user/', {
 				username: this.username,
